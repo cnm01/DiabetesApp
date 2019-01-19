@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "76008775765",
+    "firebase_url": "https://diabetesapp-1efcf.firebaseio.com",
+    "project_id": "diabetesapp-1efcf",
+    "storage_bucket": "diabetesapp-1efcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76008775765:android:b73adc27dfb3b15e",
+        "android_client_info": {
+          "package_name": "com.example.diabetesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76008775765-0tnjc3md7e3lct84cjus5u3euqd48sjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA64-s06OZPu1doJhY76g0jih7ntGUSRu8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
