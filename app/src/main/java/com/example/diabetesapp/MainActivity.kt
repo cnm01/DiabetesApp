@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private var signOutButton: Button? = null
 
+
     // Firebase References
     private var auth: FirebaseAuth? = null
 
@@ -18,8 +19,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initialise()
+//        initialise()
 
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
 
     }
 
@@ -32,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, SplashActivity::class.java)
 //            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//            intent.putExtra("EXIT", true)
             startActivity(intent)
             finish()
         }

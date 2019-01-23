@@ -83,21 +83,25 @@ class RegisterActivity : AppCompatActivity() {
 
             auth!!
                 .createUserWithEmailAndPassword(email!!, password!!)
-                .addOnCompleteListener(this) {
-                        task -> progressBar?.visibility = View.INVISIBLE
+                .addOnCompleteListener(this) { task ->
 
-                        if(task.isSuccessful) {
+                    progressBar?.visibility = View.INVISIBLE
 
-                            Log.d("CreateAccountActivity", "createUserWithEmail:success")
-                            val userID = auth!!.currentUser!!.uid
+                    if(task.isSuccessful) {
+
+                        Log.d("CreateAccountActivity", "createUserWithEmail:success")
+                        val userID = auth!!.currentUser!!.uid
+
 //                            verifyEmail()
-                            val currentUserDB = databaseRef!!.child(userID)
-                            currentUserDB.child("firstName").setValue(firstName)
-                            currentUserDB.child("lastName").setValue(lastName)
-                            updateUserInfoAndUI()
-                        }
+
+                        val currentUserDB = databaseRef!!.child(userID)
+                        currentUserDB.child("firstName").setValue(firstName)
+                        currentUserDB.child("lastName").setValue(lastName)
+
+                        updateUserInfoAndUI()
+                    }
                 }
-                }
+        }
         else {
             Toast.makeText(this, "Details can't be blank", Toast.LENGTH_SHORT).show()
         }
@@ -105,7 +109,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun updateUserInfoAndUI() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
     }

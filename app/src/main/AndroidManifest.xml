@@ -14,9 +14,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme.Launcher">
         <activity
-                android:name=".SplashActivity">
+                android:name=".HomeActivity"
+                android:label="@string/title_activity_home"
+                android:theme="@style/AppTheme.Launcher.NoActionBar">
+        </activity>
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -33,8 +38,8 @@
                 android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-                android:name=".MainActivity">
-
+                android:name=".MainActivity"
+                android:theme="@style/TitleBar">
         </activity>
     </application>
 
