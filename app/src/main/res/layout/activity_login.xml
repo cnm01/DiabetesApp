@@ -18,14 +18,15 @@
             android:layout_marginBottom="37dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/email_input" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
-    <EditText
+
+    <android.support.v7.widget.AppCompatEditText
             android:id="@+id/email_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:hint="@string/prompt_email"
-            android:backgroundTint="@color/white"
+            app:backgroundTint="@color/white"
             android:autofillHints="email"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
@@ -34,14 +35,14 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="34dp"
             android:layout_marginStart="34dp" android:layout_marginEnd="34dp" android:layout_marginRight="34dp"/>
 
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
             android:id="@+id/password_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:hint="@string/prompt_password"
-            android:backgroundTint="@color/white"
+            app:backgroundTint="@color/white"
             android:autofillHints="password"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
@@ -53,10 +54,9 @@
     <Button
             android:text="@string/action_sign_in"
             android:layout_width="0dp"
-            android:layout_height="68dp"
+            android:layout_height="67dp"
             android:id="@+id/login_button"
-            android:background="@drawable/shape"
-            android:elevation="0mm"
+            android:background="@drawable/login_button"
             android:textColor="@color/white"
             android:textAllCaps="false"
             style="?android:attr/borderlessButtonStyle"
@@ -67,13 +67,12 @@
     <Button
             android:text="@string/action_register"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="52dp"
             android:id="@+id/register_button"
             android:textAllCaps="false"
             android:textStyle="normal"
-            android:background="@drawable/shape"
+            android:background="@drawable/register_button"
             android:textColor="@color/white"
-            android:elevation="0mm"
             style="?android:attr/borderlessButtonStyle"
             app:layout_constraintTop_toBottomOf="@+id/login_button" android:layout_marginBottom="49dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"

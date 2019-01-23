@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "76008775765-647eiia43d0me5vn4drk0rscuv2g3h4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.diabetesapp",
+            "certificate_hash": "0c76513f16f9845f21801c1439a1d626f66075a6"
+          }
+        },
+        {
           "client_id": "76008775765-0tnjc3md7e3lct84cjus5u3euqd48sjd.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76008775765-0tnjc3md7e3lct84cjus5u3euqd48sjd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
