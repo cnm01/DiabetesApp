@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         initialise()
 
-//        val intent = Intent(this, LoginActivity::class.java)
-//        startActivity(intent)
 
     }
 
@@ -33,8 +31,8 @@ class MainActivity : AppCompatActivity() {
             auth?.signOut()
 
             val intent = Intent(this, SplashActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            intent.putExtra("EXIT", true)
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            intent.putExtra("EXIT", true)
             startActivity(intent)
             finish()
         }

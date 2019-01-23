@@ -13,7 +13,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.iid.FirebaseInstanceId
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -30,7 +29,6 @@ class RegisterActivity : AppCompatActivity() {
     private var databaseRef: DatabaseReference? = null
     private var database: FirebaseDatabase? = null
     private var auth: FirebaseAuth? = null
-    private var token: FirebaseInstanceId? = null
 
     // Values
     private var firstName: String? = null
@@ -108,11 +106,9 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun updateUserInfoAndUI() {
         val intent = Intent(this, MainActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
+        finish()
     }
 
-    private fun assignToken() {
 
-    }
 }
