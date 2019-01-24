@@ -9,26 +9,22 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.app_bar_home.*
+import kotlinx.android.synthetic.main.activity_account.*
+import kotlinx.android.synthetic.main.app_bar_account.*
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     // Firebase References
     private var auth: FirebaseAuth? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        setSupportActionBar(toolbar_home)
-
-        fab.setOnClickListener {
-            // TODO add link to new measurement activity
-        }
+        setContentView(R.layout.activity_account)
+        setSupportActionBar(toolbar_account)
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar_home, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar_account, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -52,7 +48,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home, menu)
+        menuInflater.inflate(R.menu.account, menu)
         return true
     }
 
@@ -69,17 +65,18 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_dashboard -> {
 
+            R.id.nav_dashboard -> {
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
             }
             R.id.nav_settings -> {
 
             }
 
             R.id.nav_account -> {
-                val intent = Intent(this, AccountActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-                startActivity(intent)
+
             }
             R.id.nav_sign_out -> {
                 auth?.signOut()
@@ -87,7 +84,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
                 finish()
             }
-
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
