@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.app_bar_home.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    // TODO set drawer header details to match user details
 
     // Firebase References
     private var auth: FirebaseAuth? = null
@@ -25,6 +26,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         fab.setOnClickListener {
             // TODO add link to new measurement activity
+
         }
 
         val toggle = ActionBarDrawerToggle(

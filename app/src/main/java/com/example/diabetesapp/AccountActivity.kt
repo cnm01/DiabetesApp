@@ -14,6 +14,13 @@ import kotlinx.android.synthetic.main.app_bar_account.*
 
 class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    // TODO create view of user details
+    // TODO retrieve user details from firebase database
+    // TODO set drawer header details to match user details
+    // TODO implement log out button
+    // TODO implement delete account button
+    // TODO implement change details
+
     // Firebase References
     private var auth: FirebaseAuth? = null
 
