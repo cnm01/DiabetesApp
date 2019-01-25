@@ -12,10 +12,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.diabetesapp.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -28,8 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     private var progressBar: ProgressBar? = null
 
     // Firebase References
-    private var databaseRef: DatabaseReference? = null
-    private var database: FirebaseDatabase? = null
+    private var database: FirebaseFirestore? = null
     private var auth: FirebaseAuth? = null
 
     // Values
@@ -59,13 +57,15 @@ class RegisterActivity : AppCompatActivity() {
         progressBar = findViewById<View>(R.id.progress_bar) as ProgressBar
         progressBar?.visibility = View.INVISIBLE
 
-        database = FirebaseDatabase.getInstance()
-        databaseRef = database!!.reference!!.child("Users")
+        database = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
         registerButton!!.setOnClickListener{
+
+            // Close keyboard
             val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
+
             createNewAccount()
         }
 
@@ -80,13 +80,13 @@ class RegisterActivity : AppCompatActivity() {
         email = emailEditText?.text.toString()
         password = passwordEditText?.text.toString()
 
-        // Validate user input
-
+        // Validate user input (not empty)
         if(!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
             progressBar?.visibility = View.VISIBLE
 
+            // Create new FirebaseAuth user account
             auth!!
                 .createUserWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
@@ -96,13 +96,14 @@ class RegisterActivity : AppCompatActivity() {
                     if(task.isSuccessful) {
 
                         Log.d("CreateAccountActivity", "createUserWithEmail:success")
-                        val userID = auth!!.currentUser!!.uid
+                        val userId = auth!!.currentUser!!.uid
 
+                        // TODO implement verify email functionality?
 //                            verifyEmail()
 
-                        val currentUserDB = databaseRef!!.child(userID)
-                        currentUserDB.child("firstName").setValue(firstName)
-                        currentUserDB.child("lastName").setValue(lastName)
+                        writeNewUser(userId, firstName!!, lastName!!, email!!)
+
+                        Toast.makeText(this, "Registered", Toast.LENGTH_SHORT).show()
 
                         updateUserInfoAndUI()
                     }
@@ -112,6 +113,16 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, "Details can't be blank", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    private fun writeNewUser(uid: String, _firstName: String, _lastName: String, _email: String) {
+
+        // Create new User and push data to Firestore
+        val user = User(uid, _firstName, _lastName, _email)
+        database!!.collection("Users").document(uid)
+            .set(user)
+            .addOnSuccessListener { Log.d("Write new user", "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w("Write new user", "Error writing document", e) }
     }
 
     private fun updateUserInfoAndUI() {
