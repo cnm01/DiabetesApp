@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
+    // TODO make editTexts auto caps
+
     // UI Elements
     private var emailEditText: EditText? = null
     private var passwordEditText: EditText? = null

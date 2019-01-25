@@ -1,11 +1,11 @@
 package com.example.diabetesapp.model
 
-class User(_uid: String, _firstName: String, _lastName: String, _email: String) {
+class User(
+    var uid: String = "",
+    var firstName: String = "",
+    var lastName: String = "",
+    var email: String = "") {
 
-    val uid: String = _uid
-    var firstName: String = _firstName
-    var lastName: String = _lastName
-    var email: String = _email
 
 
 

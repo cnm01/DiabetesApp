@@ -26,7 +26,7 @@
         <android.support.v7.widget.AppCompatEditText
                 android:layout_width="312dp"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapWords"
                 android:autofillHints="firstname"
                 app:backgroundTint="@color/white"
                 android:ems="10"
@@ -42,7 +42,7 @@
         <android.support.v7.widget.AppCompatEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapWords"
                 android:autofillHints="lastname"
                 android:ems="10"
                 android:hint="@string/hint_last_name"
@@ -57,7 +57,7 @@
                 android:id="@+id/email_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|textCapWords"
                 android:ems="10"
                 android:hint="@string/prompt_email"
                 app:backgroundTint="@color/white"

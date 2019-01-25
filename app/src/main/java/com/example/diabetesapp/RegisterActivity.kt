@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
+
     // UI Elements
     private var firstNameEditText: EditText? = null
     private var lastNameEditText: EditText? = null
@@ -72,8 +73,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun createNewAccount() {
-
-        // TODO implement functionality to send user data to firebase database
 
         firstName = firstNameEditText?.text.toString()
         lastName = lastNameEditText?.text.toString()

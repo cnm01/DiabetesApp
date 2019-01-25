@@ -6,18 +6,29 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import com.example.diabetesapp.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    // TODO set drawer header details to match user details
+
+    // UI elements
+    private var nameTextView: TextView? = null
+    private var emailTextView: TextView? = null
+    private var headerView: View? = null
+
 
     // Firebase References
     private var auth: FirebaseAuth? = null
+    private var database: FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,23 +41,45 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar_home, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout_home, toolbar_home, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
-        drawer_layout.addDrawerListener(toggle)
+        drawer_layout_home.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+        nav_view_home.setNavigationItemSelectedListener(this)
 
         initialise()
     }
 
     private fun initialise() {
+        headerView = nav_view_home.getHeaderView(0)
+        nameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
+        emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
         auth = FirebaseAuth.getInstance()
+        database = FirebaseFirestore.getInstance()
+        setNavDrawerDetails()
+    }
+
+    private fun setNavDrawerDetails() {
+        val uid = auth!!.currentUser!!.uid
+        val userRef = database!!.collection("Users").document(uid)
+        userRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                val user = documentSnapshot.toObject(User::class.java)
+                val name = user!!.firstName + " " + user.lastName
+                val email = user!!.email
+                nameTextView!!.text = name
+                emailTextView!!.text = email
+                Log.d("Fetch drawer details", "User details successfully obtained and written to drawer")
+            }
+            .addOnFailureListener{
+                e -> Log.w("Fetch drawer details", "Error fetching user details for nav drawer", e)
+            }
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (drawer_layout_home.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout_home.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
@@ -92,7 +125,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         }
 
-        drawer_layout.closeDrawer(GravityCompat.START)
+        drawer_layout_home.closeDrawer(GravityCompat.START)
         return true
     }
 }
