@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.example.diabetesapp.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -25,9 +26,19 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     // TODO implement change details
 
     // UI elements
-    private var nameTextView: TextView? = null
-    private var emailTextView: TextView? = null
+
+    // Header
+    private var headerNameTextView: TextView? = null
+    private var headerEmailTextView: TextView? = null
     private var headerView: View? = null
+
+    private var firstNameTextView: TextView? = null
+    private var lastNameTextView: TextView? = null
+    private var emailTextView: TextView? = null
+    private var changeDetailsButton: Button? = null
+    private var deleteAccountButton: Button? = null
+    private var signOutButton: Button? = null
+
 
     // Firebase References
     private var auth: FirebaseAuth? = null
@@ -52,12 +63,43 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun initialise() {
         headerView = nav_view_account.getHeaderView(0)
-        nameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
-        emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
+        headerNameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
+        headerEmailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
+
+        firstNameTextView = findViewById<View>(R.id.first_name_text) as TextView
+        lastNameTextView = findViewById<View>(R.id.last_name_text) as TextView
+        emailTextView = findViewById<View>(R.id.email_text) as TextView
+        changeDetailsButton = findViewById<View>(R.id.change_details_button) as Button
+        deleteAccountButton = findViewById<View>(R.id.delete_account_button) as Button
+        signOutButton = findViewById<View>(R.id.sign_out_button) as Button
+
+
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
+
         setNavDrawerDetails()
+        setAccountDetails()
+
+        changeDetailsButton!!.setOnClickListener{
+            val intent = Intent(this, ChangeDetailsActivity::class.java)
+            startActivity(intent)
+        }
+
+        deleteAccountButton!!.setOnClickListener{
+            val intent = Intent(this, DeleteAccountActivity::class.java)
+            startActivity(intent)
+        }
+
+        signOutButton!!.setOnClickListener{
+            auth?.signOut()
+            Log.d("Logging out", "Successfully logged out")
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
+
+
 
     private fun setNavDrawerDetails() {
         val uid = auth!!.currentUser!!.uid
@@ -67,12 +109,32 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val user = documentSnapshot.toObject(User::class.java)
                 val name = user!!.firstName + " " + user.lastName
                 val email = user!!.email
-                nameTextView!!.text = name
-                emailTextView!!.text = email
+                headerNameTextView!!.text = name
+                headerEmailTextView!!.text = email
                 Log.d("Fetch drawer details", "User details successfully obtained and written to drawer")
             }
             .addOnFailureListener{
                     e -> Log.w("Fetch drawer details", "Error fetching user details for nav drawer", e)
+            }
+    }
+
+    private fun setAccountDetails() {
+        val TAG = "Set account details"
+        val uid = auth!!.currentUser!!.uid
+        val userRef = database!!.collection("Users").document(uid)
+        userRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                val user = documentSnapshot.toObject(User::class.java)
+                val firstName = user!!.firstName
+                val lastName = user!!.lastName
+                val email = user!!.email
+                firstNameTextView!!.setText(firstName)
+                lastNameTextView!!.setText(lastName)
+                emailTextView!!.setText(email)
+                Log.d(TAG, "Account details successfully obtained")
+            }
+            .addOnFailureListener{
+                    e -> Log.w(TAG, "Error fetching account details setAccountDetails()", e)
             }
     }
 
@@ -81,6 +143,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             drawer_layout_account.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            finish()
         }
     }
 
@@ -126,5 +189,11 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         drawer_layout_account.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setNavDrawerDetails()
+        setAccountDetails()
     }
 }

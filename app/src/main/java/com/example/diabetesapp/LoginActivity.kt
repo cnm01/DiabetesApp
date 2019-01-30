@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
-    // TODO make editTexts auto caps
 
     // UI Elements
     private var emailEditText: EditText? = null
@@ -84,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
 
                     if(task.isSuccessful) {
                         Log.d("Logging in user", "signInWithEmail:success")
+                        Toast.makeText(this, "Successfully logged in", Toast.LENGTH_SHORT).show()
                         updateUI()
                     }
                     else {
@@ -103,5 +103,8 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onBackPressed() {
     }
 }

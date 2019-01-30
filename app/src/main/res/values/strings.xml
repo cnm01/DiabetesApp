@@ -26,4 +26,16 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_account">AccountActivity</string>
     <string name="account">Account</string>
+    <string name="first_name">First Name:</string>
+    <string name="last_name">Last Name:</string>
+    <string name="email">Email:</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="update_details">Update details</string>
+    <string name="sample_first_name">John</string>
+    <string name="sample_last_name">Doe</string>
+    <string name="sample_email">johndoe@gmail.com</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="new_password">New Password (optional)</string>
+    <string name="delete_account_warning">Enter login details to confirm</string>
 </resources>

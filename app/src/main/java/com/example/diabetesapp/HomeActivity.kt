@@ -128,4 +128,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout_home.closeDrawer(GravityCompat.START)
         return true
     }
+
+    override fun onResume() {
+        super.onResume()
+        setNavDrawerDetails()
+    }
 }

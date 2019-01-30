@@ -74,10 +74,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun createNewAccount() {
 
-        firstName = firstNameEditText?.text.toString()
-        lastName = lastNameEditText?.text.toString()
-        email = emailEditText?.text.toString()
-        password = passwordEditText?.text.toString()
+        firstName = firstNameEditText!!.text.toString()
+        lastName = lastNameEditText!!.text.toString()
+        email = emailEditText!!.text.toString()
+        password = passwordEditText!!.text.toString()
 
         // Validate user input (not empty)
         if(!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
@@ -107,9 +107,16 @@ class RegisterActivity : AppCompatActivity() {
                         updateUserInfoAndUI()
                     }
                 }
+                .addOnFailureListener {
+                    e -> Log.w("Create new user", "Error creating user", e)
+                    progressBar?.visibility = View.INVISIBLE
+                    Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
+
+                }
         }
         else {
             Toast.makeText(this, "Details can't be blank", Toast.LENGTH_SHORT).show()
+            progressBar?.visibility = View.INVISIBLE
         }
 
     }
