@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
+    // TODO reorganise view
+
 
     // UI Elements
     private var emailEditText: EditText? = null

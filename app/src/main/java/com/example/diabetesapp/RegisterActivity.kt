@@ -18,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
+    // TODO Reorganise view
+
 
     // UI Elements
     private var firstNameEditText: EditText? = null
@@ -97,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("CreateAccountActivity", "createUserWithEmail:success")
                         val userId = auth!!.currentUser!!.uid
 
-                        // TODO implement verify email functionality?
+                        // TODO implement email verification
 //                            verifyEmail()
 
                         writeNewUser(userId, firstName!!, lastName!!, email!!)

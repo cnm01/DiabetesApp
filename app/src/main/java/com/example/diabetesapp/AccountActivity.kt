@@ -20,10 +20,8 @@ import kotlinx.android.synthetic.main.app_bar_account.*
 
 class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    // TODO create view of user details
-    // TODO implement log out button
-    // TODO implement delete account button
-    // TODO implement change details
+    // TODO implement email verification
+    // TODO reorganise view
 
     // UI elements
 

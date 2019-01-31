@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fillViewport="true">
+        android:fillViewport="true" android:id="@+id/scrollView3">
 
     <android.support.constraint.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,9 +23,10 @@
                 android:id="@+id/textView" android:textColor="@color/white"
                 android:textSize="24sp"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="69dp" app:layout_constraintEnd_toEndOf="parent"/>
+                android:layout_marginTop="76dp" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"/>
         <android.support.v7.widget.AppCompatEditText
-                android:layout_width="312dp"
+                android:layout_width="311dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName|textCapWords"
                 android:autofillHints="firstname"
@@ -33,14 +35,14 @@
                 android:hint="@string/hint_first_name"
                 android:id="@+id/first_name_input"
                 android:textColorHint="@color/white" android:textColor="@color/white"
-                android:layout_marginTop="172dp"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="23dp"
-                android:layout_marginStart="23dp" android:layout_marginEnd="23dp" android:layout_marginRight="23dp"
-                android:layout_marginBottom="49dp" app:layout_constraintBottom_toTopOf="@+id/progress_bar"/>
+                android:layout_marginTop="92dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="8dp" app:layout_constraintHorizontal_bias="0.5"/>
 
         <android.support.v7.widget.AppCompatEditText
-                android:layout_width="0dp"
+                android:layout_width="311dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName|textCapWords"
                 android:autofillHints="lastname"
@@ -48,10 +50,10 @@
                 android:hint="@string/hint_last_name"
                 android:id="@+id/last_name_input"
                 android:textColorHint="@color/white" android:textColor="@color/white"
-                android:layout_marginTop="7dp"
-                app:layout_constraintTop_toBottomOf="@+id/first_name_input" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="24dp"
-                android:layout_marginStart="24dp" android:layout_marginEnd="24dp" android:layout_marginRight="24dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/first_name_input"
+                app:layout_constraintStart_toStartOf="@+id/first_name_input"
+                app:layout_constraintEnd_toEndOf="@+id/first_name_input"
+                app:layout_constraintHorizontal_bias="0.0"/>
 
         <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/email_input"
@@ -64,10 +66,10 @@
                 android:autofillHints="email"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/last_name_input" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp" android:layout_marginEnd="25dp" android:layout_marginRight="25dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/last_name_input"
+                app:layout_constraintStart_toStartOf="@+id/last_name_input"
+                app:layout_constraintEnd_toEndOf="@+id/last_name_input" app:layout_constraintHorizontal_bias="0.0"
+        />
 
         <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/password_input"
@@ -80,32 +82,38 @@
                 android:autofillHints="password"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
-                android:layout_marginTop="11dp"
-                app:layout_constraintTop_toBottomOf="@+id/email_input" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="23dp"
-                android:layout_marginStart="23dp" android:layout_marginEnd="23dp" android:layout_marginRight="23dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/email_input"
+                app:layout_constraintStart_toStartOf="@+id/email_input"
+                app:layout_constraintEnd_toEndOf="@+id/email_input" app:layout_constraintHorizontal_bias="0.0"
+        />
 
         <Button
                 android:text="@string/action_register"
-                android:layout_width="0dp"
+                android:layout_width="242dp"
                 android:textAllCaps="false"
                 android:background="@drawable/login_button"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_height="58dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/register_button" android:textColor="@color/white"
-                android:layout_marginBottom="56dp"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginLeft="28dp" android:layout_marginStart="28dp" android:layout_marginEnd="28dp"
-                android:layout_marginRight="28dp" app:layout_constraintEnd_toEndOf="parent"/>
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintHorizontal_bias="0.503"
+                android:layout_marginTop="76dp" app:layout_constraintTop_toBottomOf="@+id/password_input"
+                android:layout_marginBottom="24dp" app:layout_constraintBottom_toBottomOf="parent"/>
         <ProgressBar
                 style="?android:attr/progressBarStyle"
-                android:layout_width="121dp"
-                android:layout_height="0dp"
+                android:layout_width="85dp"
+                android:layout_height="74dp"
                 android:id="@+id/progress_bar"
-                app:layout_constraintTop_toBottomOf="@+id/first_name_input" android:layout_marginBottom="267dp"
-                app:layout_constraintEnd_toEndOf="@+id/password_input"
-                app:layout_constraintStart_toStartOf="@+id/last_name_input" android:layout_marginLeft="96dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="96dp"
-                android:layout_marginEnd="96dp" android:layout_marginRight="96dp"/>
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"/>
+        <android.support.constraint.Barrier android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                            android:id="@+id/barrier" app:barrierDirection="left"/>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
