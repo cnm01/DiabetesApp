@@ -61,9 +61,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton!!.setOnClickListener{
-            // Close keyboard
-            val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
+            closeKeyboard()
             login()
         }
     }
@@ -74,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Validate User Input (not empty)
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            Log.d("Validate login", "Login details not empty: success")
 
             progressBar?.visibility = View.VISIBLE
 
@@ -96,6 +95,8 @@ class LoginActivity : AppCompatActivity() {
 
         }
         else {
+            Log.d("Validate login", "Login details empty: failure")
+            progressBar?.visibility = View.INVISIBLE
             Toast.makeText(this, "Details can't be blank", Toast.LENGTH_SHORT).show()
         }
 
@@ -105,6 +106,11 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun closeKeyboard() {
+        val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
     override fun onBackPressed() {
