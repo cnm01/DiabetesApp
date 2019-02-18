@@ -18,9 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
-    // TODO Reorganise view
-
-
     // UI Elements
     private var firstNameEditText: EditText? = null
     private var lastNameEditText: EditText? = null
@@ -65,10 +62,7 @@ class RegisterActivity : AppCompatActivity() {
 
         registerButton!!.setOnClickListener{
 
-            // Close keyboard
-            val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
-
+            closeKeyboard()
             createNewAccount()
         }
 
@@ -137,6 +131,15 @@ class RegisterActivity : AppCompatActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun closeKeyboard() {
+        try {
+            val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
+        } catch (e: IllegalStateException) {
+            Log.d("Close Keyboard", "Keyboard already closed")
+        }
     }
 
     override fun onBackPressed() {

@@ -13,8 +13,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.Launcher">
-        <activity android:name=".DeleteAccountActivity"
+        <activity android:name=".NewMeasurementActivity"
                   android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+                android:name=".DeleteAccountActivity"
+                android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
                 android:name=".ChangeDetailsActivity"

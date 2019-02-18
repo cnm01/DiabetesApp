@@ -35,8 +35,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar_home)
 
-        fab.setOnClickListener {
-            // TODO add link to new measurement activity
+        new_measurement_floating_button.setOnClickListener {
+            val intent = Intent(this, NewMeasurementActivity::class.java)
+            startActivity(intent)
 
         }
 

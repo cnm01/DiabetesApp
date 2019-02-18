@@ -38,4 +38,36 @@
     <string name="delete">Delete</string>
     <string name="new_password">New Password (optional)</string>
     <string name="delete_account_warning">Enter login details to confirm</string>
+
+
+    <string name="new_measurement_title">New Measurement</string>
+    <string name="blood_glucose_concentration">Blood Glucose\nConcentration</string>
+    <string name="recent_food">Food Recently Consumed</string>
+    <string name="exercise">Recent exercise</string>
+
+    <!--Symptoms-->
+    <string name="symptoms">Symptoms</string>
+    <string name="dizziness">Dizziness</string>
+    <string name="fatigue">Fatigue</string>
+    <string name="blurred_vision">Blurred Vision</string>
+    <string name="Shakiness">Shakiness</string>
+    <string name="pale_skin">Pale skin</string>
+    <string name="palpitations">Palpitations</string>
+    <string name="rapid_breathing">Rapid Breathing</string>
+    <string name="confusion">Confusion</string>
+    <string name="difficulty_concentrating">Difficulty\nConcentrating</string>
+    <string name="thirstiness">Thirstiness</string>
+    <string name="frequent_urination">Frequent\nUrination</string>
+    <string name="nausea">Nausea</string>
+    <string name="abdominal_pain">Abdominal Pain</string>
+    <string name="headache">Headache</string>
+
+    <!--Medications-->
+    <string name="medications_title">Medications</string>
+
+    <!--Notes-->
+    <string name="notes_title">Notes</string>
+
+    <string name="submit">Submit</string>
+
 </resources>

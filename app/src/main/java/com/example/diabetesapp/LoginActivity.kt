@@ -13,8 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
-    // TODO reorganise view
-
+    // TODO Implement email verification
 
     // UI Elements
     private var emailEditText: EditText? = null
@@ -109,8 +108,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun closeKeyboard() {
-        val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
+        try {
+            val inputManager: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
+        } catch (e: IllegalStateException) {
+            Log.d("Close Keyboard", "Keyboard already closed")
+        }
     }
 
     override fun onBackPressed() {
