@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.diabetesapp.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -56,6 +57,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         headerView = nav_view_home.getHeaderView(0)
         nameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
         emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
+        var headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
+        // TODO refactor multiple navigation drawers (one for each activity) into one shared one
+        // Sets Navigation Drawer Header background image
+        headerIMG.setBackgroundResource(R.drawable.header2)
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         setNavDrawerDetails()
