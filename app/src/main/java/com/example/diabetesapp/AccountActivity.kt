@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -70,8 +71,12 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         headerIMG.setBackgroundResource(R.drawable.header2)
 
         firstNameTextView = findViewById<View>(R.id.first_name_text) as TextView
+        firstNameTextView!!.movementMethod = ScrollingMovementMethod()
+        // TODO make textviews scroll horizontally
         lastNameTextView = findViewById<View>(R.id.last_name_text) as TextView
+        lastNameTextView!!.movementMethod = ScrollingMovementMethod()
         emailTextView = findViewById<View>(R.id.email_text) as TextView
+        emailTextView!!.movementMethod = ScrollingMovementMethod()
         changeDetailsButton = findViewById<View>(R.id.change_details_button) as Button
         deleteAccountButton = findViewById<View>(R.id.delete_account_button) as Button
         signOutButton = findViewById<View>(R.id.sign_out_button) as Button
