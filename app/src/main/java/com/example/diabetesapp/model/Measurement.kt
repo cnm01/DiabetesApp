@@ -2,25 +2,27 @@ package com.example.diabetesapp.model
 
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Measurement(
-    var bloodGlucoseConc: Float,
-    var recentFood: Boolean,
-    var recentExercise: Boolean,
-    var symptoms: ArrayList<String>,
-    var medications: String,
-    var notes: String) {
+    var bloodGlucoseConc: Float = 0f,
+    var recentFood: Boolean = false,
+    var recentExercise: Boolean = false,
+    var symptoms: ArrayList<String> = ArrayList(),
+    var medications: String = "",
+    var notes: String = "") {
 
     // Date
     var day: Int? = null
     var month: Int? = null
     var year: Int? = null
-    var date: String? = null
+    var date: String? = null    // dd-mm-yyyy
 
     // Time
     var hour: Int? = null
     var minute: Int? = null
-    var time: String? = null
+    var time: String? = null    // hhmm
+    var timeFormatted: String? = null   //hh:mm
 
     init {
         var dateTime = LocalDateTime.now()
@@ -33,6 +35,7 @@ class Measurement(
         hour = dateTime.hour
         minute = dateTime.minute
         time = hour.toString() + minute.toString()
+        timeFormatted = hour.toString() + ":" + minute.toString()
 
 
     }
