@@ -15,4 +15,8 @@
     <color name="colorSecondary">#7F0000</color>
     <color name="colorSecondaryDark">#4e0000</color>
     <color name="colorSecondaryAccent">#b53d2a</color>
+
+    <color name="scoreGood">#0F9200</color>
+    <color name="scoreMedium">#CA7900</color>
+    <color name="scoreBad">#8F0000</color>
 </resources>

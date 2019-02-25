@@ -76,4 +76,12 @@
     <string name="recent">Recent</string>
     <string name="see_more">See More</string>
 
+    <string name="today_label">Today</string>
+    <string name="score">Score:</string>
+
+    <string name="hints_label">Hints</string>
+
+    <!--Hints-->
+    <string name="measure_more_hint">Improve your score by taking more frequent measurements.</string>
+
 </resources>

@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.example.diabetesapp.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class RecentItem(context: Context, timeIn: String, bgcIn: String): ConstraintLayout(context) {
 
@@ -19,9 +17,6 @@ class RecentItem(context: Context, timeIn: String, bgcIn: String): ConstraintLay
     private var timeTextView: TextView? = null
     private var bgcTextView: TextView? = null
 
-    // Firebase References
-    private var auth: FirebaseAuth? = null
-    private var database: FirebaseFirestore? = null
 
     init {
 

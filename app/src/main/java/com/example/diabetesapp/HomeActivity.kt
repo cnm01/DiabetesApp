@@ -1,7 +1,7 @@
 package com.example.diabetesapp
 
 import android.content.Intent
-import android.opengl.Visibility
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
@@ -20,7 +20,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.diabetesapp.model.Measurement
 import com.example.diabetesapp.model.User
+import com.example.diabetesapp.model.XAxisFormatter
 import com.example.diabetesapp.view.RecentItem
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -28,11 +34,18 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
 import java.time.LocalDateTime
+import java.util.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    // GraphView
+    private var graph: LineChart? = null
+
     // RecentItems
     private var recentLinearLayout: LinearLayout? = null
+
+    // Hints
+    private var hintsLinearLineChart: LinearLayout? = null
 
 
     // Drawer elements
@@ -84,8 +97,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         headerIMG.setBackgroundResource(R.drawable.header2)
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
-        setNavDrawerDetails()
         recentLinearLayout = findViewById<View>(R.id.recentLinearLayout) as LinearLayout
+        graph = findViewById<View>(R.id.graphView) as LineChart
+        hintsLinearLineChart = findViewById<View>(R.id.hintsLinearLayout) as LinearLayout
     }
 
     private fun setNavDrawerDetails() {
@@ -163,6 +177,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recentLinearLayout!!.removeAllViews()
         see_more_label.visibility = View.VISIBLE
         inflateRecentItems()
+        inflateGraphView()
     }
 
     // Converts DP to PX for setMargin of RecentItems
@@ -231,7 +246,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     // -> insert measurement into RecentItems widget
                     itemsArray.forEach { documentSnapshot ->
                         val item = documentSnapshot.toObject(Measurement::class.java)
-                        val time = item!!.hour.toString() + ":" + item!!.minute.toString()
+                        val time = item!!.timeFormatted
                         val bgc = item!!.bloodGlucoseConc.toString()
 
                         recentLinearLayout!!.removeView(progressBar)
@@ -246,5 +261,101 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
     }
+
+
+
+    private fun inflateGraphView() {
+
+        val entries = ArrayList<Entry>()
+
+        val userId = auth!!.currentUser!!.uid
+
+        // Gets current date in format dd-mm-yyyy for query
+        var dateTime = LocalDateTime.now()
+        val day = dateTime.dayOfMonth
+        val month = dateTime.monthValue
+        val year = dateTime.year
+        val date = day.toString() + "-" + month.toString() + "-" + year.toString()
+
+        // Query -> Measurements from current day
+        val query = database!!
+            .collection("Users")
+            .document(userId)
+            .collection("Measurements")
+            .whereEqualTo("date", date)
+            .orderBy("time", Query.Direction.ASCENDING)
+
+        query.get()
+            .addOnSuccessListener {querySnapshot ->
+                val itemsArray = querySnapshot.documents
+
+                // If no Measurements from current day
+                // -> Display "No recent measurements" TextView
+                if(itemsArray.size == 0) {
+
+                    Toast.makeText(this, "No Graph items", Toast.LENGTH_LONG).show()
+
+                }
+                // Else -> display recent measurements from current day
+                else {
+                    // For each measurement from current day
+                    // -> insert measurement into RecentItems widget
+                    itemsArray.forEach { documentSnapshot ->
+                        val item = documentSnapshot.toObject(Measurement::class.java)
+                        val time = item!!.time!!.toFloat()
+
+                        val bgc = item!!.bloodGlucoseConc
+                        // TODO find a way to evenly space x axis of graph
+                        Log.d("ENTRY", "VALUE ##########")
+                        Log.d(time.toString(), bgc.toString())
+                        entries.add(Entry(time, bgc))
+                        Log.d("ADD ENTRIES", "COMPLETE")
+                    }
+                    val dataSet = LineDataSet(entries, "Blood Glucose Concentration")
+                    dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+                    dataSet.setDrawValues(false)
+                    dataSet.setDrawFilled(true)
+                    dataSet.lineWidth = 2f
+                    dataSet.fillColor = Color.WHITE
+                    dataSet.circleRadius = 5f
+                    dataSet.setCircleColor(Color.WHITE)
+                    dataSet.color = Color.WHITE
+                    val lineData = LineData(dataSet)
+                    graph!!.data = lineData
+                    graph!!.setNoDataText("No data available")
+                    graph!!.setGridBackgroundColor(Color.RED)
+//                    graph!!.setVisibleXRangeMaximum(5f)
+                    graph!!.axisRight.isEnabled = false
+                    graph!!.xAxis.setDrawGridLines(false)
+                    graph!!.xAxis.textSize = 10f
+                    graph!!.xAxis.valueFormatter = XAxisFormatter()
+//                    graph!!.xAxis.axisLineWidth = 2f
+//                    graph!!.xAxis.axisLineColor = Color.BLACK
+//                    graph!!.xAxis.setDrawAxisLine(false)
+//                    graph!!.axisLeft.setDrawAxisLine(false)
+//                    graph!!.axisRight.setDrawGridLines(false)
+                    graph!!.xAxis.granularity = 100f
+                    graph!!.xAxis.position = XAxis.XAxisPosition.BOTTOM
+                    graph!!.legend.isEnabled = false
+                    graph!!.description.isEnabled = false
+                    graph!!.invalidate()
+                    graph!!.axisLeft.setDrawGridLines(false)
+                    Log.d("POPULATE GRAPH", "COMPLETE")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("Fetch recent items", "Error fetching Graph items", e)
+                Toast.makeText(this, "Error fetching Graph items", Toast.LENGTH_LONG).show()
+
+            }
+
+    }
+
+    // TODO create method for setting score
+    // TODO create method for setting score color based on score
+
+    // TODO create method for inflating hints
+
+
 
 }

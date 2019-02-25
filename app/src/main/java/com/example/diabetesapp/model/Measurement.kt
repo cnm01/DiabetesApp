@@ -1,10 +1,11 @@
 package com.example.diabetesapp.model
 
 import java.time.LocalDateTime
-import java.util.*
-import kotlin.collections.ArrayList
+
+
 
 class Measurement(
+
     var bloodGlucoseConc: Float = 0f,
     var recentFood: Boolean = false,
     var recentExercise: Boolean = false,
@@ -25,6 +26,10 @@ class Measurement(
     var timeFormatted: String? = null   //hh:mm
 
     init {
+
+
+
+
         var dateTime = LocalDateTime.now()
 
         day = dateTime.dayOfMonth
@@ -34,11 +39,53 @@ class Measurement(
 
         hour = dateTime.hour
         minute = dateTime.minute
-        time = hour.toString() + minute.toString()
-        timeFormatted = hour.toString() + ":" + minute.toString()
+        setTime()
+        setTimeFormatted()
 
 
     }
+
+    private fun setTime() {
+        if(hour!! < 10) {
+            if(minute!! < 10) {
+                time = "0" + hour.toString() + "0" + minute.toString()
+            }
+            else {
+                time = "0" + hour.toString() + minute.toString()
+            }
+        }
+        else {
+            if(minute!! < 10) {
+                time = hour.toString() + "0" + minute.toString()
+            }
+            else {
+                time = hour.toString() + minute.toString()
+            }
+        }
+
+    }
+
+    private fun setTimeFormatted() {
+        if(hour!! < 10) {
+            if(minute!! < 10) {
+                timeFormatted = "0" + hour.toString() + ":" + "0" + minute.toString()
+            }
+            else {
+                timeFormatted = "0" + hour.toString() + ":" + minute.toString()
+            }
+        }
+        else {
+            if(minute!! < 10) {
+                timeFormatted = hour.toString() + ":" + "0" + minute.toString()
+            }
+            else {
+                timeFormatted = hour.toString() + ":" + minute.toString()
+            }
+        }
+
+    }
+
+
 
     override fun toString(): String {
         return "[BGC: " + bloodGlucoseConc + "\n" +

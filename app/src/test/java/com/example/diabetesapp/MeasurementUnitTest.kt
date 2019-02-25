@@ -41,4 +41,9 @@ class MeasurementUnitTest {
         val today = LocalDateTime.now().year
         Assert.assertEquals(today, measurement.year)
     }
+
+    @Test
+    fun timeScaled_isCorrect() {
+        println(measurement.timeScaled100)
+    }
 }
