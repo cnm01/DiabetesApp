@@ -33,7 +33,7 @@
                 android:layout_marginTop="50dp">
 
             <TextView
-                    android:text="94%"
+                    android:text="94"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/score_text"
                     android:textSize="50sp" android:layout_marginTop="8dp"
@@ -50,11 +50,22 @@
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/score_text" app:layout_constraintVertical_bias="0.812"/>
+            <TextView
+                    android:text="@string/percentage_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/percentage_label"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/score_text"
+                    app:layout_constraintHorizontal_bias="0.502" app:layout_constraintVertical_bias="0.0"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
                 android:id="@+id/graph_container"
                 android:layout_width="match_parent"
-                android:layout_height="266dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/new_measurement_item"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
@@ -70,17 +81,26 @@
                     app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-            <com.github.mikephil.charting.charts.LineChart
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:id="@+id/graphView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="24dp" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/today_label">
+            <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/today_label"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"
+                    android:id="@+id/graph_holder">
 
-            </com.github.mikephil.charting.charts.LineChart>
+                <com.github.mikephil.charting.charts.LineChart
+                        android:layout_width="0dp"
+                        android:layout_height="170dp"
+                        android:id="@+id/graphView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                </com.github.mikephil.charting.charts.LineChart>
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -96,7 +116,7 @@
                 app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                    android:text="@string/recent"
+                    android:text="@string/measurements"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:id="@+id/recent_label" android:textSize="18sp"
@@ -156,26 +176,7 @@
                     app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/hints_label" android:layout_marginBottom="16dp"
                     app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0">
-                <android.support.constraint.ConstraintLayout
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:background="@drawable/recent_item"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:id="@+id/recent_item_container">
 
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" android:id="@+id/hint_text_view"
-                            android:textSize="14sp"
-                            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
-                            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
-                            app:layout_constraintVertical_bias="0.0"
-                            android:text="@string/measure_more_hint" android:layout_marginEnd="16dp"
-                            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>
 

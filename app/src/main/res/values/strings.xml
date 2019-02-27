@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DiabetesApp</string>
+    <string name="app_name">Diabetes</string>
     <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -74,6 +74,7 @@
     <string name="submit">Submit</string>
 
     <string name="recent">Recent</string>
+    <string name="measurements">Measurements</string>
     <string name="see_more">See More</string>
 
     <string name="today_label">Today</string>
@@ -81,7 +82,9 @@
 
     <string name="hints_label">Hints</string>
 
+    <string name="percentage_sign">/100</string>
+
     <!--Hints-->
-    <string name="measure_more_hint">Improve your score by taking more frequent measurements.</string>
+    <string name="measure_more_hint">Improve your score by taking more frequent measurements throughout the day.</string>
 
 </resources>

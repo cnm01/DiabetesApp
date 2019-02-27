@@ -33,14 +33,7 @@ class RecentItem(context: Context, timeIn: String, bgcIn: String): ConstraintLay
         bgcTextView!!.text = bgc + " mmol/L"
 
 
-
-
-
-
-
     }
-
-
 
 
 }

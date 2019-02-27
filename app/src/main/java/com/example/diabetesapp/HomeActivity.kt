@@ -3,6 +3,7 @@ package com.example.diabetesapp
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
@@ -21,6 +22,7 @@ import android.widget.Toast
 import com.example.diabetesapp.model.Measurement
 import com.example.diabetesapp.model.User
 import com.example.diabetesapp.model.XAxisFormatter
+import com.example.diabetesapp.view.HintItem
 import com.example.diabetesapp.view.RecentItem
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -40,6 +42,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // GraphView
     private var graph: LineChart? = null
+    private var graphHolder: ConstraintLayout? = null
 
     // RecentItems
     private var recentLinearLayout: LinearLayout? = null
@@ -80,11 +83,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         initialise()
 
-//        inflateRecentItems()
-
-
-
-
     }
 
     private fun initialise() {
@@ -100,6 +98,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recentLinearLayout = findViewById<View>(R.id.recentLinearLayout) as LinearLayout
         graph = findViewById<View>(R.id.graphView) as LineChart
         hintsLinearLineChart = findViewById<View>(R.id.hintsLinearLayout) as LinearLayout
+        graphHolder = findViewById<View>(R.id.graph_holder) as ConstraintLayout
     }
 
     private fun setNavDrawerDetails() {
@@ -147,10 +146,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_dashboard -> {
-
             }
             R.id.nav_settings -> {
-
             }
 
             R.id.nav_account -> {
@@ -164,9 +161,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
                 finish()
             }
-
         }
-
         drawer_layout_home.closeDrawer(GravityCompat.START)
         return true
     }
@@ -176,8 +171,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setNavDrawerDetails()
         recentLinearLayout!!.removeAllViews()
         see_more_label.visibility = View.VISIBLE
+        graphHolder!!.removeAllViews()
         inflateRecentItems()
         inflateGraphView()
+        hintsLinearLayout.removeAllViews()
+        inflateHints()
     }
 
     // Converts DP to PX for setMargin of RecentItems
@@ -210,7 +208,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val day = dateTime.dayOfMonth
         val month = dateTime.monthValue
         val year = dateTime.year
-        val date = day.toString() + "-" + month.toString() + "-" + year.toString()
+        val date = "$day-$month-$year"
 
         // Query -> Measurements from current day
         val query = database!!
@@ -240,7 +238,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     see_more_label.visibility = View.INVISIBLE
                     recentLinearLayout!!.addView(emptyTextView)
                 }
-                // Else -> display recent measurements from current day
+                // If measurements from current day -> display them
                 else {
                     // For each measurement from current day
                     // -> insert measurement into RecentItems widget
@@ -265,6 +263,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     private fun inflateGraphView() {
+
+        val progressBar = ProgressBar(this)
+        var layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        layoutParams.setMargins(0, 8.dpToPx(this.resources.displayMetrics),0, 0)
+        progressBar.layoutParams = layoutParams
+        graphHolder!!.addView(progressBar)
 
         val entries = ArrayList<Entry>()
 
@@ -292,8 +296,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // If no Measurements from current day
                 // -> Display "No recent measurements" TextView
                 if(itemsArray.size == 0) {
+                    graphHolder!!.removeView(graph!!)
+                    val addMeasurementsTextView = TextView(this)
+                    addMeasurementsTextView.text = "Add a measurement to get started"
+                    addMeasurementsTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
+                    addMeasurementsTextView.gravity = Gravity.CENTER
+                    addMeasurementsTextView.height = 300
 
-                    Toast.makeText(this, "No Graph items", Toast.LENGTH_LONG).show()
+                    var layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    layoutParams.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
+                    addMeasurementsTextView.layoutParams = layoutParams
+
+
+                    graphHolder!!.removeView(progressBar)
+                    graphHolder!!.addView(addMeasurementsTextView)
 
                 }
                 // Else -> display recent measurements from current day
@@ -317,36 +333,44 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     dataSet.setDrawFilled(true)
                     dataSet.lineWidth = 2f
                     dataSet.fillColor = Color.WHITE
-                    dataSet.circleRadius = 5f
+                    dataSet.circleRadius = 4f
                     dataSet.setCircleColor(Color.WHITE)
                     dataSet.color = Color.WHITE
                     val lineData = LineData(dataSet)
                     graph!!.data = lineData
-                    graph!!.setNoDataText("No data available")
                     graph!!.setGridBackgroundColor(Color.RED)
-//                    graph!!.setVisibleXRangeMaximum(5f)
                     graph!!.axisRight.isEnabled = false
                     graph!!.xAxis.setDrawGridLines(false)
                     graph!!.xAxis.textSize = 10f
                     graph!!.xAxis.valueFormatter = XAxisFormatter()
-//                    graph!!.xAxis.axisLineWidth = 2f
-//                    graph!!.xAxis.axisLineColor = Color.BLACK
-//                    graph!!.xAxis.setDrawAxisLine(false)
-//                    graph!!.axisLeft.setDrawAxisLine(false)
-//                    graph!!.axisRight.setDrawGridLines(false)
                     graph!!.xAxis.granularity = 100f
                     graph!!.xAxis.position = XAxis.XAxisPosition.BOTTOM
                     graph!!.legend.isEnabled = false
                     graph!!.description.isEnabled = false
-                    graph!!.invalidate()
                     graph!!.axisLeft.setDrawGridLines(false)
+                    graph!!.invalidate()
+
+
+
+                    graphHolder!!.removeView(progressBar)
+                    graphHolder!!.addView(graph!!)
                     Log.d("POPULATE GRAPH", "COMPLETE")
                 }
             }
             .addOnFailureListener { e ->
                 Log.w("Fetch recent items", "Error fetching Graph items", e)
-                Toast.makeText(this, "Error fetching Graph items", Toast.LENGTH_LONG).show()
+                graphHolder!!.removeView(graph!!)
+                val tv = TextView(this)
+                tv.text = "Error"
+                tv.setTextColor(ContextCompat.getColor(this, R.color.textDark))
+                tv.gravity = Gravity.CENTER
+                tv.height = 300
 
+                var layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                layoutParams.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
+                tv.layoutParams = layoutParams
+
+                graphHolder!!.addView(tv)
             }
 
     }
@@ -354,8 +378,30 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // TODO create method for setting score
     // TODO create method for setting score color based on score
 
-    // TODO create method for inflating hints
+    private fun inflateHints() {
+        // Inserts appropriate hint based on context
+        // -> If no measurements on current day yet - ADD_HINT
+        // -> Regular usage - FREQUENT_HINT
+        // -> If account is unverified - VERIFY_HINT
+        // -> If deviation outside healthy range of BGC - RANGE_HINT
 
+        insertHintItem(HintItem.ADD_HINT)
+        insertHintItem(HintItem.FREQUENT_HINT)
+        insertHintItem(HintItem.RANGE_HINT)
+
+    }
+
+    private fun insertHintItem(hint: String) {
+
+        // Creates Layout Params for bottom margin of RecentItem
+        var layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        layoutParams.setMargins(0,0,0, 4.dpToPx(this.resources.displayMetrics))
+
+        // Creates new RecentItem and adds to view
+        val newItem = HintItem(this, hint)
+        newItem.layoutParams = layoutParams
+        hintsLinearLayout!!.addView(newItem)
+    }
 
 
 }
