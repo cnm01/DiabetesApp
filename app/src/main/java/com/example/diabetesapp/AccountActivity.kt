@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.example.diabetesapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,9 +36,11 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private var firstNameTextView: TextView? = null
     private var lastNameTextView: TextView? = null
     private var emailTextView: TextView? = null
+    private var verificationTextView: TextView? = null
     private var changeDetailsButton: Button? = null
     private var deleteAccountButton: Button? = null
     private var signOutButton: Button? = null
+    private var verifyButton: Button? = null
 
 
     // Firebase References
@@ -77,19 +80,20 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         lastNameTextView!!.movementMethod = ScrollingMovementMethod()
         emailTextView = findViewById<View>(R.id.email_text) as TextView
         emailTextView!!.movementMethod = ScrollingMovementMethod()
+        verificationTextView = findViewById<View>(R.id.verification_text) as TextView
+        verificationTextView!!.movementMethod = ScrollingMovementMethod()
         changeDetailsButton = findViewById<View>(R.id.change_details_button) as Button
         deleteAccountButton = findViewById<View>(R.id.delete_account_button) as Button
         signOutButton = findViewById<View>(R.id.sign_out_button) as Button
+        verifyButton = findViewById<View>(R.id.verify_button) as Button
 
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
 
-        setNavDrawerDetails()
-        setAccountDetails()
 
         changeDetailsButton!!.setOnClickListener{
-            val intent = Intent(this, ChangeDetailsActivity::class.java)
+            val intent = Intent(this, Reauthenticate::class.java)
             startActivity(intent)
         }
 
@@ -99,11 +103,23 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         signOutButton!!.setOnClickListener{
-            auth?.signOut()
+            auth!!.signOut()
             Log.d("Logging out", "Successfully logged out")
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        verifyButton!!.setOnClickListener {
+            auth!!.currentUser!!.sendEmailVerification()
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Verification email sent", Toast.LENGTH_LONG).show()
+                    Log.d("Send verify email", "SUCCESS")
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_LONG).show()
+                    Log.w("Send verify email", "FAILED")
+                }
         }
     }
 
@@ -139,12 +155,28 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 firstNameTextView!!.setText(firstName)
                 lastNameTextView!!.setText(lastName)
                 emailTextView!!.setText(email)
+                setVerification()
                 Log.d(TAG, "Account details successfully obtained")
             }
             .addOnFailureListener{
                     e -> Log.w(TAG, "Error fetching account details setAccountDetails()", e)
             }
     }
+
+    private fun setVerification() {
+        val user = auth!!.currentUser!!
+        if(user.isEmailVerified) {
+            verificationTextView!!.text = "Verified"
+            verifyButton!!.isEnabled = false
+            verifyButton!!.visibility = View.INVISIBLE
+
+        }
+        else {
+            verificationTextView!!.text = "Unverified"
+        }
+    }
+
+    // TODO Add change profile picture functionality
 
     override fun onBackPressed() {
         if (drawer_layout_account.isDrawerOpen(GravityCompat.START)) {

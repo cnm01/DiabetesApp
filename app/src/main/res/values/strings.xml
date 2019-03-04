@@ -30,7 +30,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email">Email</string>
-    <string name="verification">Verification</string>
+    <string name="verification">Status</string>
 
     <string name="delete_account">Delete Account</string>
     <string name="update_details">Update details</string>
@@ -84,7 +84,14 @@
 
     <string name="percentage_sign">/100</string>
 
+    <string name="verify">Verify Email</string>
+
     <!--Hints-->
-    <string name="measure_more_hint">Improve your score by taking more frequent measurements throughout the day.</string>
+    <string name="measure_more_hint">Improve your score by taking more frequent measurements throughout the day.
+    </string>
+
+    <string name="reauthenticate">Reauthenticate</string>
+    <string name="reauthenticate_warning">Enter login details to continue</string>
+    <string name="continue_">Continue</string>
 
 </resources>

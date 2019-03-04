@@ -1,12 +1,10 @@
 package com.example.diabetesapp
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -90,6 +88,8 @@ class ChangeDetailsActivity : AppCompatActivity() {
         val email = emailEditText!!.text.toString()
         val password = passwordEditText!!.text.toString()
 
+
+
         // Validate user input (not empty)
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
             && !TextUtils.isEmpty(email)) {
@@ -100,7 +100,7 @@ class ChangeDetailsActivity : AppCompatActivity() {
             val user = auth!!.currentUser
 
             user!!.updateEmail(email)
-                .addOnSuccessListener { Log.d("Update email", "Email successfully updated") }
+                .addOnSuccessListener { Log.d("Update email", "Email successfully updated")}
                 .addOnFailureListener { e -> Log.w("Update email", "Error updating email", e) }
 
             updateUserModel(userId, firstName!!, lastName!!, email!!)
@@ -113,6 +113,7 @@ class ChangeDetailsActivity : AppCompatActivity() {
 
             progressBar?.visibility = View.INVISIBLE
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()
+
 
         }
         else {
