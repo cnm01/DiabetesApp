@@ -93,9 +93,6 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("CreateAccountActivity", "createUserWithEmail:success")
                         val userId = auth!!.currentUser!!.uid
 
-                        // TODO implement email verification
-//                            verifyEmail()
-
                         writeNewUser(userId, firstName!!, lastName!!, email!!)
 
                         Toast.makeText(this, "Registered", Toast.LENGTH_SHORT).show()

@@ -13,8 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
-    // TODO Implement email verification
-
     // UI Elements
     private var emailEditText: EditText? = null
     private var passwordEditText: EditText? = null

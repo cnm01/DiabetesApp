@@ -23,9 +23,6 @@ import kotlinx.android.synthetic.main.app_bar_account.*
 
 class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    // TODO implement email verification
-    // TODO reorganise view
-
     // UI elements
 
     // Header
@@ -132,7 +129,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             .addOnSuccessListener { documentSnapshot ->
                 val user = documentSnapshot.toObject(User::class.java)
                 val name = user!!.firstName + " " + user.lastName
-                val email = user!!.email
+                val email = user.email
                 headerNameTextView!!.text = name
                 headerEmailTextView!!.text = email
                 Log.d("Fetch drawer details", "User details successfully obtained and written to drawer")
@@ -150,11 +147,11 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             .addOnSuccessListener { documentSnapshot ->
                 val user = documentSnapshot.toObject(User::class.java)
                 val firstName = user!!.firstName
-                val lastName = user!!.lastName
-                val email = user!!.email
-                firstNameTextView!!.setText(firstName)
-                lastNameTextView!!.setText(lastName)
-                emailTextView!!.setText(email)
+                val lastName = user.lastName
+                val email = user.email
+                firstNameTextView!!.text = firstName
+                lastNameTextView!!.text = lastName
+                emailTextView!!.text = email
                 setVerification()
                 Log.d(TAG, "Account details successfully obtained")
             }

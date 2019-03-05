@@ -19,6 +19,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.example.diabetesapp.model.Calculator
 import com.example.diabetesapp.model.Measurement
 import com.example.diabetesapp.model.User
 import com.example.diabetesapp.model.XAxisFormatter
@@ -112,7 +113,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .addOnSuccessListener { documentSnapshot ->
                 val user = documentSnapshot.toObject(User::class.java)
                 val name = user!!.firstName + " " + user.lastName
-                val email = user!!.email
+                val email = user.email
                 nameTextView!!.text = name
                 emailTextView!!.text = email
                 Log.d("Fetch drawer details", "User details successfully obtained and written to drawer")
@@ -250,10 +251,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     itemsArray.forEach { documentSnapshot ->
                         val item = documentSnapshot.toObject(Measurement::class.java)
                         val time = item!!.timeFormatted
-                        val bgc = item!!.bloodGlucoseConc.toString()
+                        val bgc = item.bloodGlucoseConc.toString()
 
                         recentLinearLayout!!.removeView(progressBar)
-                        insertRecentItem(time!!, bgc!!)
+                        insertRecentItem(time!!, bgc)
                     }
                 }
             }
@@ -308,9 +309,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     addMeasurementsTextView.gravity = Gravity.CENTER
                     addMeasurementsTextView.height = 300
 
-                    var layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    layoutParams.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
-                    addMeasurementsTextView.layoutParams = layoutParams
+                    var layoutParams1 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    layoutParams1.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
+                    addMeasurementsTextView.layoutParams = layoutParams1
 
 
                     graphHolder!!.removeView(progressBar)
@@ -325,7 +326,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         val item = documentSnapshot.toObject(Measurement::class.java)
                         val time = item!!.time!!.toFloat()
 
-                        val bgc = item!!.bloodGlucoseConc
+                        val bgc = item.bloodGlucoseConc
 
                         Log.d("ENTRY", "VALUE ##########")
                         Log.d(time.toString(), bgc.toString())
@@ -336,14 +337,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
                     dataSet.setDrawValues(false)
                     dataSet.setDrawFilled(true)
-
-
-
                     dataSet.lineWidth = 2f
                     dataSet.fillColor = Color.WHITE
                     dataSet.circleRadius = 4f
                     dataSet.setCircleColor(Color.WHITE)
                     dataSet.color = Color.WHITE
+                    dataSet.isHighlightEnabled = false
                     val lineData = LineData(dataSet)
 
                     var postPrandialLimit = LimitLine(9f)
@@ -393,9 +392,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 tv.gravity = Gravity.CENTER
                 tv.height = 300
 
-                var layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                layoutParams.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
-                tv.layoutParams = layoutParams
+                var layoutParams2 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                layoutParams2.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
+                tv.layoutParams = layoutParams2
 
                 graphHolder!!.addView(tv)
             }
@@ -446,7 +445,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         val item = documentSnapshot.toObject(Measurement::class.java)
                         measurements.add(item!!)
                     }
-                    scoreText!!.text = measurements.size.toString()
+                    val calculator = Calculator(measurements)
+                    setScore(calculator.score)
                 }
             }
 
@@ -456,7 +456,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setScore(score: Int) {
         when {
-            score >= 60 -> {
+            score >= 70 -> {
                 scoreText!!.setTextColor(ContextCompat.getColor(this, R.color.scoreGood))
             }
             score >= 30 -> {

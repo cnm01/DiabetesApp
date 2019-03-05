@@ -7,13 +7,13 @@ class Calculator(measurements : ArrayList<Measurement>) {
     var measurements : ArrayList<Measurement> = arrayListOf()
 
     var duration : Int = 0  // Duration of time spent outside of desired range
+    var numHypos : Int = 0  // Num deviations above range
+    var numHypers : Int = 0 // Num deviations below range
+    var numDeviations : Int = 0 // Total num deviations outside range
 
-    var percentageSafe : Int = 0
-    var numAbove : Int = 0
-    var numBelow : Int = 0
-    var numHypos : Int = 0
-    var numHypers : Int = 0
-    var numDeviations : Int = 0
+    var percentageSafe : Int = 0    // Percentage of time spent inside of safe range
+    var percentAbove : Int = 0  // Percentage of measurements above range
+    var percentBelow : Int = 0  // Percentage of measurements below range
     var numMeasurements : Int = 0
     var numSymptoms : Int = 0
 
@@ -24,6 +24,11 @@ class Calculator(measurements : ArrayList<Measurement>) {
         calcDurationUpper()
         calcDurationLower()
         calcPercentageSafe()
+        calcPercentAbove()
+        calcPercentBelow()
+        setNumMeasurements()
+
+        setScore()
     }
 
     private fun calcDurationUpper() {
@@ -204,7 +209,59 @@ class Calculator(measurements : ArrayList<Measurement>) {
         }
     }
 
-    private fun calcNumAbove() {
+    private fun calcPercentAbove() {
+        var num = 0
+        for(m in measurements) {
+            if(m.bloodGlucoseConc > 6f) {
+                num++
+            }
+        }
+
+        println("num_above : $num")
+        println("Total size : " + measurements.size)
+
+        if(measurements.size > 0 && num < measurements.size) {
+            percentAbove = ((num.toFloat()/measurements.size.toFloat())*100f).toInt()
+        }
+    }
+
+    private fun calcPercentBelow() {
+        var num = 0
+        for(m in measurements) {
+            if(m.bloodGlucoseConc < 4f) {
+                num++
+            }
+        }
+
+        println("num_above : $num")
+        println("Total size : " + measurements.size)
+
+        if(measurements.size > 0 && num < measurements.size) {
+            percentBelow = ((num.toFloat()/measurements.size.toFloat())*100f).toInt()
+        }
+    }
+
+    private fun setNumMeasurements() {
+        numMeasurements = measurements.size
+    }
+
+    private fun setNumSymptoms() {
+        var num = 0
+        for(m in measurements) {
+            for(s in m.symptoms) {
+                num++
+            }
+        }
+        numSymptoms = num
+    }
+
+    private fun setScore() {
+
+        score += ((percentageSafe.toFloat()/100) * 30).toInt()
+        score += (((100-percentAbove.toFloat())/100) * 20).toInt()
+        score += (((100-percentBelow.toFloat())/100) * 20).toInt()
+        score += ((numMeasurements.toFloat() * 0.2) * 20).toInt()
+        score += (1-((numSymptoms.toFloat() * 0.1)) * 10).toInt()
 
     }
 

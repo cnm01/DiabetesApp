@@ -716,8 +716,111 @@ class CalculatorUnitTest {
     // TODO Above range to below range
 
 
+    // Test PercentAbove
+
+    @Test
+    fun percentAbove_isCorrect_1() {
+    // One measurements above range
+
+        var m1 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m1.time = "0800"
+        var m2 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m2.time = "0900"
+        var m3 = Measurement(7f, false, false, arrayListOf(),"", "" )
+        m3.time = "1000"
+        var m4 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m4.time = "1100"
+        val measurements = arrayListOf(m1,m2,m3,m4)
+
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(25, calculator.percentAbove)
+    }
+
+    @Test
+    fun percentAbove_empty_isCorrect() {
+
+        val measurements = arrayListOf<Measurement>()
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(0, calculator.percentAbove)
+    }
+
+    @Test
+    fun percentAbove_none_isCorrect() {
+
+        var m1 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m1.time = "0800"
+        var m2 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m2.time = "0900"
+        var m3 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m3.time = "1000"
+        var m4 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m4.time = "1100"
+
+        val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(0, calculator.percentAbove)
+    }
+
+    @Test
+    fun percentBelow_isCorrect() {
+        var m1 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m1.time = "0800"
+        var m2 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m2.time = "0900"
+        var m3 = Measurement(3f, false, false, arrayListOf(),"", "" )
+        m3.time = "1000"
+        var m4 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m4.time = "1100"
+        val measurements = arrayListOf(m1,m2,m3,m4)
+
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(25, calculator.percentBelow)
+    }
+
+    @Test
+    fun percentBelow_empty_isCorrect() {
+
+        val measurements = arrayListOf<Measurement>()
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(0, calculator.percentBelow)
+    }
+
+    @Test
+    fun percentBelow_none_isCorrect() {
+
+        var m1 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m1.time = "0800"
+        var m2 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m2.time = "0900"
+        var m3 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m3.time = "1000"
+        var m4 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m4.time = "1100"
+
+        val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(0, calculator.percentBelow)
+    }
 
 
+    // Test Score
+
+    @Test
+    fun score_Works() {
+
+        var m1 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m1.time = "0800"
+        var m2 = Measurement(7f, false, false, arrayListOf(),"", "" )
+        m2.time = "0900"
+        var m3 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m3.time = "1000"
+        var m4 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m4.time = "1100"
+
+        val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
+        val calculator = Calculator(measurements)
+        println("Score : " + calculator.score)
+    }
 
 
 
