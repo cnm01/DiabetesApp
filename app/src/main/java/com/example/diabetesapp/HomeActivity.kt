@@ -25,6 +25,7 @@ import com.example.diabetesapp.model.XAxisFormatter
 import com.example.diabetesapp.view.HintItem
 import com.example.diabetesapp.view.RecentItem
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -36,9 +37,11 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
 import java.time.LocalDateTime
-import java.util.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    // Score
+    private var scoreText: TextView? = null
 
     // GraphView
     private var graph: LineChart? = null
@@ -99,6 +102,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         graph = findViewById<View>(R.id.graphView) as LineChart
         hintsLinearLineChart = findViewById<View>(R.id.hintsLinearLayout) as LinearLayout
         graphHolder = findViewById<View>(R.id.graph_holder) as ConstraintLayout
+        scoreText = findViewById<View>(R.id.score_text) as TextView
     }
 
     private fun setNavDrawerDetails() {
@@ -176,6 +180,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         inflateGraphView()
         hintsLinearLayout.removeAllViews()
         inflateHints()
+        calcScore()
     }
 
     // Converts DP to PX for setMargin of RecentItems
@@ -321,7 +326,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         val time = item!!.time!!.toFloat()
 
                         val bgc = item!!.bloodGlucoseConc
-                        // TODO find a way to evenly space x axis of graph
+
                         Log.d("ENTRY", "VALUE ##########")
                         Log.d(time.toString(), bgc.toString())
                         entries.add(Entry(time, bgc))
@@ -331,12 +336,34 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
                     dataSet.setDrawValues(false)
                     dataSet.setDrawFilled(true)
+
+
+
                     dataSet.lineWidth = 2f
                     dataSet.fillColor = Color.WHITE
                     dataSet.circleRadius = 4f
                     dataSet.setCircleColor(Color.WHITE)
                     dataSet.color = Color.WHITE
                     val lineData = LineData(dataSet)
+
+                    var postPrandialLimit = LimitLine(9f)
+                    postPrandialLimit.lineColor = Color.RED
+                    postPrandialLimit.lineWidth = 0.3f
+                    postPrandialLimit.enableDashedLine(30f, 10f, 30f)
+                    var prePrandialLimit = LimitLine(6f)
+                    prePrandialLimit.lineColor = Color.RED
+                    prePrandialLimit.lineWidth = 0.3f
+                    prePrandialLimit.enableDashedLine(30f, 10f, 30f)
+                    var lowerLimit = LimitLine(4f)
+                    lowerLimit.lineColor = Color.RED
+                    lowerLimit.lineWidth = 0.3f
+                    lowerLimit.enableDashedLine(30f, 10f, 30f)
+
+                    graph!!.axisLeft.addLimitLine(postPrandialLimit)
+                    graph!!.axisLeft.addLimitLine(prePrandialLimit)
+                    graph!!.axisLeft.addLimitLine(lowerLimit)
+                    graph!!.axisRight.setDrawLimitLinesBehindData(false)
+
                     graph!!.data = lineData
                     graph!!.setGridBackgroundColor(Color.RED)
                     graph!!.axisRight.isEnabled = false
@@ -378,7 +405,72 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // TODO create method for setting score
     // TODO create method for setting score color based on score
 
+    private fun calcScore() {
+
+        // TODO refactor so class only fetches measurements once
+
+        var measurements = ArrayList<Measurement>()
+
+        val userId = auth!!.currentUser!!.uid
+
+        // Gets current date in format dd-mm-yyyy for query
+        var dateTime = LocalDateTime.now()
+        val day = dateTime.dayOfMonth
+        val month = dateTime.monthValue
+        val year = dateTime.year
+        val date = day.toString() + "-" + month.toString() + "-" + year.toString()
+
+        // Query -> Measurements from current day
+        val query = database!!
+            .collection("Users")
+            .document(userId)
+            .collection("Measurements")
+            .whereEqualTo("date", date)
+            .orderBy("time", Query.Direction.ASCENDING)
+
+        query.get()
+            .addOnSuccessListener { querySnapshot ->
+                val itemsArray = querySnapshot.documents
+
+                // If no Measurements from current day
+                // -> Display "No recent measurements" TextView
+                if (itemsArray.size == 0) {
+                    // Upload score object to firestore
+                    // Set score text equal to that score
+                    setScore(0)
+                }
+                // Else -> get measurements from current day
+                else {
+                    // For each measurement from current day
+                    itemsArray.forEach { documentSnapshot ->
+                        val item = documentSnapshot.toObject(Measurement::class.java)
+                        measurements.add(item!!)
+                    }
+                    scoreText!!.text = measurements.size.toString()
+                }
+            }
+
+
+
+    }
+
+    private fun setScore(score: Int) {
+        when {
+            score >= 60 -> {
+                scoreText!!.setTextColor(ContextCompat.getColor(this, R.color.scoreGood))
+            }
+            score >= 30 -> {
+                scoreText!!.setTextColor(Color.YELLOW)
+            }
+            else -> {
+                scoreText!!.setTextColor(Color.RED)
+            }
+        }
+        scoreText!!.text = score.toString()
+    }
+
     private fun inflateHints() {
+        // TODO implement functionality for deciding and inflating hints
         // Inserts appropriate hint based on context
         // -> If no measurements on current day yet - ADD_HINT
         // -> Regular usage - FREQUENT_HINT

@@ -1,7 +1,7 @@
 package com.example.diabetesapp.model
 
 import java.time.LocalDateTime
-
+import kotlin.math.roundToInt
 
 
 class Measurement(
@@ -45,21 +45,47 @@ class Measurement(
 
     }
 
+//    private fun setTime() {
+//    // Sets time in the form HHmm
+//
+//        if(hour!! < 10) {
+//            if(minute!! < 10) {
+//                time = "0" + hour.toString() + "0" + minute.toString()
+//            }
+//            else {
+//                time = "0" + hour.toString() + minute.toString()
+//            }
+//        }
+//        else {
+//            if(minute!! < 10) {
+//                time = hour.toString() + "0" + minute.toString()
+//            }
+//            else {
+//                time = hour.toString() + minute.toString()
+//            }
+//        }
+//    }
+
+
     private fun setTime() {
-        if(hour!! < 10) {
-            if(minute!! < 10) {
-                time = "0" + hour.toString() + "0" + minute.toString()
+    // Sets times in the form HHmm where minutes are scaled up to a figure out of 100
+    // Eg 0830 is scaled to 0850 (30/60 = 50/100)
+    // Allows even spacing of X axis on graph view
+
+        val minuteScaled = ((minute!!.toFloat()/60f)*100f).roundToInt()
+
+
+        time = if(hour!! < 10) {
+            if(minuteScaled!! < 10) {
+                "0" + hour.toString() + "0" + minuteScaled.toString()
+            } else {
+                "0" + hour.toString() + minuteScaled.toString()
             }
-            else {
-                time = "0" + hour.toString() + minute.toString()
-            }
-        }
-        else {
-            if(minute!! < 10) {
-                time = hour.toString() + "0" + minute.toString()
-            }
-            else {
-                time = hour.toString() + minute.toString()
+        } else {
+            if(minuteScaled!! < 10) {
+                hour.toString() + "0" + minuteScaled.toString()
+            } else {
+                hour.toString() + minuteScaled.toString()
             }
         }
 

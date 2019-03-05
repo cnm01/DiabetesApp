@@ -43,7 +43,9 @@ class MeasurementUnitTest {
     }
 
     @Test
-    fun timeScaled_isCorrect() {
-        println(measurement.timeScaled100)
+    fun time_isCorrect() {
+        println(measurement.time)
     }
+
+
 }
