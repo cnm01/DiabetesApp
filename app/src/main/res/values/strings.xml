@@ -93,5 +93,15 @@
     <string name="reauthenticate">Reauthenticate</string>
     <string name="reauthenticate_warning">Enter login details to continue</string>
     <string name="continue_">Continue</string>
+    <string name="title_activity_day_view">DayViewActivity</string>
+    <string name="title_activity_week_view">WeekViewActivity</string>
+    <string name="title_activity_month_view">MonthViewActivity</string>
+
+    <string name="day">Day</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+
+    <string name="archive">Archive</string>
+
 
 </resources>

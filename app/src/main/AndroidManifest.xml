@@ -15,9 +15,28 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme.Launcher"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Reauthenticate"
-                  android:theme="@style/AppTheme"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+                android:name=".MonthViewActivity"
+                android:exported="true"
+                android:label="@string/archive"
+                android:theme="@style/AppTheme.Launcher.NoActionBar">
+        </activity>
+        <activity
+                android:name=".WeekViewActivity"
+                android:exported="true"
+                android:label="@string/archive"
+                android:theme="@style/AppTheme.Launcher.NoActionBar">
+        </activity>
+        <activity
+                android:name=".DayViewActivity"
+                android:exported="true"
+                android:label="@string/archive"
+                android:theme="@style/AppTheme.Launcher.NoActionBar">
+        </activity>
+        <activity
+                android:name=".Reauthenticate"
+                android:theme="@style/AppTheme"
+                android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
                 android:name=".NewMeasurementActivity"

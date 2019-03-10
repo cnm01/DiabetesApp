@@ -19,10 +19,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import com.example.diabetesapp.model.Calculator
-import com.example.diabetesapp.model.Measurement
-import com.example.diabetesapp.model.User
-import com.example.diabetesapp.model.XAxisFormatter
+import com.example.diabetesapp.model.*
 import com.example.diabetesapp.view.HintItem
 import com.example.diabetesapp.view.RecentItem
 import com.github.mikephil.charting.charts.LineChart
@@ -33,6 +30,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
@@ -52,7 +50,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var recentLinearLayout: LinearLayout? = null
 
     // Hints
-    private var hintsLinearLineChart: LinearLayout? = null
+    private var hintsLinearLayout: LinearLayout? = null
 
 
     // Drawer elements
@@ -90,6 +88,23 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initialise() {
+        // Treats java.util.date objects as com.google.firebase.Timestamp objects
+        // (Solves warning given in Logcat)
+        // -> java.util.date behaviour will change in firestore and your app may break
+        // Refactor usages as such:
+        //        // Old:
+        //        val date = snapshot.getDate("created_at")
+        //        // New:
+        //        val timestamp = snapshot.getTimestamp("created_at")
+        //        val date = timestamp.toDate()
+        val firestore = FirebaseFirestore.getInstance()
+        val settings = FirebaseFirestoreSettings.Builder()
+            .setTimestampsInSnapshotsEnabled(true)
+            .build()
+        firestore.firestoreSettings = settings
+        //
+
+
         headerView = nav_view_home.getHeaderView(0)
         nameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
         emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
@@ -101,7 +116,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         database = FirebaseFirestore.getInstance()
         recentLinearLayout = findViewById<View>(R.id.recentLinearLayout) as LinearLayout
         graph = findViewById<View>(R.id.graphView) as LineChart
-        hintsLinearLineChart = findViewById<View>(R.id.hintsLinearLayout) as LinearLayout
+        hintsLinearLayout = findViewById<View>(R.id.hintsLinearLayout) as LinearLayout
         graphHolder = findViewById<View>(R.id.graph_holder) as ConstraintLayout
         scoreText = findViewById<View>(R.id.score_text) as TextView
     }
@@ -152,6 +167,21 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_dashboard -> {
             }
+            R.id.nav_day_view -> {
+                val intent = Intent(this, DayViewActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
+            }
+            R.id.nav_week_view-> {
+                val intent = Intent(this, WeekViewActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
+            }
+            R.id.nav_month_view-> {
+                val intent = Intent(this, MonthViewActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
+            }
             R.id.nav_settings -> {
             }
 
@@ -179,7 +209,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         graphHolder!!.removeAllViews()
         inflateRecentItems()
         inflateGraphView()
-        hintsLinearLayout.removeAllViews()
+        hintsLinearLayout!!.removeAllViews()
         inflateHints()
         calcScore()
     }
@@ -454,19 +484,62 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun setScore(score: Int) {
+    private fun setScore(scoreVal: Int) {
         when {
-            score >= 70 -> {
+            scoreVal >= 70 -> {
                 scoreText!!.setTextColor(ContextCompat.getColor(this, R.color.scoreGood))
             }
-            score >= 30 -> {
+            scoreVal >= 30 -> {
                 scoreText!!.setTextColor(Color.YELLOW)
             }
             else -> {
                 scoreText!!.setTextColor(Color.RED)
             }
         }
-        scoreText!!.text = score.toString()
+        scoreText!!.text = scoreVal.toString()
+
+        val score = Score(scoreVal)
+
+        val userId = auth!!.currentUser!!.uid
+
+        // Gets current date in format dd-mm-yyyy for query
+        var dateTime = LocalDateTime.now()
+        val day = dateTime.dayOfMonth
+        val month = dateTime.monthValue
+        val year = dateTime.year
+        val date = day.toString() + "-" + month.toString() + "-" + year.toString()
+
+        // Query -> Measurements from current day
+        val query = database!!
+            .collection("Users")
+            .document(userId)
+            .collection("Scores")
+            .whereEqualTo("date", date)
+
+        query.get()
+            .addOnSuccessListener { querySnapshot ->
+                val itemsArray = querySnapshot.documents
+
+                // If previous score for current day, delete it
+                if (itemsArray.size > 0) {
+                    for(doc in itemsArray) {
+                        doc.reference.delete()
+                    }
+                }
+                // Append new score for current day
+                database!!.collection("Users")
+                    .document(userId)
+                    .collection("Scores")
+                    .add(score)
+                    .addOnSuccessListener {
+                        Log.d("Add score", "Score written successfully")
+                    }
+                    .addOnFailureListener {
+                        Log.w("Add score", "Failed to write new measurement object to Firestore")
+                    }
+            }
+
+
     }
 
     private fun inflateHints() {

@@ -64,7 +64,7 @@ class DeleteAccountActivity : AppCompatActivity() {
             user!!.reauthenticate(credential)
                 .addOnSuccessListener {
                     Log.d(TAG, "Successfully re-authenticated user")
-                    user!!.delete()
+                    user.delete()
                         .addOnSuccessListener {
                             progressBar?.visibility = View.INVISIBLE
                             Log.d(TAG, "Successfully deleted user")

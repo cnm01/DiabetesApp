@@ -159,16 +159,18 @@
                         android:theme="@style/checkTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/textDark"
                         android:id="@+id/frequent_urination_checkbox"
-                        android:textColor="@color/colorPrimaryDark" app:layout_constraintStart_toStartOf="@+id/thirstiness_checkbox"
+                        android:textColor="@color/textDark" app:layout_constraintStart_toStartOf="@+id/thirstiness_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/thirstiness_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/nausea"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
                         android:id="@+id/nausea_checkbox"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/frequent_urination_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/frequent_urination_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
@@ -176,8 +178,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/abdominal_pain_checkbox"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/nausea_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/nausea_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
@@ -185,16 +188,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/rapid_breathing_checkbox"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:textColor="@color/colorPrimaryDark" app:layout_constraintStart_toStartOf="@+id/abdominal_pain_checkbox"
+                        android:textColor="@color/textDark" app:layout_constraintStart_toStartOf="@+id/abdominal_pain_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/abdominal_pain_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/headache"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/headache_checkbox"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/rapid_breathing_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/rapid_breathing_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
@@ -203,23 +208,26 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/thirstiness_checkbox"
                         android:theme="@style/checkTheme"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:buttonTint="@color/textDark"
+                        android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/concentration_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/concentration_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/pale_skin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:id="@+id/pale_skin_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/pale_skin_checkbox" android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/shakiness_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/shakiness_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/fatigue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:id="@+id/fatigue_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/fatigue_checkbox" android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/dizziness_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/dizziness_checkbox"/>
 
@@ -228,31 +236,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:theme="@style/checkTheme"
-                        android:id="@+id/palpitations_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:buttonTint="@color/textDark"
+                        android:id="@+id/palpitations_checkbox" android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/pale_skin_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/pale_skin_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/confusion"
                         android:layout_width="wrap_content"
                         android:theme="@style/checkTheme"
+                        android:buttonTint="@color/textDark"
                         android:layout_height="wrap_content"
-                        android:id="@+id/confusion_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/confusion_checkbox" android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/palpitations_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/palpitations_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/blurred_vision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:id="@+id/blurred_vision_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/blurred_vision_checkbox" android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/fatigue_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/fatigue_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/Shakiness"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:id="@+id/shakiness_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/shakiness_checkbox" android:textColor="@color/textDark"
                         app:layout_constraintStart_toStartOf="@+id/blurred_vision_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/blurred_vision_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
@@ -260,7 +272,8 @@
                         android:layout_width="wrap_content"
                         android:theme="@style/checkTheme"
                         android:layout_height="wrap_content"
-                        android:id="@+id/dizziness_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:buttonTint="@color/textDark"
+                        android:id="@+id/dizziness_checkbox" android:textColor="@color/textDark"
                         android:layout_marginTop="16dp"
                         app:layout_constraintTop_toBottomOf="@+id/symptoms_title" android:layout_marginStart="16dp"
                         app:layout_constraintStart_toStartOf="parent"/>
@@ -268,8 +281,9 @@
                         android:text="@string/difficulty_concentrating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:id="@+id/concentration_checkbox" android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/concentration_checkbox" android:textColor="@color/textDark"
                         app:layout_constraintStart_toEndOf="@+id/dizziness_checkbox"
                         android:layout_marginStart="8dp"
                         app:layout_constraintTop_toTopOf="@+id/dizziness_checkbox"
@@ -305,6 +319,7 @@
                         android:textSize="14sp"
                         android:textColor="@color/colorPrimaryDark"
                         android:gravity="top"
+                        android:background="@android:color/transparent"
                         android:id="@+id/medications_edit_text" app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
@@ -341,6 +356,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:gravity="top"
                         android:textSize="14sp"
+                        android:background="@android:color/transparent"
                         android:id="@+id/notes_edit_text"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"

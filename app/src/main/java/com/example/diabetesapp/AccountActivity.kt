@@ -209,6 +209,21 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
             }
+            R.id.nav_day_view -> {
+                val intent = Intent(this, DayViewActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
+            }
+            R.id.nav_week_view-> {
+                val intent = Intent(this, WeekViewActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
+            }
+            R.id.nav_month_view-> {
+                val intent = Intent(this, MonthViewActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
+            }
             R.id.nav_settings -> {
 
             }

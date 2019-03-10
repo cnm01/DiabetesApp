@@ -204,14 +204,14 @@ class NewMeasurementActivity : AppCompatActivity() {
                         .document(userId)
                             .collection("Measurements")
                                 .add(measurement)
-                                    .addOnSuccessListener { documentReference ->
+                                    .addOnSuccessListener {
                                         Log.d("Add Measurement", "Measurement written successfully")
                                         Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
                                         progressBar?.visibility = View.INVISIBLE
                                         finish()
 
                                     }
-                                    .addOnFailureListener { e ->
+                                    .addOnFailureListener {
                                         Log.w("Add Measurement", "Failed to write new measurement object to Firestore")
                                         Toast.makeText(this, "Submit Unsuccessful", Toast.LENGTH_LONG).show()
                                     }

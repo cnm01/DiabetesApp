@@ -4,20 +4,19 @@
       tools:showIn="navigation_view">
 
     <group android:id="@+id/group_1"
-            android:checkableBehavior="none">
+           android:checkableBehavior="none">
 
         <item
                 android:id="@+id/nav_dashboard"
                 android:icon="@drawable/dashboard_icon"
                 android:iconTint="@color/white"
                 android:title="Dashboard"/>
-
     </group>
+
     <item android:title="Archive">
         <menu>
             <group android:id="@+id/group_2"
                    android:checkableBehavior="none">
-
                 <item
                         android:id="@+id/nav_day_view"
                         android:icon="@drawable/assess_icon"
@@ -36,6 +35,7 @@
             </group>
         </menu>
     </item>
+
     <group android:id="@+id/group_3"
            android:checkableBehavior="none">
         <item
@@ -54,6 +54,5 @@
                 android:iconTint="@color/white"
                 android:title="Sign Out"/>
     </group>
-
 
 </menu>

@@ -68,8 +68,8 @@ class ChangeDetailsActivity : AppCompatActivity() {
             .addOnSuccessListener { documentSnapshot ->
                 val user = documentSnapshot.toObject(User::class.java)
                 val firstName = user!!.firstName
-                val lastName = user!!.lastName
-                val email = user!!.email
+                val lastName = user.lastName
+                val email = user.email
                 firstNameEditText!!.append(firstName)
                 lastNameEditText!!.append(lastName)
                 emailEditText!!.append(email)
@@ -103,10 +103,10 @@ class ChangeDetailsActivity : AppCompatActivity() {
                 .addOnSuccessListener { Log.d("Update email", "Email successfully updated")}
                 .addOnFailureListener { e -> Log.w("Update email", "Error updating email", e) }
 
-            updateUserModel(userId, firstName!!, lastName!!, email!!)
+            updateUserModel(userId, firstName, lastName, email)
 
             if(!TextUtils.isEmpty(password)) {
-                user!!.updatePassword(password)
+                user.updatePassword(password)
                     .addOnSuccessListener { Log.d("Update password", "Password successfully updated") }
                     .addOnFailureListener { e -> Log.w("Update password", "Error updating password", e) }
             }

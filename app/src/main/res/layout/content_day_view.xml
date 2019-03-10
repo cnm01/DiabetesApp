@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:showIn="@layout/app_bar_day_view"
+            android:background="@color/colorPrimary"
+            tools:context=".DayViewActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" app:layout_constraintGuide_begin="48dp"
+                android:id="@+id/guideline3" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="48dp"/>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/score_container"
+                android:background="@drawable/score_container"
+                app:layout_constraintTop_toTopOf="@+id/guideline3"
+                android:layout_marginTop="50dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintHorizontal_bias="0.497">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/score_text"
+                    android:textSize="50sp" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:textColor="@color/scoreGood"/>
+            <TextView
+                    android:text="@string/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/score_label" android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/score_text" app:layout_constraintVertical_bias="0.812"/>
+            <TextView
+                    android:text="@string/percentage_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/percentage_label"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/score_text"
+                    app:layout_constraintHorizontal_bias="0.502" app:layout_constraintVertical_bias="0.0"/>
+        </android.support.constraint.ConstraintLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@drawable/new_measurement_item"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/score_container" android:id="@+id/linearLayout">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+                <TextView
+                        android:text="@string/day"
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/day_label" android:layout_weight="1"/>
+                <TextView
+                        android:text="@string/month"
+                        android:layout_width="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content" android:id="@+id/month_label" android:layout_weight="1"/>
+                <TextView
+                        android:text="@string/year"
+                        android:layout_width="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content" android:id="@+id/year_label" android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <Spinner
+                        android:layout_height="42dp"
+                        android:id="@+id/day_spinner"
+                        android:layout_weight="1"
+                        android:theme="@style/spinnerTheme"
+                        android:textAlignment="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        android:layout_width="0dp"/>
+                <Spinner
+                        android:layout_height="42dp"
+                        android:theme="@style/spinnerTheme"
+                        android:layout_weight="1"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="8dp"
+                        android:id="@+id/month_spinner" android:layout_width="0dp"/>
+                <Spinner
+                        android:layout_height="42dp"
+                        android:theme="@style/spinnerTheme"
+                        android:textAlignment="center"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        android:id="@+id/year_spinner"
+                        android:layout_marginEnd="8dp" android:layout_width="0dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/graph_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/new_measurement_item"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp">
+
+            <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"
+                    android:id="@+id/graph_holder" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="24dp">
+
+                <com.github.mikephil.charting.charts.LineChart
+                        android:layout_width="0dp"
+                        android:layout_height="170dp"
+                        android:id="@+id/graphView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                </com.github.mikephil.charting.charts.LineChart>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/recent_container"
+                android:layout_width="0dp"
+                android:background="@drawable/new_measurement_item"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/graph_container"
+                android:layout_marginBottom="64dp" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                    android:text="@string/measurements"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:id="@+id/recent_label" android:textSize="18sp"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recent_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:id="@+id/recentLinearLayout">
+
+            </LinearLayout>
+            <TextView
+                    android:text="@string/see_more"
+                    android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/see_more_label" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="12dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recentLinearLayout"/>
+        </android.support.constraint.ConstraintLayout>
+        <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/next_button"
+                android:background="@drawable/arrow_right" android:textColor="@color/textDark" android:textSize="18sp"
+                android:textAlignment="center" android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/score_container"
+                app:layout_constraintBottom_toBottomOf="@+id/score_container"
+                app:layout_constraintStart_toEndOf="@+id/score_container" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
+        <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/prev_button"
+                android:background="@drawable/arrow_left" android:textColor="@color/textDark" android:textSize="18sp"
+                android:textAlignment="center" android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/score_container"
+                app:layout_constraintBottom_toBottomOf="@+id/score_container" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/score_container"/>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
