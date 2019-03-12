@@ -122,16 +122,22 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun initButtons() {
         nextButton!!.setOnClickListener {
-            if(day!! < 31) {
-                day = day!! + 1
-                daySpinner!!.setSelection(day!! - 1)
-            }
+            val current = LocalDateTime.of(year!!, month!!, day!!, 7, 0)
+            val new = current.plusDays(1)
+            day = new.dayOfMonth
+            month = new.monthValue
+
+            daySpinner!!.setSelection(day!!-1)
+            monthSpinner!!.setSelection(month!!-1)
         }
         prevButton!!.setOnClickListener {
-            if(day!! > 1) {
-                day = day!! - 1
-                daySpinner!!.setSelection(day!! - 1)
-            }
+            val current = LocalDateTime.of(year!!, month!!, day!!, 7, 0)
+            val new = current.minusDays(1)
+            day = new.dayOfMonth
+            month = new.monthValue
+
+            daySpinner!!.setSelection(day!!-1)
+            monthSpinner!!.setSelection(month!!-1)
         }
 
     }
@@ -195,11 +201,30 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun initDaySpinner() {
 
-        // TODO set correct number of days in each month
+        val longMonths = arrayListOf(1,3,5,7,8,10,12)
+        val shortMonths = arrayListOf(4,6,9,11)
+
+        // TODO implement year switching capability
 
         val days = ArrayList<Int>()
-        for(i in 1..31) {
-            days.add(i)
+
+        when (month) {
+            in longMonths -> {
+                for(i in 1..31) {
+                    days.add(i)
+                }
+            }
+            in shortMonths -> {
+                for(i in 1..30) {
+                    days.add(i)
+                }
+            }
+            //Month is Feb =(2)
+            else -> {
+                for(i in 1..28) {
+                    days.add(i)
+                }
+            }
         }
 
         val daySpinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, days)
@@ -220,6 +245,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                 inflateGraphView()
                 inflateMeasurementItems()
+                Log.d("Calling inflate measurements : ", "from DaySpinner")
                 inflateScore()
             }
 
@@ -251,8 +277,11 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val selectedMonth = spinnerStr.toInt()
                 month = selectedMonth
 
+                initDaySpinner()
+
                 inflateGraphView()
                 inflateMeasurementItems()
+                Log.d("Calling inflate measurements : ", "from MonthSpinner")
                 inflateScore()
 
             }
@@ -494,6 +523,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     emptyTextView.layoutParams = layoutParams
 
                     see_more_label.visibility = View.INVISIBLE
+                    measurementsLinearLayout!!.removeAllViews()
                     measurementsLinearLayout!!.addView(emptyTextView)
                 }
                 // If measurements from current day -> display them
@@ -525,7 +555,9 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         setNavDrawerDetails()
         inflateGraphView()
         inflateMeasurementItems()
+        Log.d("Calling inflate measurements : ", "from onResume")
         inflateScore()
+
     }
 
     private fun inflateScore() {

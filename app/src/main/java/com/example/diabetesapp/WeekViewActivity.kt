@@ -329,12 +329,32 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     private fun initDaySpinner() {
 
-        // TODO set correct number of days in each month
+        val longMonths = arrayListOf(1,3,5,7,8,10,12)
+        val shortMonths = arrayListOf(4,6,9,11)
+
+        // TODO implement year switching capability
 
         val days = ArrayList<Int>()
-        for(i in 1..31) {
-            days.add(i)
+
+        when (month) {
+            in longMonths -> {
+                for(i in 1..31) {
+                    days.add(i)
+                }
+            }
+            in shortMonths -> {
+                for(i in 1..30) {
+                    days.add(i)
+                }
+            }
+            //Month is Feb =(2)
+            else -> {
+                for(i in 1..28) {
+                    days.add(i)
+                }
+            }
         }
+
 
         val daySpinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, days)
         daySpinnerAdapter.setDropDownViewResource((android.R.layout.simple_dropdown_item_1line))
@@ -385,6 +405,8 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
                 selectedDate = LocalDateTime.of(year!!, selectedMonth, day!!, 7, 0, 0)
                 refreshDate()
+
+                initDaySpinner()
 
                 inflateDatesAndScores()
 //                inflateGraphView()
