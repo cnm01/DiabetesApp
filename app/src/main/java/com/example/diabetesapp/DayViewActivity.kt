@@ -16,10 +16,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import com.example.diabetesapp.model.GraphFormatterDay
 import com.example.diabetesapp.model.Measurement
 import com.example.diabetesapp.model.Score
 import com.example.diabetesapp.model.User
-import com.example.diabetesapp.model.XAxisFormatter
 import com.example.diabetesapp.view.RecentItem
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
@@ -93,7 +93,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
-        var headerIMG = headerView!!.findViewById<View>(R.id.header_layout_day) as LinearLayout
+        val headerIMG = headerView!!.findViewById<View>(R.id.header_layout_day) as LinearLayout
         // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
         headerIMG.setBackgroundResource(R.drawable.header2)
@@ -138,7 +138,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun initDate() {
 
-        var dateTime = LocalDateTime.now()
+        val dateTime = LocalDateTime.now()
         day = dateTime.dayOfMonth
         month = dateTime.monthValue
         year = dateTime.year
@@ -168,7 +168,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         addMeasurementsTextView.gravity = Gravity.CENTER
         addMeasurementsTextView.height = 300
 
-        var layoutParams1 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams1 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutParams1.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
         addMeasurementsTextView.layoutParams = layoutParams1
 
@@ -182,7 +182,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         emptyTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
         emptyTextView.gravity = Gravity.CENTER_HORIZONTAL
 
-        var layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(0, 20.dpToPx(this.resources.displayMetrics),0, 0)
         emptyTextView.layoutParams = layoutParams
 
@@ -194,6 +194,8 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()
 
     private fun initDaySpinner() {
+
+        // TODO set correct number of days in each month
 
         val days = ArrayList<Int>()
         for(i in 1..31) {
@@ -212,7 +214,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = daySpinnerAdapter.getItem(position)
-                var spinnerStr = item.toString()
+                val spinnerStr = item.toString()
                 val selectedDay = spinnerStr.toInt()
                 day = selectedDay
 
@@ -245,7 +247,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = monthSpinnerAdapter.getItem(position)
-                var spinnerStr = item.toString()
+                val spinnerStr = item.toString()
                 val selectedMonth = spinnerStr.toInt()
                 month = selectedMonth
 
@@ -310,7 +312,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         graphHolder!!.removeAllViews()
 
         val progressBar = ProgressBar(this)
-        var layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(0, 8.dpToPx(this.resources.displayMetrics),0, 0)
         progressBar.layoutParams = layoutParams
         graphHolder!!.addView(progressBar)
@@ -343,7 +345,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     addMeasurementsTextView.gravity = Gravity.CENTER
                     addMeasurementsTextView.height = 300
 
-                    var layoutParams1 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    val layoutParams1 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                     layoutParams1.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
                     addMeasurementsTextView.layoutParams = layoutParams1
 
@@ -379,15 +381,15 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     dataSet.isHighlightEnabled = false
                     val lineData = LineData(dataSet)
 
-                    var postPrandialLimit = LimitLine(9f)
+                    val postPrandialLimit = LimitLine(9f)
                     postPrandialLimit.lineColor = Color.RED
                     postPrandialLimit.lineWidth = 0.3f
                     postPrandialLimit.enableDashedLine(30f, 10f, 30f)
-                    var prePrandialLimit = LimitLine(6f)
+                    val prePrandialLimit = LimitLine(6f)
                     prePrandialLimit.lineColor = Color.RED
                     prePrandialLimit.lineWidth = 0.3f
                     prePrandialLimit.enableDashedLine(30f, 10f, 30f)
-                    var lowerLimit = LimitLine(4f)
+                    val lowerLimit = LimitLine(4f)
                     lowerLimit.lineColor = Color.RED
                     lowerLimit.lineWidth = 0.3f
                     lowerLimit.enableDashedLine(30f, 10f, 30f)
@@ -402,7 +404,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     graph!!.axisRight.isEnabled = false
                     graph!!.xAxis.setDrawGridLines(false)
                     graph!!.xAxis.textSize = 10f
-                    graph!!.xAxis.valueFormatter = XAxisFormatter()
+                    graph!!.xAxis.valueFormatter = GraphFormatterDay()
                     graph!!.xAxis.granularity = 100f
                     graph!!.xAxis.position = XAxis.XAxisPosition.BOTTOM
                     graph!!.legend.isEnabled = false
@@ -431,7 +433,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 tv.gravity = Gravity.CENTER
                 tv.height = 300
 
-                var layoutParams2 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                val layoutParams2 = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                 layoutParams2.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
                 tv.layoutParams = layoutParams2
 
@@ -487,7 +489,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     emptyTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
                     emptyTextView.gravity = Gravity.CENTER_HORIZONTAL
 
-                    var layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                     layoutParams.setMargins(0, 20.dpToPx(this.resources.displayMetrics),0, 0)
                     emptyTextView.layoutParams = layoutParams
 

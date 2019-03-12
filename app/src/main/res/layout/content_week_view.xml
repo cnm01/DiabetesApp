@@ -1,13 +1,480 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/app_bar_week_view"
-        android:background="@color/colorPrimary"
-        tools:context=".WeekViewActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:showIn="@layout/app_bar_week_view"
+            android:background="@color/colorPrimary"
+            tools:context=".WeekViewActivity">
 
-</android.support.constraint.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:layout_constraintGuide_begin="48dp"
+                android:id="@+id/guideline4"/>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/score_container"
+                android:background="@drawable/score_container"
+                android:layout_marginTop="50dp"
+                app:layout_constraintTop_toTopOf="@+id/guideline4" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/score_text"
+                    android:textSize="50sp" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:textColor="@color/scoreGood"/>
+            <TextView
+                    android:text="Weekly Score:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/score_label" android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/score_text" app:layout_constraintVertical_bias="0.812"/>
+            <TextView
+                    android:text="@string/percentage_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/percentage_label"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/score_text"
+                    app:layout_constraintHorizontal_bias="0.502" app:layout_constraintVertical_bias="0.0"/>
+        </android.support.constraint.ConstraintLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@drawable/new_measurement_item"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/score_container" android:id="@+id/linearLayout">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+                <TextView
+                        android:text="@string/day"
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/day_label" android:layout_weight="1"/>
+                <TextView
+                        android:text="@string/month"
+                        android:layout_width="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content" android:id="@+id/month_label" android:layout_weight="1"/>
+                <TextView
+                        android:text="@string/year"
+                        android:layout_width="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content" android:id="@+id/year_label" android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <Spinner
+                        android:layout_height="42dp"
+                        android:id="@+id/day_spinner"
+                        android:layout_weight="1"
+                        android:theme="@style/spinnerTheme"
+                        android:textAlignment="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        android:layout_width="0dp"/>
+                <Spinner
+                        android:layout_height="42dp"
+                        android:theme="@style/spinnerTheme"
+                        android:layout_weight="1"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="8dp"
+                        android:id="@+id/month_spinner" android:layout_width="0dp"/>
+                <Spinner
+                        android:layout_height="42dp"
+                        android:theme="@style/spinnerTheme"
+                        android:textAlignment="center"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        android:id="@+id/year_spinner"
+                        android:layout_marginEnd="8dp" android:layout_width="0dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/graph_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/new_measurement_item"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp">
+
+            <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"
+                    android:id="@+id/graph_holder" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="24dp">
+
+                <com.github.mikephil.charting.charts.LineChart
+                        android:layout_width="0dp"
+                        android:layout_height="170dp"
+                        android:id="@+id/graphView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                </com.github.mikephil.charting.charts.LineChart>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/recent_container"
+                android:layout_width="0dp"
+                android:background="@drawable/new_measurement_item"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/graph_container"
+                android:layout_marginBottom="64dp" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                    android:text="Week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:id="@+id/recent_label" android:textSize="18sp"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recent_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:id="@+id/recentLinearLayout">
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/recent_item"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/day_item_1"
+                >
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/monday_label"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:text="@string/monday"
+                            app:layout_constraintVertical_bias="0.454"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/monday_date"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/monday_label"
+                            app:layout_constraintStart_toEndOf="@+id/monday_label" android:layout_marginStart="8dp"
+                            android:textColor="@color/colorPrimaryDark"/>
+                    <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/monday_score"
+                            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            style="?android:attr/borderlessButtonStyle"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="8dp"/>
+                </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/recent_item"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:clickable="true"
+                        android:id="@+id/day_item_2"
+                >
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tuesday_date"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/tuesday_label"
+                            app:layout_constraintStart_toEndOf="@+id/tuesday_label" android:layout_marginStart="8dp"
+                            android:textColor="@color/colorPrimaryDark"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tuesday_label"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:text="@string/tuesday"
+                            app:layout_constraintVertical_bias="0.454"/>
+                    <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/tuesday_score"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="8dp"/>
+                </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/recent_item"
+                        android:layout_marginBottom="4dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:id="@+id/day_item_3"
+                >
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/wednesday_date"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/wednesday_label"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toEndOf="@+id/wednesday_label"
+                            android:textColor="@color/colorPrimaryDark"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/wednesday_label"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:text="@string/wednesday"
+                            app:layout_constraintVertical_bias="0.454"/>
+                    <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/wednesday_score"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="8dp"/>
+                </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/recent_item"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:clickable="true"
+                        android:id="@+id/day_item_4"
+                >
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/thursday_date"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/thursday_label"
+                            app:layout_constraintStart_toEndOf="@+id/thursday_label" android:layout_marginStart="8dp"
+                            android:textColor="@color/colorPrimaryDark"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/thursday_label"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:text="@string/thursday"
+                            app:layout_constraintVertical_bias="0.454"/>
+                    <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:id="@+id/thursday_score"
+                            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="8dp"/>
+                </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/recent_item"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:clickable="true"
+                        android:id="@+id/day_item_5"
+                >
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/friday_date"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/friday_label"
+                            app:layout_constraintStart_toEndOf="@+id/friday_label" android:layout_marginStart="8dp"
+                            android:textColor="@color/colorPrimaryDark"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/friday_label"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:text="@string/friday"
+                            app:layout_constraintVertical_bias="0.454"/>
+                    <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/friday_score"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="8dp"/>
+                </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/recent_item"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/day_item_6"
+                >
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/saturday_date"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/saturday_label"
+                            app:layout_constraintStart_toEndOf="@+id/saturday_label" android:layout_marginStart="8dp"
+                            android:textColor="@color/colorPrimaryDark"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/saturday_label"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:text="@string/saturday"
+                            app:layout_constraintVertical_bias="0.454"/>
+                    <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/saturday_score"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="8dp"/>
+                </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/recent_item"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:id="@+id/day_item_7"
+                >
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/sunday_date"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/sunday_label"
+                            app:layout_constraintStart_toEndOf="@+id/sunday_label" android:layout_marginStart="8dp"
+                            android:textColor="@color/colorPrimaryDark"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/sunday_label"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:text="@string/sunday"
+                            app:layout_constraintVertical_bias="0.454"/>
+                    <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/sunday_score"
+                            android:elevation="0dp"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="8dp"/>
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+            <TextView
+                    android:text="@string/see_more"
+                    android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/see_more_label" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="12dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recentLinearLayout" android:visibility="invisible"/>
+        </android.support.constraint.ConstraintLayout>
+        <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/next_button4"
+                android:background="@drawable/arrow_right" android:textColor="@color/textDark"
+                android:textSize="18sp"
+                android:clickable="false"
+                android:textAlignment="center" android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/score_container"
+                app:layout_constraintBottom_toBottomOf="@+id/score_container"
+                app:layout_constraintStart_toEndOf="@+id/score_container" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
+        <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/prev_button4"
+                android:background="@drawable/arrow_left" android:textColor="@color/textDark"
+                android:textSize="18sp"
+                android:textAlignment="center" android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/score_container"
+                app:layout_constraintBottom_toBottomOf="@+id/score_container" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/score_container"/>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

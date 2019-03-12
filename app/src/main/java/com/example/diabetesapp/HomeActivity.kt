@@ -398,7 +398,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     graph!!.axisRight.isEnabled = false
                     graph!!.xAxis.setDrawGridLines(false)
                     graph!!.xAxis.textSize = 10f
-                    graph!!.xAxis.valueFormatter = XAxisFormatter()
+                    graph!!.xAxis.valueFormatter = GraphFormatterDay()
                     graph!!.xAxis.granularity = 100f
                     graph!!.xAxis.position = XAxis.XAxisPosition.BOTTOM
                     graph!!.legend.isEnabled = false
