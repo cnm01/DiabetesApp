@@ -186,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:layout_marginBottom="4dp"
-                        android:id="@+id/day_item_1"
+                        android:id="@+id/monday_container"
                 >
 
                     <TextView
@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:clickable="true"
-                        android:id="@+id/day_item_2"
+                        android:id="@+id/tuesday_container"
                 >
 
                     <TextView
@@ -260,7 +260,7 @@
                         android:layout_marginBottom="4dp"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:id="@+id/day_item_3"
+                        android:id="@+id/wednesday_container"
                 >
 
                     <TextView
@@ -298,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:clickable="true"
-                        android:id="@+id/day_item_4"
+                        android:id="@+id/thursday_container"
                 >
 
                     <TextView
@@ -335,7 +335,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:clickable="true"
-                        android:id="@+id/day_item_5"
+                        android:id="@+id/friday_container"
                 >
 
                     <TextView
@@ -372,7 +372,7 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:layout_marginBottom="4dp"
-                        android:id="@+id/day_item_6"
+                        android:id="@+id/saturday_container"
                 >
 
                     <TextView
@@ -408,7 +408,7 @@
                         android:background="@drawable/recent_item"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:id="@+id/day_item_7"
+                        android:id="@+id/sunday_container"
                 >
 
                     <TextView

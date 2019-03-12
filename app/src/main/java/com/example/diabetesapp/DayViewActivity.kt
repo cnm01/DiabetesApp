@@ -33,6 +33,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_day_view.*
 import kotlinx.android.synthetic.main.app_bar_day_view.*
 import kotlinx.android.synthetic.main.content_home.*
+import kotlinx.android.synthetic.main.recent_item_layout.view.*
 import java.time.LocalDateTime
 
 class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +85,25 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         nav_view_day.setNavigationItemSelectedListener(this)
 
         initialise()
+
+        val b = intent.extras
+
+        if(b != null) {
+            try {
+                val newDate = b.get("date") as LocalDateTime
+                if(newDate.year == year) {
+                    day = newDate.dayOfMonth
+                    month = newDate.monthValue
+                    initDaySpinner()
+                    daySpinner!!.setSelection(day!!-1)
+                    monthSpinner!!.setSelection(month!!-1)
+                }
+            } catch (e : Exception) {
+                Log.w("Creating DayView with supplied date :", "FAILURE", e)
+            }
+
+
+        }
     }
 
     private fun initialise() {
@@ -476,7 +496,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
 
-    private fun insertMeasurementItem(time: String, bgc: String) {
+    private fun insertMeasurementItem(time: String, bgc: String, mid : String) {
 
         // Creates Layout Params for bottom margin of RecentItem
         var layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -484,6 +504,11 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         // Creates new RecentItem and adds to view
         val newItem = RecentItem(this, time, bgc)
+        newItem.recent_item_container.setOnClickListener {
+            val intent = Intent(this, MeasurementViewActivity::class.java)
+            intent.putExtra("mid", mid)
+            startActivity(intent)
+        }
         newItem.layoutParams = layoutParams
         measurementsLinearLayout!!.addView(newItem)
     }
@@ -542,7 +567,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         val bgc = item.bloodGlucoseConc.toString()
 
 
-                        insertMeasurementItem(time!!, bgc)
+                        insertMeasurementItem(time!!, bgc, documentSnapshot.id)
                     }
                 }
             }

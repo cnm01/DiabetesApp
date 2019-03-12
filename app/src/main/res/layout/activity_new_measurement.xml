@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="match_parent"
         android:layout_width="match_parent" >
 
@@ -29,17 +30,17 @@
                     app:layout_constraintHorizontal_bias="0.503"/>
 
             <android.support.constraint.ConstraintLayout
-                    android:layout_width="309dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/new_measurement_item"
                     android:id="@+id/blood_glucose_layout"
-                    app:layout_constraintStart_toStartOf="@+id/new_measure_text_view"
-                    app:layout_constraintEnd_toEndOf="@+id/new_measure_text_view" android:layout_marginTop="112dp"
-                    app:layout_constraintTop_toBottomOf="@+id/new_measure_text_view"
-                    app:layout_constraintHorizontal_bias="0.509">
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp" android:layout_marginTop="116dp"
+                    app:layout_constraintTop_toBottomOf="@+id/new_measure_text_view">
                 <TextView
                         android:text="@string/blood_glucose_concentration"
-                        android:layout_width="wrap_content"
+                        android:layout_width="92dp"
                         android:textAlignment="center"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
@@ -47,7 +48,7 @@
                         android:id="@+id/blood_glucose_label"
                         android:textSize="14sp" app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.526"
-                        android:layout_marginStart="28dp" app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="24dp" app:layout_constraintStart_toStartOf="parent"
                 />
                 <Spinner
                         android:layout_width="178dp"
@@ -64,7 +65,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
-                    android:layout_width="309dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/new_measurement_item"
                     android:id="@+id/food_layout"
@@ -74,7 +75,7 @@
                     app:layout_constraintHorizontal_bias="0.0">
                 <TextView
                         android:text="@string/recent_food"
-                        android:layout_width="wrap_content"
+                        android:layout_width="163dp"
                         android:textAlignment="center"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
@@ -100,7 +101,7 @@
 
             </android.support.constraint.ConstraintLayout>
             <android.support.constraint.ConstraintLayout
-                    android:layout_width="309dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/new_measurement_item"
                     android:id="@+id/exercise_layout"
@@ -108,9 +109,9 @@
                     app:layout_constraintEnd_toEndOf="@+id/food_layout" android:layout_marginTop="20dp"
                     app:layout_constraintTop_toBottomOf="@+id/food_layout" app:layout_constraintHorizontal_bias="1.0">
                 <TextView
-                        android:text="@string/exercise"
-                        android:layout_width="wrap_content"
-                        android:textAlignment="center"
+                        android:text="Recent Physical Activity"
+                        android:layout_width="186dp"
+                        android:textAlignment="viewStart"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_height="wrap_content"
@@ -135,16 +136,17 @@
 
             </android.support.constraint.ConstraintLayout>
             <android.support.constraint.ConstraintLayout
-                    android:layout_width="311dp"
+                    android:layout_width="0dp"
                     android:layout_height="308dp"
                     android:background="@drawable/new_measurement_item"
                     android:id="@+id/symptoms_layout"
                     app:layout_constraintStart_toStartOf="@+id/exercise_layout"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@+id/exercise_layout">
+                    app:layout_constraintTop_toBottomOf="@+id/exercise_layout"
+                    app:layout_constraintEnd_toEndOf="@+id/exercise_layout">
                 <TextView
                         android:text="@string/symptoms"
-                        android:layout_width="wrap_content"
+                        android:layout_width="69dp"
                         android:textAlignment="center"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
@@ -161,7 +163,8 @@
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/textDark"
                         android:id="@+id/frequent_urination_checkbox"
-                        android:textColor="@color/textDark" app:layout_constraintStart_toStartOf="@+id/thirstiness_checkbox"
+                        android:textColor="@color/textDark"
+                        app:layout_constraintStart_toStartOf="@+id/thirstiness_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/thirstiness_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/nausea"
@@ -190,7 +193,8 @@
                         android:id="@+id/rapid_breathing_checkbox"
                         android:buttonTint="@color/textDark"
                         android:theme="@style/checkTheme"
-                        android:textColor="@color/textDark" app:layout_constraintStart_toStartOf="@+id/abdominal_pain_checkbox"
+                        android:textColor="@color/textDark"
+                        app:layout_constraintStart_toStartOf="@+id/abdominal_pain_checkbox"
                         app:layout_constraintTop_toBottomOf="@+id/abdominal_pain_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/headache"
@@ -269,13 +273,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/blurred_vision_checkbox"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/dizziness"
-                        android:layout_width="wrap_content"
+                        android:layout_width="92dp"
                         android:theme="@style/checkTheme"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/textDark"
                         android:id="@+id/dizziness_checkbox" android:textColor="@color/textDark"
                         android:layout_marginTop="16dp"
-                        app:layout_constraintTop_toBottomOf="@+id/symptoms_title" android:layout_marginStart="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/symptoms_title" android:layout_marginStart="17dp"
                         app:layout_constraintStart_toStartOf="parent"/>
                 <android.support.v7.widget.AppCompatCheckBox
                         android:text="@string/difficulty_concentrating"
@@ -292,43 +296,44 @@
 
             </android.support.constraint.ConstraintLayout>
             <android.support.constraint.ConstraintLayout
-                    android:layout_width="311dp"
+                    android:layout_width="0dp"
                     android:layout_height="146dp"
                     android:background="@drawable/new_measurement_item"
                     android:id="@+id/medications_layout"
                     app:layout_constraintStart_toStartOf="@+id/symptoms_layout"
                     app:layout_constraintEnd_toEndOf="@+id/symptoms_layout" android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@+id/symptoms_layout" app:layout_constraintHorizontal_bias="0.0">
+                    app:layout_constraintTop_toBottomOf="@+id/symptoms_layout"
+                    app:layout_constraintHorizontal_bias="0.0">
                 <TextView
                         android:text="@string/medications_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="78dp"
                         android:textAlignment="center"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_height="16dp"
                         android:id="@+id/medications_title"
                         android:textSize="14sp"
-                        android:layout_marginStart="28dp"
+                        android:layout_marginStart="24dp"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"/>
                 <android.support.v7.widget.AppCompatEditText
-                        android:layout_width="268dp"
-                        android:layout_height="89dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         android:inputType="textMultiLine"
                         android:ems="10"
                         android:textSize="14sp"
                         android:textColor="@color/colorPrimaryDark"
                         android:gravity="top"
                         android:background="@android:color/transparent"
-                        android:id="@+id/medications_edit_text" app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:id="@+id/medications_edit_text"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp"
                         app:layout_constraintTop_toBottomOf="@+id/medications_title"
-                        android:layout_marginTop="12dp"/>
+                        app:layout_constraintStart_toStartOf="@+id/medications_title"
+                        app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent"/>
             </android.support.constraint.ConstraintLayout>
             <android.support.constraint.ConstraintLayout
-                    android:layout_width="311dp"
+                    android:layout_width="0dp"
                     android:layout_height="146dp"
                     android:background="@drawable/new_measurement_item"
                     android:id="@+id/notes_layout"
@@ -345,11 +350,11 @@
                         android:layout_height="16dp"
                         android:id="@+id/notes_title"
                         android:textSize="14sp"
-                        android:layout_marginStart="28dp"
+                        android:layout_marginStart="24dp"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"/>
                 <android.support.v7.widget.AppCompatEditText
-                        android:layout_width="265dp"
+                        android:layout_width="0dp"
                         android:layout_height="90dp"
                         android:inputType="textMultiLine"
                         android:ems="10"
@@ -358,11 +363,12 @@
                         android:textSize="14sp"
                         android:background="@android:color/transparent"
                         android:id="@+id/notes_edit_text"
-                        app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-                        android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/notes_title" app:layout_constraintHorizontal_bias="0.484"
-                        android:layout_marginTop="12dp"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="24dp"
+                        app:layout_constraintTop_toBottomOf="@+id/notes_title"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="@+id/notes_title" android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
             </android.support.constraint.ConstraintLayout>
             <Button
                     android:text="@string/submit"

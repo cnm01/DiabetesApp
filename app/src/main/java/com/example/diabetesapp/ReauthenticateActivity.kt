@@ -14,7 +14,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class Reauthenticate : AppCompatActivity() {
+class ReauthenticateActivity : AppCompatActivity() {
 
     // UI Elements
     private var emailEditText: EditText? = null
@@ -47,7 +47,7 @@ class Reauthenticate : AppCompatActivity() {
     }
 
     private fun reauthenticate() {
-        val TAG = "Reauthenticate"
+        val TAG = "ReauthenticateActivity"
         val user = auth!!.currentUser
         val email = emailEditText!!.text.toString()
         val password = passwordEditText!!.text.toString()

@@ -90,7 +90,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
         changeDetailsButton!!.setOnClickListener{
-            val intent = Intent(this, Reauthenticate::class.java)
+            val intent = Intent(this, ReauthenticateActivity::class.java)
             startActivity(intent)
         }
 

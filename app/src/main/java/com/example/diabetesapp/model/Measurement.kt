@@ -22,7 +22,7 @@ class Measurement(
     // Time
     var hour: Int? = null
     var minute: Int? = null
-    var time: String? = null    // hhmm
+    var time: String? = null    // hhmm where minutes are scaled up to /100. eg, 0930 = 0950 (30/60 = 50/100)
     var timeFormatted: String? = null   //hh:mm
 
     init {

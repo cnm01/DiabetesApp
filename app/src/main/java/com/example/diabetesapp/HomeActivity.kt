@@ -35,6 +35,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
+import kotlinx.android.synthetic.main.recent_item_layout.view.*
 import java.time.LocalDateTime
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -205,7 +206,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onResume()
         setNavDrawerDetails()
         recentLinearLayout!!.removeAllViews()
-        see_more_label.visibility = View.VISIBLE
+//        see_more_label.visibility = View.VISIBLE
         graphHolder!!.removeAllViews()
         inflateRecentItems()
         inflateGraphView()
@@ -219,19 +220,34 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 
-    private fun insertRecentItem(time: String, bgc: String) {
+    private fun insertRecentItem(time: String, bgc: String, mid : String) {
 
         // Creates Layout Params for bottom margin of RecentItem
-        var layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        var layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(0,0,0, 4.dpToPx(this.resources.displayMetrics))
 
         // Creates new RecentItem and adds to view
         val newItem = RecentItem(this, time, bgc)
+        newItem.recent_item_container.setOnClickListener {
+            val intent = Intent(this, MeasurementViewActivity::class.java)
+            intent.putExtra("mid", mid)
+            startActivity(intent)
+            Log.d("Measurement Item Clicked :", "DETECTED")
+
+        }
         newItem.layoutParams = layoutParams
+
+
+
         recentLinearLayout!!.addView(newItem)
+
+
     }
 
+
     private fun inflateRecentItems() {
+
+        // TODO add onClickListener to open measurements view for each measurement
 
         // Display ProgressBar while waiting for RecentItems to inflate
         val progressBar = ProgressBar(this)
@@ -253,7 +269,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             .collection("Measurements")
                             .whereEqualTo("date", date)
                             .orderBy("time", Query.Direction.DESCENDING)
-//                            .limit(2)
         query.get()
             .addOnSuccessListener {querySnapshot ->
                 val itemsArray = querySnapshot.documents
@@ -285,7 +300,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         val bgc = item.bloodGlucoseConc.toString()
 
                         recentLinearLayout!!.removeView(progressBar)
-                        insertRecentItem(time!!, bgc)
+                        Log.d("ID : ", documentSnapshot.id)
+                        insertRecentItem(time!!, bgc, documentSnapshot.id)
                     }
                 }
             }

@@ -44,7 +44,7 @@
 
 
     <string name="new_measurement_title">New Measurement</string>
-    <string name="blood_glucose_concentration">Blood Glucose\nConcentration</string>
+    <string name="blood_glucose_concentration">Blood Glucose Concentration:</string>
     <string name="recent_food">Food Recently Consumed</string>
     <string name="exercise">Recent exercise</string>
 
@@ -112,8 +112,6 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="no_score">---</string>
-
-
 
 
 </resources>

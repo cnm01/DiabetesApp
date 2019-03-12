@@ -56,6 +56,16 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private var nextButton : Button? = null
     private var prevButton : Button? = null
 
+    // Day Containers
+    private var mondayContainer : ConstraintLayout? = null
+    private var tuesdayContainer : ConstraintLayout? = null
+    private var wednesdayContainer : ConstraintLayout? = null
+    private var thursdayContainer : ConstraintLayout? = null
+    private var fridayContainer : ConstraintLayout? = null
+    private var saturdayContainer : ConstraintLayout? = null
+    private var sundayContainer : ConstraintLayout? = null
+    private var dayContainers = ArrayList<ConstraintLayout>()
+
     // Date strings
     private var mondayDate : TextView? = null
     private var tuesdayDate : TextView? = null
@@ -137,7 +147,27 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             saturdayScore!!,
             sundayScore!!
         )
+        initDayContainers()
 
+
+    }
+
+    private fun initDayContainers() {
+        mondayContainer = findViewById<View>(R.id.monday_container) as ConstraintLayout
+        tuesdayContainer = findViewById<View>(R.id.tuesday_container) as ConstraintLayout
+        wednesdayContainer = findViewById<View>(R.id.wednesday_container) as ConstraintLayout
+        thursdayContainer = findViewById<View>(R.id.thursday_container) as ConstraintLayout
+        fridayContainer = findViewById<View>(R.id.friday_container) as ConstraintLayout
+        saturdayContainer = findViewById<View>(R.id.saturday_container) as ConstraintLayout
+        sundayContainer = findViewById<View>(R.id.sunday_container) as ConstraintLayout
+
+        dayContainers = arrayListOf(mondayContainer!!,
+                                    tuesdayContainer!!,
+                                    wednesdayContainer!!,
+                                    thursdayContainer!!,
+                                    fridayContainer!!,
+                                    saturdayContainer!!,
+                                    sundayContainer!!)
 
     }
 
@@ -150,6 +180,10 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
 
     private fun inflateDatesAndScores() {
+
+        for(c in dayContainers) {
+            c.setOnClickListener {  }
+        }
 
 
         val cur = selectedDate!!.dayOfWeek.value -1
@@ -228,6 +262,11 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                             }
                         }
                     }
+                    dayContainers[i].setOnClickListener {
+                        val intent = Intent(this, DayViewActivity::class.java)
+                        intent.putExtra("date", datesBefore[i])
+                        startActivity(intent)
+                    }
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error fetching score", Toast.LENGTH_LONG).show()
@@ -294,6 +333,11 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                         Log.d("Avg score : ", avg.toString())
                         setScore(avg)
                     }
+                    dayContainers[i].setOnClickListener {
+                        val intent = Intent(this, DayViewActivity::class.java)
+                        intent.putExtra("date", datesAfter[i])
+                        startActivity(intent)
+                    }
                 }
             }
             .addOnFailureListener { e ->
@@ -308,7 +352,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val drawable = button.background as GradientDrawable
         when {
             score == -1 -> {
-                drawable.setStroke(2, ContextCompat.getColor(this, R.color.colorPrimary))
+                drawable.setStroke(1, ContextCompat.getColor(this, R.color.colorPrimary))
                 button.text = "-"
                 return
 
@@ -615,14 +659,6 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             layoutParams.setMargins(0, 8.dpToPx(this.resources.displayMetrics), 0, 0)
             progressBar.layoutParams = layoutParams
             graphHolder!!.addView(progressBar)
-
-//            for (i in 0..6) {
-//                try {
-//                    entries.add(Entry(i.toFloat(), this!!.scoreButtons!![i].text.toString().toFloat()))
-//                } catch (e : java.lang.Exception) {
-//                    Log.w("Convert string to float : ", "EXCEPTION", e)
-//                }
-//            }
 
             entries.sortBy { entry -> entry.x }
 

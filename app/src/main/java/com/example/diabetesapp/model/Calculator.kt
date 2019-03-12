@@ -263,6 +263,10 @@ class Calculator(measurements : ArrayList<Measurement>) {
         score += ((numMeasurements.toFloat() * 0.2) * 20).toInt()
         score += (1-((numSymptoms.toFloat() * 0.1)) * 10).toInt()
 
+        if(score > 100) {
+            score = 100
+        }
+
         // TODO refactor score algorithm based on specification
 
     }
