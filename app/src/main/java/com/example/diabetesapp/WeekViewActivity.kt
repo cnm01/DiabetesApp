@@ -473,20 +473,30 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     private fun initButtons() {
         nextButton!!.setOnClickListener {
-            selectedDate = selectedDate!!.plusDays(7)
-            refreshDate()
-            daySpinner!!.setSelection(day!!-1)
-            monthSpinner!!.setSelection(month!!-1)
-            inflateDatesAndScores()
-//            inflateGraphView()
+            val current = LocalDateTime.of(year!!, month!!, day!!, 7, 0)
+            val new = current.plusDays(7)
+
+            if(new.year == year!!) {
+                selectedDate = new
+                refreshDate()
+                initDaySpinner()
+                daySpinner!!.setSelection(day!! - 1)
+                monthSpinner!!.setSelection(month!! - 1)
+                inflateDatesAndScores()
+            }
         }
         prevButton!!.setOnClickListener {
-            selectedDate = selectedDate!!.minusDays(7)
-            refreshDate()
-            daySpinner!!.setSelection(day!!-1)
-            monthSpinner!!.setSelection(month!!-1)
-            inflateDatesAndScores()
-//            inflateGraphView()
+            val current = LocalDateTime.of(year!!, month!!, day!!, 7, 0)
+            val new = current.minusDays(7)
+
+            if(new.year == year!!) {
+                selectedDate = new
+                refreshDate()
+                initDaySpinner()
+                daySpinner!!.setSelection(day!! - 1)
+                monthSpinner!!.setSelection(month!! - 1)
+                inflateDatesAndScores()
+            }
         }
 
     }

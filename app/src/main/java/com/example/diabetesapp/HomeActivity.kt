@@ -272,6 +272,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     emptyTextView.layoutParams = layoutParams
 
                     see_more_label.visibility = View.INVISIBLE
+                    recentLinearLayout!!.removeAllViews()
                     recentLinearLayout!!.addView(emptyTextView)
                 }
                 // If measurements from current day -> display them

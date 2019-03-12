@@ -124,20 +124,24 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         nextButton!!.setOnClickListener {
             val current = LocalDateTime.of(year!!, month!!, day!!, 7, 0)
             val new = current.plusDays(1)
-            day = new.dayOfMonth
-            month = new.monthValue
-
-            daySpinner!!.setSelection(day!!-1)
-            monthSpinner!!.setSelection(month!!-1)
+            if(new.year == year) {
+                day = new.dayOfMonth
+                month = new.monthValue
+                initDaySpinner()
+                daySpinner!!.setSelection(day!!-1)
+                monthSpinner!!.setSelection(month!!-1)
+            }
         }
         prevButton!!.setOnClickListener {
             val current = LocalDateTime.of(year!!, month!!, day!!, 7, 0)
             val new = current.minusDays(1)
-            day = new.dayOfMonth
-            month = new.monthValue
-
-            daySpinner!!.setSelection(day!!-1)
-            monthSpinner!!.setSelection(month!!-1)
+            if(new.year == year) {
+                day = new.dayOfMonth
+                month = new.monthValue
+                initDaySpinner()
+                daySpinner!!.setSelection(day!!-1)
+                monthSpinner!!.setSelection(month!!-1)
+            }
         }
 
     }
