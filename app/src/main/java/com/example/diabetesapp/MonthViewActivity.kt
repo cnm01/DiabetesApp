@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.NavigationView
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -167,6 +168,9 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
 
+        var total = 0
+        var ctr = 0
+
         for(i in 1..lengthOfMonth) {
 
             Log.d("Evaluating day : ", i.toString())
@@ -182,14 +186,27 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     // Add score item for day
                     Log.d("Score exists : ", "TRUE")
                     insertDayItem(i.toString(), month!!, days[i]!!.score, dayItemDate)
+                    total += days[i]!!.score
+                    ctr++
                 }
                 else {
                     // Add zero (0) item
                     Log.d("Score exists : ", "FALSE")
                     insertDayItem(i.toString(), month!!, 0, dayItemDate)
+                    ctr++
                 }
             }
         }
+
+        if(ctr > 0) {
+            val avg = total/ctr
+            setScore(avg)
+        }
+        else {
+            setScore(0)
+        }
+
+
     }
 
     private fun insertDayItem(day : String, month : Int, score : Int, date : LocalDateTime) {
@@ -335,6 +352,13 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         graph!!.legend.isEnabled = false
         graph!!.description.isEnabled = false
         graph!!.axisLeft.setDrawGridLines(false)
+        if(month!! == currentDate.monthValue) {
+            graph!!.setVisibleXRangeMaximum(currentDate.dayOfMonth.toFloat())
+            graph!!.setVisibleXRangeMaximum(32f)
+        }
+        else {
+            graph!!.fitScreen()
+        }
         graph!!.invalidate()
 
         graphHolder!!.removeView(progressBar)
@@ -391,6 +415,21 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 monthSpinner!!.setSelection(month!!-1)
             }
         }
+    }
+
+    private fun setScore(scoreVal: Int) {
+        when {
+            scoreVal >= 70 -> {
+                scoreText!!.setTextColor(ContextCompat.getColor(this, R.color.scoreGood))
+            }
+            scoreVal >= 30 -> {
+                scoreText!!.setTextColor(Color.YELLOW)
+            }
+            else -> {
+                scoreText!!.setTextColor(Color.RED)
+            }
+        }
+        scoreText!!.text = scoreVal.toString()
     }
 
     override fun onResume() {
