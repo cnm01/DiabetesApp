@@ -112,7 +112,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
         // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.header2)
+        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         recentLinearLayout = findViewById<View>(R.id.recentLinearLayout) as LinearLayout
@@ -183,8 +183,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-            }
 
             R.id.nav_account -> {
                 val intent = Intent(this, AccountActivity::class.java)
@@ -244,6 +242,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    // TODO Refactor score safe range based on accurate values
 
     private fun inflateRecentItems() {
 

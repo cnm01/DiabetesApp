@@ -66,13 +66,11 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         headerNameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
         headerEmailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
         var headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
-        // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.header2)
+        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
 
         firstNameTextView = findViewById<View>(R.id.first_name_text) as TextView
         firstNameTextView!!.movementMethod = ScrollingMovementMethod()
-        // TODO make textviews scroll horizontally
         lastNameTextView = findViewById<View>(R.id.last_name_text) as TextView
         lastNameTextView!!.movementMethod = ScrollingMovementMethod()
         emailTextView = findViewById<View>(R.id.email_text) as TextView
@@ -84,7 +82,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         signOutButton = findViewById<View>(R.id.sign_out_button) as Button
         verifyButton = findViewById<View>(R.id.verify_button) as Button
 
-
+        // TODO add comments to all code
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
 
@@ -117,6 +115,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_LONG).show()
                     Log.w("Send verify email", "FAILED")
                 }
+            // TODO fix verification only updates on relogin
         }
     }
 
@@ -224,10 +223,6 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-
-            }
-
             R.id.nav_account -> {
 
             }

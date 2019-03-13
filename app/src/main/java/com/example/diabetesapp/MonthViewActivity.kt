@@ -89,7 +89,7 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         var headerIMG = headerView!!.findViewById<View>(R.id.header_layout_month) as LinearLayout
         // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.header2)
+        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
 
         scoreText = findViewById<View>(R.id.score_text) as TextView
         graph = findViewById<View>(R.id.graphView) as LineChart
@@ -485,9 +485,6 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             R.id.nav_month_view-> {
             }
-            R.id.nav_settings -> {
-            }
-
             R.id.nav_account -> {
                 val intent = Intent(this, AccountActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT

@@ -116,7 +116,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val headerIMG = headerView!!.findViewById<View>(R.id.header_layout_day) as LinearLayout
         // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.header2)
+        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
 
         daySpinner = findViewById<View>(R.id.day_spinner) as Spinner
         monthSpinner = findViewById<View>(R.id.month_spinner) as Spinner
@@ -670,9 +670,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-            }
-
             R.id.nav_account -> {
                 val intent = Intent(this, AccountActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT

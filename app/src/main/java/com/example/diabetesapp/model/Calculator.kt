@@ -27,6 +27,7 @@ class Calculator(measurements : ArrayList<Measurement>) {
         calcPercentAbove()
         calcPercentBelow()
         setNumMeasurements()
+//        setNumSymptoms() // Makes score too low
 
         setScore()
     }
