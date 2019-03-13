@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/recent_item"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:id="@+id/day_item"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/month_text_view"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark" android:text=""
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/day_text_view" android:layout_marginStart="6dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/day_text_view"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:text=""
+            app:layout_constraintVertical_bias="0.454"/>
+    <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/score_button"
+            android:elevation="0dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/score_circle_mini" android:textColor="@color/textDark"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp" android:text="76"/>
+</android.support.constraint.ConstraintLayout>

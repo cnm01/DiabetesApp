@@ -117,7 +117,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
-        var headerIMG = headerView!!.findViewById<View>(R.id.header_layout_week) as LinearLayout
+        val headerIMG = headerView!!.findViewById<View>(R.id.header_layout_week) as LinearLayout
         // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
         headerIMG.setBackgroundResource(R.drawable.header2)
@@ -188,7 +188,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         val cur = selectedDate!!.dayOfWeek.value -1
 
-        val dateTextViews = arrayListOf<TextView>(
+        val dateTextViews = arrayListOf(
             mondayDate!!,
             tuesdayDate!!,
             wednesdayDate!!,
@@ -200,7 +200,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         // Evaluates days in the week up to and including selectedDate
 
-        var datesBefore = arrayListOf<LocalDateTime>()
+        val datesBefore = arrayListOf<LocalDateTime>()
         for (i in 0..cur) {
             datesBefore.add(selectedDate!!.minusDays((cur - i).toLong()))
         }
@@ -226,27 +226,27 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 .addOnSuccessListener { querySnapshot ->
                     val itemsArray = querySnapshot.documents
                     if(datesBefore[i].isAfter(currentDate)) {
-                        setScoreAndColor(this!!.scoreButtons!![i], -1)
+                        setScoreAndColor(this.scoreButtons!![i], -1)
                     }
                     else {
                         // If no score for day
                         if (itemsArray.size == 0) {
-                            setScoreAndColor(this!!.scoreButtons!![i], 0)
+                            setScoreAndColor(this.scoreButtons!![i], 0)
                             entries.add(Entry(i.toFloat(), 0f))
                             counter++
                             // Day == Monday
                             if ((cur + 1) == 0) {
                                 setScore(0)
                             } else {
-                                var avg = total / counter
+                                val avg = total / counter
                                 Log.d("Avg score : ", avg.toString())
                                 setScore(avg)
                             }
                         }
                         else {
                             val score = itemsArray[0].toObject(Score::class.java)
-                            setScoreAndColor(this!!.scoreButtons!![i], score!!.score)
-                            entries.add(Entry(i.toFloat(), score!!.score.toFloat()))
+                            setScoreAndColor(this.scoreButtons!![i], score!!.score)
+                            entries.add(Entry(i.toFloat(), score.score.toFloat()))
                             total += score.score
                             counter++
                             Log.d("Day val : ", i.toString())
@@ -254,9 +254,9 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                             Log.d("Total score : ", total.toString())
                             // Day == Monday
                             if ((cur + 1) == 0) {
-                                setScore(score!!.score)
+                                setScore(score.score)
                             } else {
-                                var avg = total / counter
+                                val avg = total / counter
                                 Log.d("Avg score : ", avg.toString())
                                 setScore(avg)
                             }
@@ -277,7 +277,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         // Evaluates days in the week after the selectedDate
 
-        var datesAfter = mutableMapOf<Int, LocalDateTime>()
+        val datesAfter = mutableMapOf<Int, LocalDateTime>()
         for (i in (cur+1)..6) {
             datesAfter[i] = (selectedDate!!.plusDays((i - (cur)).toLong()))
         }
@@ -306,30 +306,30 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 if(datesAfter[i]!!.isAfter(currentDate)) {
                     Log.d("AFTER DATE", "EXECUTING")
                     Log.d("ENTRIES : ", entries.toString())
-                    setScoreAndColor(this!!.scoreButtons!![i], -1)
+                    setScoreAndColor(this.scoreButtons!![i], -1)
                     inflateGraphView()
                 }
                 else {
                     // If no score for day
                     if (itemsArray.size == 0) {
-                        setScoreAndColor(this!!.scoreButtons!![i], 0)
+                        setScoreAndColor(this.scoreButtons!![i], 0)
                         entries.add(Entry(i.toFloat(), 0f))
                         counter++
-                        var avg = total / counter
+                        val avg = total / counter
                         Log.d("Avg score : ", avg.toString())
                         setScore(avg)
                     }
                     // If score
                     else {
                         val score = itemsArray[0].toObject(Score::class.java)
-                        setScoreAndColor(this!!.scoreButtons!![i], score!!.score)
-                        entries.add(Entry(i.toFloat(), score!!.score.toFloat()))
+                        setScoreAndColor(this.scoreButtons!![i], score!!.score)
+                        entries.add(Entry(i.toFloat(), score.score.toFloat()))
                         total += score.score
                         counter ++
                         Log.d("Day val : ", i.toString())
                         Log.d("Day score :", score.score.toString())
                         Log.d("Total score : ", total.toString())
-                        var avg = total / counter
+                        val avg = total / counter
                         Log.d("Avg score : ", avg.toString())
                         setScore(avg)
                     }
@@ -358,16 +358,16 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
             }
             score >= 70 -> {
-                drawable.setStroke(2, ContextCompat.getColor(this, R.color.scoreGood))
+                drawable.setStroke(1, ContextCompat.getColor(this, R.color.scoreGood))
             }
             score >= 30 -> {
-                drawable.setStroke(2, Color.YELLOW)
+                drawable.setStroke(1, Color.YELLOW)
             }
             else -> {
-                drawable.setStroke(2, Color.RED)
+                drawable.setStroke(1, Color.RED)
             }
         }
-        button!!.text = "$score"
+        button.text = "$score"
         inflateGraphView()
     }
 
@@ -597,9 +597,9 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

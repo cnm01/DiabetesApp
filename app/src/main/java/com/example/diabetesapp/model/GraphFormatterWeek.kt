@@ -3,7 +3,7 @@ package com.example.diabetesapp.model
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 
-class GraphFormatterWeek() : IAxisValueFormatter {
+class GraphFormatterWeek : IAxisValueFormatter {
 
     override fun getFormattedValue(value: Float, axis: AxisBase?): String {
         val intVal = value.toInt()
