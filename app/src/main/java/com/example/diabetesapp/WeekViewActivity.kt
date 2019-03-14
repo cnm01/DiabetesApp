@@ -118,7 +118,6 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         val headerIMG = headerView!!.findViewById<View>(R.id.header_layout_week) as LinearLayout
-        // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
         headerIMG.setBackgroundResource(R.drawable.wallpaper2)
         graph = findViewById<View>(R.id.graphView) as LineChart
@@ -376,7 +375,6 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val longMonths = arrayListOf(1,3,5,7,8,10,12)
         val shortMonths = arrayListOf(4,6,9,11)
 
-        // TODO implement year switching capability
 
         val days = ArrayList<Int>()
 
@@ -407,7 +405,6 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         daySpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -438,7 +435,6 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         monthSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -473,7 +469,6 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         yearSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -645,8 +640,9 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     private fun inflateGraphView() {
 
+        graphHolder!!.removeAllViews()
+
         try {
-            graphHolder!!.removeAllViews()
 
             val progressBar = ProgressBar(this)
             val layoutParams = ConstraintLayout.LayoutParams(
@@ -689,9 +685,8 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             graph!!.axisLeft.setDrawGridLines(false)
             graph!!.invalidate()
 
-            graphHolder!!.removeView(progressBar)
+            graphHolder!!.removeAllViews()
             if(graph!!.parent != graphHolder) {
-                graphHolder!!.removeAllViews()
                 graphHolder!!.addView(graph!!)
             }
             Log.d("POPULATE GRAPH", "COMPLETE")
@@ -699,7 +694,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         } catch (e : Exception) {
 
             Log.w("POPULATE GRAPH", "EXCEPTION", e)
-            graphHolder!!.removeView(graph!!)
+            graphHolder!!.removeAllViews()
             val tv = TextView(this)
             tv.text = getString(R.string.error)
             tv.setTextColor(ContextCompat.getColor(this, R.color.textDark))

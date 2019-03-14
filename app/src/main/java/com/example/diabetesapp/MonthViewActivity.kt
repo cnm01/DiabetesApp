@@ -87,7 +87,6 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         var headerIMG = headerView!!.findViewById<View>(R.id.header_layout_month) as LinearLayout
-        // TODO refactor multiple navigation drawers (one for each activity) into one shared one
         // Sets Navigation Drawer Header background image
         headerIMG.setBackgroundResource(R.drawable.wallpaper2)
 
@@ -126,7 +125,7 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val itemsArray = querySnapshot.documents
                 for(document in itemsArray) {
                     val dayItem = document.toObject(Score::class.java)
-                    days[dayItem!!.day!!.toInt()] = dayItem!!
+                    days[dayItem!!.day!!.toInt()] = dayItem
                 }
                 Log.d("Fetch_score_items : ", "SUCCESS")
 
@@ -263,7 +262,6 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         monthSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -313,7 +311,7 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             else {
                 if(days.containsKey(i)) {
                     // Add score item for day
-                    entries.add(Entry(i.toFloat(), days!![i]!!.score.toFloat()))
+                    entries.add(Entry(i.toFloat(), days[i]!!.score.toFloat()))
                 }
                 else {
                     // Add zero (0) item
@@ -384,7 +382,6 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         yearSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

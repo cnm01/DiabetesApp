@@ -713,7 +713,6 @@ class CalculatorUnitTest {
         Assert.assertEquals(0, calculator.percentageSafe)
     }
 
-    // TODO Above range to below range
 
 
     // Test PercentAbove
@@ -820,6 +819,42 @@ class CalculatorUnitTest {
         val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
         val calculator = Calculator(measurements)
         println("Score : " + calculator.score)
+    }
+
+    // Test Highest
+
+    @Test
+    fun highest_isCorrect() {
+
+        var m1 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m1.time = "0800"
+        var m2 = Measurement(7f, false, false, arrayListOf(),"", "" )
+        m2.time = "0900"
+        var m3 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m3.time = "1000"
+        var m4 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m4.time = "1100"
+
+        val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(7f, calculator.highestMeasurement)
+    }
+
+    @Test
+    fun lowest_isCorrect() {
+
+        var m1 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m1.time = "0800"
+        var m2 = Measurement(7f, false, false, arrayListOf(),"", "" )
+        m2.time = "0900"
+        var m3 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m3.time = "1000"
+        var m4 = Measurement(5f, false, false, arrayListOf(),"", "" )
+        m4.time = "1100"
+
+        val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
+        val calculator = Calculator(measurements)
+        Assert.assertEquals(5f, calculator.lowestMeasurement)
     }
 
 

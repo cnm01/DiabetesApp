@@ -4,18 +4,24 @@ import kotlin.math.roundToInt
 
 class Calculator(measurements : ArrayList<Measurement>) {
 
+    // Safe Range
+    private val lowerLimit = 4f
+    private val upperLimit = 9f
+
+    // List of measurements to calculate score for
     var measurements : ArrayList<Measurement> = arrayListOf()
 
-    var duration : Int = 0  // Duration of time spent outside of desired range
-    var numHypos : Int = 0  // Num deviations above range
-    var numHypers : Int = 0 // Num deviations below range
-    var numDeviations : Int = 0 // Total num deviations outside range
+    var duration : Int = 0                  // Duration of time spent outside of desired range
+    var highestMeasurement : Float = 0f     // BGC of highest measurement
+    var lowestMeasurement : Float = 0f      // BGC of lowest measurement
 
-    var percentageSafe : Int = 0    // Percentage of time spent inside of safe range
-    var percentAbove : Int = 0  // Percentage of measurements above range
-    var percentBelow : Int = 0  // Percentage of measurements below range
-    var numMeasurements : Int = 0
-    var numSymptoms : Int = 0
+    var percentageSafe : Int = 0            // Percentage of time spent inside of safe range
+    var percentAbove : Int = 0              // Percentage of measurements above range
+    var percentBelow : Int = 0              // Percentage of measurements below range
+    var numMeasurements : Int = 0           // Total number of measurements
+    var numSymptoms : Int = 0               // Total number of symptoms out of all measurements
+    var upperDifference : Float = 0f        // Difference between upperLimit and highest BGC
+    var lowerDifference : Float = 0f        // Difference between lowerLimit and lowest BGC
 
     var score : Int = 0
 
@@ -27,27 +33,88 @@ class Calculator(measurements : ArrayList<Measurement>) {
         calcPercentAbove()
         calcPercentBelow()
         setNumMeasurements()
-//        setNumSymptoms() // Makes score too low
+        setNumSymptoms()
+        setHighest()
+        setLowest()
+        setUpperDifference()
+        setLowerDifference()
 
         setScore()
     }
 
+    private fun setHighest() {
+    // Sets the BGC of the highest measurement
+
+        if(measurements.size > 2) {
+            var temp = measurements[0]
+
+            for(m in measurements) {
+                if(m.bloodGlucoseConc > temp.bloodGlucoseConc) {
+                    temp = m
+                }
+            }
+            highestMeasurement = temp.bloodGlucoseConc
+        }
+    }
+
+    private fun setLowest() {
+    // Sets the BGC of the lowest measurement
+
+        if(measurements.size > 2) {
+            var temp = measurements[0]
+
+            for(m in measurements) {
+                if(m.bloodGlucoseConc < temp.bloodGlucoseConc) {
+                    temp = m
+                }
+            }
+            lowestMeasurement = temp.bloodGlucoseConc
+        }
+    }
+
+    private fun setUpperDifference() {
+    // Sets the difference between the highest measurement BGC
+    //  and the upperLimit
+
+        upperDifference = if(highestMeasurement > upperLimit) {
+            (highestMeasurement - upperDifference)
+        }
+        else {
+            0f
+        }
+    }
+
+    private fun setLowerDifference() {
+    // Sets the difference between the lowest measurement BGC
+    //  and the lowerLimit
+
+        lowerDifference = if(lowestMeasurement < lowerLimit) {
+            (lowerLimit - lowestMeasurement)
+        }
+        else {
+            0f
+        }
+    }
+
     private fun calcDurationUpper() {
+    // Calculates the total time spent above the safe range
+    //  and adds this to duration
 
         if(measurements.size < 2) { return }
 
         var cur = measurements[0]
         var next = measurements[1]
-        var intercepts = arrayListOf<Float>()
+        val intercepts = arrayListOf<Float>()
 
-        println("Created measurements")
-
+        // Iterate through measurements to find all times where BGC crosses upperLimit
         do {
-            println("Executing loop")
-            if(6 in cur.bloodGlucoseConc.toInt()..next.bloodGlucoseConc.toInt() || 6 in next.bloodGlucoseConc.toInt()..cur.bloodGlucoseConc.toInt() ) {
-                println("Intercept in range")
+            //If current measurement and next measurement intercept upperLimit
+            if(upperLimit.toInt() in cur.bloodGlucoseConc.toInt()..next.bloodGlucoseConc.toInt() || upperLimit.toInt() in next.bloodGlucoseConc.toInt()..cur.bloodGlucoseConc.toInt() ) {
+                // Uses equation (y1 - y2) = m(x1 - x2)
+                //  in the form: x1 = (y1 - y2 + mx2)/m
                 val m = (cur.bloodGlucoseConc-next.bloodGlucoseConc)/(cur.time!!.toInt() - next.time!!.toInt())
-                val intercept = (6-cur.bloodGlucoseConc+m*cur.time!!.toInt())/m
+                val intercept = (upperLimit.toInt()-cur.bloodGlucoseConc+m*cur.time!!.toInt())/m
+                // Adds x value (time) of measurement to intercepts
                 intercepts.add(intercept)
             }
             try {
@@ -59,15 +126,13 @@ class Calculator(measurements : ArrayList<Measurement>) {
 
         } while (measurements.indexOf(next) < measurements.size)
 
-        println(intercepts)
-
-
         var total = 0
 
         if(intercepts.isEmpty()) { return }
 
-        // If first measurement is within range
-        if(measurements[0].bloodGlucoseConc <= 6) {
+        // If first measurement is inside range
+        //  -> first intercept is BGC increasing past upperLimit
+        if(measurements[0].bloodGlucoseConc <= upperLimit.toInt()) {
             for(m in intercepts) {
                 val i = intercepts.indexOf(m)
                 if (i % 2 == 0) {
@@ -79,8 +144,8 @@ class Calculator(measurements : ArrayList<Measurement>) {
             }
         }
         // If first measurement is outside range
+        //  -> first intercept is BGC decreasing below upperLimit
         else {
-            println("First m outside range")
             total += intercepts[0].toInt() - measurements[0].time!!.toInt()
 
             for(m in intercepts) {
@@ -92,36 +157,36 @@ class Calculator(measurements : ArrayList<Measurement>) {
                     }
                 }
             }
-
-
         }
-        if(measurements.last().bloodGlucoseConc > 6) {
-            println("Last m outside range")
+        // If last measurement is above upperLimit
+        //  -> last intercept is BGC increasing above upperLimit
+        if(measurements.last().bloodGlucoseConc > upperLimit.toInt()) {
             total += measurements.last().time!!.toInt() - intercepts.last().toInt()
         }
 
-
-        println(total)
         duration += total
 
     }
 
     private fun calcDurationLower() {
+    // Calculates the total time spent below the safe range
+    //  and adds this to duration
 
         if(measurements.size < 2) { return }
 
         var cur = measurements[0]
         var next = measurements[1]
-        var intercepts = arrayListOf<Float>()
+        val intercepts = arrayListOf<Float>()
 
-        println("Created measurements")
-
+        // Iterate through measurements to find all time where BGC crosses lowerLimit
         do {
-            println("Executing loop")
-            if(4 in cur.bloodGlucoseConc.toInt()..next.bloodGlucoseConc.toInt() || 4 in next.bloodGlucoseConc.toInt()..cur.bloodGlucoseConc.toInt() ) {
-                println("Intercept in range")
+            // If current measurement and next measurement intercept lowerLimit
+            if(lowerLimit.toInt() in cur.bloodGlucoseConc.toInt()..next.bloodGlucoseConc.toInt() || lowerLimit.toInt() in next.bloodGlucoseConc.toInt()..cur.bloodGlucoseConc.toInt() ) {
+                // Uses equation (y1 - y2) = m(x1 - x2)
+                //  in the form x1 = (y1 - y2 + mx2)/m
                 val m = (cur.bloodGlucoseConc-next.bloodGlucoseConc)/(cur.time!!.toInt() - next.time!!.toInt())
-                val intercept = (4-cur.bloodGlucoseConc+m*cur.time!!.toInt())/m
+                val intercept = (lowerLimit.toInt()-cur.bloodGlucoseConc+m*cur.time!!.toInt())/m
+                // Adds x value (time) of measurement to intercepts
                 intercepts.add(intercept)
             }
             try {
@@ -130,18 +195,15 @@ class Calculator(measurements : ArrayList<Measurement>) {
             } catch (e : Exception) {
                 break
             }
-
         } while (measurements.indexOf(next) < measurements.size)
-
-        println(intercepts)
-
 
         var total = 0
 
         if(intercepts.isEmpty()) { return }
 
-        // If first measurement is within range
-        if(measurements[0].bloodGlucoseConc >= 4) {
+        // If first measurement is inside range
+        //  -> first intercept is BGC decreasing below lowerLimit
+        if(measurements[0].bloodGlucoseConc >= lowerLimit.toInt()) {
             for(m in intercepts) {
                 val i = intercepts.indexOf(m)
                 if (i % 2 == 0) {
@@ -153,8 +215,8 @@ class Calculator(measurements : ArrayList<Measurement>) {
             }
         }
         // If first measurement is outside range
+        //  -> first intercept is BGC increasing above lowerLimit
         else {
-            println("First m outside range")
             total += intercepts[0].toInt() - measurements[0].time!!.toInt()
 
             for(m in intercepts) {
@@ -166,34 +228,31 @@ class Calculator(measurements : ArrayList<Measurement>) {
                     }
                 }
             }
-
-
         }
-        if(measurements.last().bloodGlucoseConc < 4) {
+        // If last measurement is below lowerLimit
+        //  -> last intercept is BGC decreasing below lowerLimit
+        if(measurements.last().bloodGlucoseConc < lowerLimit.toInt()) {
             println("Last m outside range")
             total += measurements.last().time!!.toInt() - intercepts.last().toInt()
         }
 
-
-        println(total)
         duration += total
 
     }
 
     private fun calcPercentageSafe() {
+    // Calculates the percentage of time that is spent within the safe range
 
         when {
             measurements.size == 0 -> { percentageSafe = 0 }
             measurements.size == 1 -> {
-                if(measurements[0].bloodGlucoseConc in 4.0..6.0) {
+                if(measurements[0].bloodGlucoseConc in lowerLimit..upperLimit) {
                     percentageSafe = 100
                 }
             }
             else -> {
 
                 val totalDuration = measurements.last().time!!.toFloat() - measurements.first().time!!.toFloat()
-                println("Duration outside safe range : " + duration)
-                println("Total duration : " + totalDuration)
                 percentageSafe = if (totalDuration > 0) {
                     100 - ((duration/totalDuration)*100).roundToInt()
                 } else {
@@ -202,7 +261,8 @@ class Calculator(measurements : ArrayList<Measurement>) {
                 // If percentageSafe = 100 then either:
                 // -> all measurements within safe range
                 // -> all measurements outside of safe range
-                if(percentageSafe == 100 && measurements[0].bloodGlucoseConc  !in 4.0..6.0) {
+                // Check if all are outside or outside range
+                if(percentageSafe == 100 && measurements[0].bloodGlucoseConc  !in lowerLimit..upperLimit) {
                     percentageSafe = 0
                 }
 
@@ -211,15 +271,14 @@ class Calculator(measurements : ArrayList<Measurement>) {
     }
 
     private fun calcPercentAbove() {
+    // Calculates the percentage of measurements that are above range
+
         var num = 0
         for(m in measurements) {
-            if(m.bloodGlucoseConc > 6f) {
+            if(m.bloodGlucoseConc > upperLimit) {
                 num++
             }
         }
-
-        println("num_above : $num")
-        println("Total size : " + measurements.size)
 
         if(measurements.size > 0 && num < measurements.size) {
             percentAbove = ((num.toFloat()/measurements.size.toFloat())*100f).toInt()
@@ -227,15 +286,14 @@ class Calculator(measurements : ArrayList<Measurement>) {
     }
 
     private fun calcPercentBelow() {
+    // Calculates the percentage of measurements that are below range
+
         var num = 0
         for(m in measurements) {
-            if(m.bloodGlucoseConc < 4f) {
+            if(m.bloodGlucoseConc < lowerLimit) {
                 num++
             }
         }
-
-        println("num_above : $num")
-        println("Total size : " + measurements.size)
 
         if(measurements.size > 0 && num < measurements.size) {
             percentBelow = ((num.toFloat()/measurements.size.toFloat())*100f).toInt()
@@ -257,20 +315,61 @@ class Calculator(measurements : ArrayList<Measurement>) {
     }
 
     private fun setScore() {
+    // Calculates and sets a value for score
 
-        score += ((percentageSafe.toFloat()/100) * 30).toInt()
-        score += (((100-percentAbove.toFloat())/100) * 20).toInt()
-        score += (((100-percentBelow.toFloat())/100) * 20).toInt()
-        score += ((numMeasurements.toFloat() * 0.2) * 20).toInt()
-        score += (1-((numSymptoms.toFloat() * 0.1)) * 10).toInt()
+        val percentageSafeMetric = (percentageSafe.toFloat()/100)
+        val percentAboveMetric = ((100-percentAbove.toFloat())/100)
+        val percentBelowMetric = ((100-percentBelow.toFloat())/100)
+
+        var numMeasurementsMetric = (numMeasurements.toFloat() * 0.2)
+        numMeasurementsMetric = when {
+            (numMeasurementsMetric > 1) -> { 1.0 }
+            (numMeasurementsMetric < 0) -> { 0.0 }
+            else -> { numMeasurementsMetric }
+        }
+        var numSymptomsMetric = 1-((numSymptoms.toFloat() * 0.1))
+        numSymptomsMetric = when {
+            (numSymptomsMetric > 1) -> { 1.0 }
+            (numSymptomsMetric < 0) -> { 0.0 }
+            else -> { numSymptomsMetric }
+        }
+
+        var upperDifferenceMetric = (1-(upperDifference/10))
+        upperDifferenceMetric = when {
+            (upperDifferenceMetric > 1) -> {1f}
+            (upperDifferenceMetric < 0) -> {0f}
+            else -> {upperDifferenceMetric}
+        }
+
+        var lowerDifferenceMetric = (1-(lowerDifference/10))
+        lowerDifferenceMetric = when {
+            (lowerDifferenceMetric > 1) -> {1f}
+            (lowerDifferenceMetric < 0) -> {0f}
+            else -> {lowerDifferenceMetric}
+        }
+
+        // Each metric is a value between 0..1
+        // Each metric is weighted with a value /100 as below
+        score += (percentageSafeMetric * 30).roundToInt()
+        score += (percentAboveMetric * 10).roundToInt()
+        score += (percentBelowMetric * 10).roundToInt()
+        score += (numMeasurementsMetric * 20).roundToInt()
+        score += (numSymptomsMetric * 10).roundToInt()
+        score += (upperDifferenceMetric * 10).roundToInt()
+        score += (lowerDifferenceMetric * 10).roundToInt()
+
 
         if(score > 100) {
             score = 100
         }
+        else if(score < 0) {
+            score = 0
+        }
 
-        // TODO refactor score algorithm based on specification
 
     }
+
+
 
 
 

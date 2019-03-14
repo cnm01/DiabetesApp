@@ -23,13 +23,12 @@ import kotlinx.android.synthetic.main.app_bar_account.*
 
 class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    // UI elements
-
-    // Header
+    // Nav Drawer Header
     private var headerNameTextView: TextView? = null
     private var headerEmailTextView: TextView? = null
     private var headerView: View? = null
 
+    // UI elements
     private var firstNameTextView: TextView? = null
     private var lastNameTextView: TextView? = null
     private var emailTextView: TextView? = null
@@ -39,11 +38,9 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private var signOutButton: Button? = null
     private var verifyButton: Button? = null
 
-
     // Firebase References
     private var auth: FirebaseAuth? = null
     private var database: FirebaseFirestore? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +62,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         headerView = nav_view_account.getHeaderView(0)
         headerNameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
         headerEmailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
-        var headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
+        val headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
         // Sets Navigation Drawer Header background image
         headerIMG.setBackgroundResource(R.drawable.wallpaper2)
 
@@ -82,10 +79,8 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         signOutButton = findViewById<View>(R.id.sign_out_button) as Button
         verifyButton = findViewById<View>(R.id.verify_button) as Button
 
-        // TODO add comments to all code
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
-
 
         changeDetailsButton!!.setOnClickListener{
             val intent = Intent(this, ReauthenticateActivity::class.java)
@@ -122,6 +117,8 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
     private fun setNavDrawerDetails() {
+    // Sets name and email in Nav Drawer Header
+
         val uid = auth!!.currentUser!!.uid
         val userRef = database!!.collection("Users").document(uid)
         userRef.get()
@@ -139,7 +136,9 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun setAccountDetails() {
-        val TAG = "Set account details"
+    // Sets firstName, lastName, email, and verification
+
+        val tag = "Set account details"
         val uid = auth!!.currentUser!!.uid
         val userRef = database!!.collection("Users").document(uid)
         userRef.get()
@@ -152,27 +151,26 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 lastNameTextView!!.text = lastName
                 emailTextView!!.text = email
                 setVerification()
-                Log.d(TAG, "Account details successfully obtained")
+                Log.d(tag, "Account details successfully obtained")
             }
             .addOnFailureListener{
-                    e -> Log.w(TAG, "Error fetching account details setAccountDetails()", e)
+                    e -> Log.w(tag, "Error fetching account details setAccountDetails()", e)
             }
     }
 
     private fun setVerification() {
+    // Sets the verification status
+
         val user = auth!!.currentUser!!
         if(user.isEmailVerified) {
             verificationTextView!!.text = getString(R.string.verified)
             verifyButton!!.isEnabled = false
             verifyButton!!.visibility = View.INVISIBLE
-
         }
         else {
             verificationTextView!!.text = getString(R.string.unverified)
         }
     }
-
-    // TODO Add change profile picture functionality
 
     override fun onBackPressed() {
         if (drawer_layout_account.isDrawerOpen(GravityCompat.START)) {
@@ -193,9 +191,9 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

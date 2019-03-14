@@ -18,8 +18,5 @@ class GraphFormatterWeek : IAxisValueFormatter {
             6 -> { "Sun" }
             else -> { "-" }
         }
-
     }
-
-
 }

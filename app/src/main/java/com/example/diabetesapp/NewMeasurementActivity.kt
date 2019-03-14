@@ -94,7 +94,7 @@ class NewMeasurementActivity : AppCompatActivity() {
     private fun populateBloodGlucoseValue() {
         val unit = " mmol/L"
         var concentration = 0.0f
-        while(concentration <= 16.1f) {
+        while(concentration <= 50.1f) {
             bloodGlucoseValues += "%.1f".format(concentration)  + unit
             concentration += 0.1f
         }
@@ -108,7 +108,6 @@ class NewMeasurementActivity : AppCompatActivity() {
         bloodGlucoseSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -119,6 +118,7 @@ class NewMeasurementActivity : AppCompatActivity() {
             }
 
         }
+        bloodGlucoseSpinner!!.setSelection(50)
     }
 
     private fun initCheckboxes() {

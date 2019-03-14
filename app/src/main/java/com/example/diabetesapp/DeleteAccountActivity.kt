@@ -19,7 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class DeleteAccountActivity : AppCompatActivity() {
 
     // UI Elements
-
     private var emailEditText: EditText? = null
     private var passwordEditText: EditText? = null
     private var deleteButton: Button? = null
@@ -35,6 +34,8 @@ class DeleteAccountActivity : AppCompatActivity() {
         initialise()
     }
 
+    // TODO change settings menu, top right 3 buttons
+
     private fun initialise() {
         emailEditText = findViewById<View>(R.id.email_input) as EditText
         passwordEditText = findViewById<View>(R.id.password_input) as EditText
@@ -49,11 +50,14 @@ class DeleteAccountActivity : AppCompatActivity() {
             closeKeyboard()
             deleteAccount()
         }
-
     }
 
+
     private fun deleteAccount() {
-        val TAG = "Delete User Account"
+    // Deletes user accounts
+    //  -> user must be recently authenticated for this to work
+
+        val tag = "Delete User Account"
         val user = auth!!.currentUser
         val email = emailEditText!!.text.toString()
         val password = passwordEditText!!.text.toString()
@@ -63,24 +67,24 @@ class DeleteAccountActivity : AppCompatActivity() {
             val credential = EmailAuthProvider.getCredential(email, password)
             user!!.reauthenticate(credential)
                 .addOnSuccessListener {
-                    Log.d(TAG, "Successfully re-authenticated user")
+                    Log.d(tag, "Successfully re-authenticated user")
                     user.delete()
                         .addOnSuccessListener {
                             progressBar?.visibility = View.INVISIBLE
-                            Log.d(TAG, "Successfully deleted user")
+                            Log.d(tag, "Successfully deleted user")
                             Toast.makeText(this, "Account Deleted", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
                         .addOnFailureListener { e ->
-                            Log.w(TAG, "Error deleting account", e)
+                            Log.w(tag, "Error deleting account", e)
                             progressBar?.visibility = View.INVISIBLE
                             Toast.makeText(this, "Unable to delete account", Toast.LENGTH_SHORT).show()
                         }
                 }
                 .addOnFailureListener { e ->
-                    Log.w(TAG, "Error re-authenticating user", e)
+                    Log.w(tag, "Error re-authenticating user", e)
                     progressBar?.visibility = View.INVISIBLE
                     Toast.makeText(this, "Unable to authenticate account", Toast.LENGTH_SHORT).show()
                 }
@@ -88,8 +92,6 @@ class DeleteAccountActivity : AppCompatActivity() {
         else {
             Toast.makeText(this, "Details cannot be blank", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     private fun closeKeyboard() {

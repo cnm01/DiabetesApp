@@ -16,5 +16,4 @@ class Score(var score: Int = 0) {
         year = dateTime.year
         date = day.toString() + "-" + month.toString() + "-" + year.toString()
     }
-
 }

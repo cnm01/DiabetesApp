@@ -9,9 +9,5 @@ class GraphFormatterMonth : IAxisValueFormatter {
         val intVal = value.toInt()
 
         return intVal.toString()
-
-
     }
-
-
 }

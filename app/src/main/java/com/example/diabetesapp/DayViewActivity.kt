@@ -69,8 +69,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private var auth: FirebaseAuth? = null
     private var database: FirebaseFirestore? = null
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_day_view)
@@ -86,8 +84,10 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         initialise()
 
+        // Allows Activity to be created with param for date
         val b = intent.extras
 
+        // If Activity is created with param passed for date, set that date as current
         if(b != null) {
             try {
                 val newDate = b.get("date") as LocalDateTime
@@ -114,8 +114,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         val headerIMG = headerView!!.findViewById<View>(R.id.header_layout_day) as LinearLayout
-        // TODO refactor multiple navigation drawers (one for each activity) into one shared one
-        // Sets Navigation Drawer Header background image
         headerIMG.setBackgroundResource(R.drawable.wallpaper2)
 
         daySpinner = findViewById<View>(R.id.day_spinner) as Spinner
@@ -134,10 +132,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         initButtons()
         scoreText = findViewById<View>(R.id.score_text) as TextView
         setScore(0)
-
-
-
-
     }
 
     private fun initButtons() {
@@ -163,16 +157,13 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 monthSpinner!!.setSelection(month!!-1)
             }
         }
-
     }
 
     private fun initDate() {
-
         val dateTime = LocalDateTime.now()
         day = dateTime.dayOfMonth
         month = dateTime.monthValue
         year = dateTime.year
-
     }
 
     private fun setScore(scoreVal: Int) {
@@ -190,6 +181,8 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         scoreText!!.text = scoreVal.toString()
     }
 
+    // TODO implement progressBars to MeasurementView activity while loading
+
     private fun initGraph() {
         graphHolder!!.removeView(graph!!)
         val addMeasurementsTextView = TextView(this)
@@ -202,22 +195,11 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         layoutParams1.setMargins(0, 50.dpToPx(this.resources.displayMetrics),0, 50.dpToPx(this.resources.displayMetrics))
         addMeasurementsTextView.layoutParams = layoutParams1
 
-
-//        graphHolder!!.addView(addMeasurementsTextView)
+        graphHolder!!.addView(addMeasurementsTextView)
     }
 
     private fun initMeasurements() {
-        val emptyTextView = TextView(this)
-        emptyTextView.text = getString(R.string.no_measurements)
-        emptyTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
-        emptyTextView.gravity = Gravity.CENTER_HORIZONTAL
-
-        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        layoutParams.setMargins(0, 20.dpToPx(this.resources.displayMetrics),0, 0)
-        emptyTextView.layoutParams = layoutParams
-
         see_more_label.visibility = View.INVISIBLE
-//        recentLinearLayout!!.addView(emptyTextView)
     }
 
     // Converts DP to PX for setMargin of RecentItems
@@ -227,8 +209,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val longMonths = arrayListOf(1,3,5,7,8,10,12)
         val shortMonths = arrayListOf(4,6,9,11)
-
-        // TODO implement year switching capability
 
         val days = ArrayList<Int>()
 
@@ -257,9 +237,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         daySpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = daySpinnerAdapter.getItem(position)
@@ -272,7 +250,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Log.d("Calling inflate measurements : ", "from DaySpinner")
                 inflateScore()
             }
-
         }
 
         daySpinner!!.setSelection(day!!-1)
@@ -291,9 +268,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         monthSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = monthSpinnerAdapter.getItem(position)
@@ -309,7 +284,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 inflateScore()
 
             }
-
         }
 
         monthSpinner!!.setSelection(month!!-1)
@@ -328,22 +302,20 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         yearSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = yearSpinnerAdapter.getItem(position)
                 var spinnerStr = item.toString()
-
             }
-
         }
 
         yearSpinner!!.setSelection(0)
     }
 
     private fun setNavDrawerDetails() {
+    // Sets name and email in Nav Drawer Header
+
         val uid = auth!!.currentUser!!.uid
         val userRef = database!!.collection("Users").document(uid)
         userRef.get()
@@ -361,6 +333,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun inflateGraphView() {
+    // Fetches measurements for selected date and adds graph of these values
 
         graphHolder!!.removeAllViews()
 
@@ -422,6 +395,8 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         entries.add(Entry(time, bgc))
                         Log.d("ADD ENTRIES", "COMPLETE")
                     }
+
+                    // Create graph
                     val dataSet = LineDataSet(entries, "Blood Glucose Concentration")
                     dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
                     dataSet.setDrawValues(false)
@@ -434,22 +409,21 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     dataSet.isHighlightEnabled = false
                     val lineData = LineData(dataSet)
 
-                    val postPrandialLimit = LimitLine(9f)
-                    postPrandialLimit.lineColor = Color.RED
-                    postPrandialLimit.lineWidth = 0.3f
-                    postPrandialLimit.enableDashedLine(30f, 10f, 30f)
-                    val prePrandialLimit = LimitLine(6f)
-                    prePrandialLimit.lineColor = Color.RED
-                    prePrandialLimit.lineWidth = 0.3f
-                    prePrandialLimit.enableDashedLine(30f, 10f, 30f)
+                    val lowLimit = LimitLine(4f)
+                    val highLimit = LimitLine(9f)
+                    highLimit.lineColor = Color.RED
+                    highLimit.lineWidth = 0.3f
+                    highLimit.enableDashedLine(30f, 10f, 30f)
+                    lowLimit.lineColor = Color.RED
+                    lowLimit.lineWidth = 0.3f
+                    lowLimit.enableDashedLine(30f, 10f, 30f)
                     val lowerLimit = LimitLine(4f)
                     lowerLimit.lineColor = Color.RED
                     lowerLimit.lineWidth = 0.3f
                     lowerLimit.enableDashedLine(30f, 10f, 30f)
 
-                    graph!!.axisLeft.addLimitLine(postPrandialLimit)
-                    graph!!.axisLeft.addLimitLine(prePrandialLimit)
-                    graph!!.axisLeft.addLimitLine(lowerLimit)
+                    graph!!.axisLeft.addLimitLine(highLimit)
+                    graph!!.axisLeft.addLimitLine(lowLimit)
                     graph!!.axisRight.setDrawLimitLinesBehindData(false)
 
                     graph!!.data = lineData
@@ -464,8 +438,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     graph!!.description.isEnabled = false
                     graph!!.axisLeft.setDrawGridLines(false)
                     graph!!.invalidate()
-
-
 
                     graphHolder!!.removeView(progressBar)
 
@@ -497,9 +469,10 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
     private fun insertMeasurementItem(time: String, bgc: String, mid : String) {
+    // Creates new MeasurementItem and adds it to view
 
         // Creates Layout Params for bottom margin of RecentItem
-        var layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(0,0,0, 4.dpToPx(this.resources.displayMetrics))
 
         // Creates new RecentItem and adds to view
@@ -514,6 +487,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun inflateMeasurementItems() {
+    // Fetches measurements from selected date and inflates them to view
 
         measurementsLinearLayout!!.removeAllViews()
         recentLinearLayout.removeAllViews()
@@ -533,7 +507,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             .collection("Measurements")
             .whereEqualTo("date", date)
             .orderBy("time", Query.Direction.DESCENDING)
-//                            .limit(2)
+
         query.get()
             .addOnSuccessListener {querySnapshot ->
                 val itemsArray = querySnapshot.documents
@@ -566,7 +540,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         val time = item!!.timeFormatted
                         val bgc = item.bloodGlucoseConc.toString()
 
-
                         insertMeasurementItem(time!!, bgc, documentSnapshot.id)
                     }
                 }
@@ -574,7 +547,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             .addOnFailureListener { e ->
                 Log.w("Fetch measurement items", "Error fetching measurement items", e)
                 Toast.makeText(this, "Error fetching measurement items", Toast.LENGTH_LONG).show()
-
             }
 
     }
@@ -590,6 +562,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun inflateScore() {
+    // Fetches score if available, if no score, then displays score=0
 
         val userId = auth!!.currentUser!!.uid
 
@@ -607,7 +580,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val itemsArray = querySnapshot.documents
 
                 // If no score from current day
-                // -> Display Score = 0
+                //  -> Display Score = 0
                 if(itemsArray.size == 0) {
                     setScore(0)
                 }
@@ -622,7 +595,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Toast.makeText(this, "Error fetching score", Toast.LENGTH_LONG).show()
 
             }
-
     }
 
     override fun onBackPressed() {

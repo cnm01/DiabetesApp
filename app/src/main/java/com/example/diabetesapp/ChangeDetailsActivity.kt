@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ChangeDetailsActivity : AppCompatActivity() {
 
     // UI Elements
-
     private var firstNameEditText: EditText? = null
     private var lastNameEditText: EditText? = null
     private var emailEditText: EditText? = null
@@ -26,10 +25,8 @@ class ChangeDetailsActivity : AppCompatActivity() {
     private var progressBar: ProgressBar? = null
 
     // Firebase Ref
-
     private var auth: FirebaseAuth? = null
     private var database: FirebaseFirestore? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +58,9 @@ class ChangeDetailsActivity : AppCompatActivity() {
     }
 
     private fun fillTextFields() {
-        val TAG = "Fill account details"
+    // Populates EditTexts with current values for name, email
+
+        val tag = "Fill account details"
         val uid = auth!!.currentUser!!.uid
         val userRef = database!!.collection("Users").document(uid)
         userRef.get()
@@ -73,22 +72,21 @@ class ChangeDetailsActivity : AppCompatActivity() {
                 firstNameEditText!!.append(firstName)
                 lastNameEditText!!.append(lastName)
                 emailEditText!!.append(email)
-                Log.d(TAG, "UpdateDetails text fields filled with account details")
+                Log.d(tag, "UpdateDetails text fields filled with account details")
             }
             .addOnFailureListener { e ->
-                Log.w(TAG, "Error auto filling UpdateDetails fields", e)
+                Log.w(tag, "Error auto filling UpdateDetails fields", e)
             }
     }
 
 
     private fun updateDetails() {
+    // Sets new details, stores updated result in FireStore
 
         val firstName = firstNameEditText!!.text.toString()
         val lastName = lastNameEditText!!.text.toString()
         val email = emailEditText!!.text.toString()
         val password = passwordEditText!!.text.toString()
-
-
 
         // Validate user input (not empty)
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
@@ -114,16 +112,14 @@ class ChangeDetailsActivity : AppCompatActivity() {
             progressBar?.visibility = View.INVISIBLE
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()
 
-
         }
         else {
             Toast.makeText(this, "Details can't be blank", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     private fun updateUserModel(uid: String, _firstName: String, _lastName: String, _email: String) {
+    // Updates user model in FireStore
 
         val user = User(uid, _firstName, _lastName, _email)
         database!!.collection("Users").document(uid)

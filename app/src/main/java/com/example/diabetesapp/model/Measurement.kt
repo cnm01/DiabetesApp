@@ -4,14 +4,12 @@ import java.time.LocalDateTime
 import kotlin.math.roundToInt
 
 
-class Measurement(
-
-    var bloodGlucoseConc: Float = 0f,
-    var recentFood: Boolean = false,
-    var recentExercise: Boolean = false,
-    var symptoms: ArrayList<String> = ArrayList(),
-    var medications: String = "",
-    var notes: String = "") {
+class Measurement(var bloodGlucoseConc: Float = 0f,
+                  var recentFood: Boolean = false,
+                  var recentExercise: Boolean = false,
+                  var symptoms: ArrayList<String> = ArrayList(),
+                  var medications: String = "",
+                  var notes: String = "") {
 
     // Date
     var day: Int? = null
@@ -22,14 +20,10 @@ class Measurement(
     // Time
     var hour: Int? = null
     var minute: Int? = null
-    var time: String? = null    // hhmm where minutes are scaled up to /100. eg, 0930 = 0950 (30/60 = 50/100)
-    var timeFormatted: String? = null   //hh:mm
+    var time: String? = null    // HHmm : where minutes are scaled up to /100. eg, 0930 = 0950 (30/60 = 50/100)
+    var timeFormatted: String? = null   //hh:mm : (correct time - no scaling)
 
     init {
-
-
-
-
         var dateTime = LocalDateTime.now()
 
         day = dateTime.dayOfMonth
@@ -41,48 +35,25 @@ class Measurement(
         minute = dateTime.minute
         setTime()
         setTimeFormatted()
-
-
     }
 
-//    private fun setTime() {
-//    // Sets time in the form HHmm
-//
-//        if(hour!! < 10) {
-//            if(minute!! < 10) {
-//                time = "0" + hour.toString() + "0" + minute.toString()
-//            }
-//            else {
-//                time = "0" + hour.toString() + minute.toString()
-//            }
-//        }
-//        else {
-//            if(minute!! < 10) {
-//                time = hour.toString() + "0" + minute.toString()
-//            }
-//            else {
-//                time = hour.toString() + minute.toString()
-//            }
-//        }
-//    }
 
 
     private fun setTime() {
     // Sets times in the form HHmm where minutes are scaled up to a figure out of 100
     // Eg 0830 is scaled to 0850 (30/60 = 50/100)
-    // Allows even spacing of X axis on graph view
+    // Allows correct even spacing of X axis on graph view
 
         val minuteScaled = ((minute!!.toFloat()/60f)*100f).roundToInt()
 
-
         time = if(hour!! < 10) {
-            if(minuteScaled!! < 10) {
+            if(minuteScaled < 10) {
                 "0" + hour.toString() + "0" + minuteScaled.toString()
             } else {
                 "0" + hour.toString() + minuteScaled.toString()
             }
         } else {
-            if(minuteScaled!! < 10) {
+            if(minuteScaled < 10) {
                 hour.toString() + "0" + minuteScaled.toString()
             } else {
                 hour.toString() + minuteScaled.toString()
@@ -92,26 +63,23 @@ class Measurement(
     }
 
     private fun setTimeFormatted() {
-        if(hour!! < 10) {
+    // Sets timeFormatted in the form HH:mm (no scaling)
+
+        timeFormatted = if(hour!! < 10) {
             if(minute!! < 10) {
-                timeFormatted = "0" + hour.toString() + ":" + "0" + minute.toString()
+                "0" + hour.toString() + ":" + "0" + minute.toString()
+            } else {
+                "0" + hour.toString() + ":" + minute.toString()
             }
-            else {
-                timeFormatted = "0" + hour.toString() + ":" + minute.toString()
-            }
-        }
-        else {
+        } else {
             if(minute!! < 10) {
-                timeFormatted = hour.toString() + ":" + "0" + minute.toString()
-            }
-            else {
-                timeFormatted = hour.toString() + ":" + minute.toString()
+                hour.toString() + ":" + "0" + minute.toString()
+            } else {
+                hour.toString() + ":" + minute.toString()
             }
         }
 
     }
-
-
 
     override fun toString(): String {
         return "[BGC: " + bloodGlucoseConc + "\n" +
@@ -122,7 +90,6 @@ class Measurement(
                 "notes: " + notes + "\n" +
                 "date: " + date + "\n" +
                 "time: " + time + " ]"
-
     }
 
 }

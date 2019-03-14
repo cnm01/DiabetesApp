@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.recent_item_layout.view.*
 import java.time.LocalDateTime
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+// Acts as main activity for app : dashboard
 
     // Score
     private var scoreText: TextView? = null
@@ -53,17 +54,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // Hints
     private var hintsLinearLayout: LinearLayout? = null
 
-
     // Drawer elements
     private var nameTextView: TextView? = null
     private var emailTextView: TextView? = null
     private var headerView: View? = null
 
-
     // Firebase References
     private var auth: FirebaseAuth? = null
     private var database: FirebaseFirestore? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +71,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         new_measurement_floating_button.setOnClickListener {
             val intent = Intent(this, NewMeasurementActivity::class.java)
             startActivity(intent)
-
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -88,29 +85,31 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun initialise() {
-        // Treats java.util.date objects as com.google.firebase.Timestamp objects
-        // (Solves warning given in Logcat)
-        // -> java.util.date behaviour will change in firestore and your app may break
-        // Refactor usages as such:
-        //        // Old:
-        //        val date = snapshot.getDate("created_at")
-        //        // New:
-        //        val timestamp = snapshot.getTimestamp("created_at")
-        //        val date = timestamp.toDate()
+    private fun initDateSetting() {
+    // Treats java.util.date objects as com.google.firebase.Timestamp objects
+    // (Solves warning given in Logcat)
+    // -> java.util.date behaviour will change in firestore and your app may break
+    // Refactor usages as such:
+    //        // Old:
+    //        val date = snapshot.getDate("created_at")
+    //        // New:
+    //        val timestamp = snapshot.getTimestamp("created_at")
+    //        val date = timestamp.toDate()
         val firestore = FirebaseFirestore.getInstance()
         val settings = FirebaseFirestoreSettings.Builder()
             .setTimestampsInSnapshotsEnabled(true)
             .build()
         firestore.firestoreSettings = settings
-        //
+    }
 
+    private fun initialise() {
+
+        initDateSetting()
 
         headerView = nav_view_home.getHeaderView(0)
         nameTextView = headerView!!.findViewById<View>(R.id.name_text_view) as TextView
         emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
-        var headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
-        // TODO refactor multiple navigation drawers (one for each activity) into one shared one
+        val headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
         // Sets Navigation Drawer Header background image
         headerIMG.setBackgroundResource(R.drawable.wallpaper2)
         auth = FirebaseAuth.getInstance()
@@ -123,6 +122,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun setNavDrawerDetails() {
+    // Sets name and email in Nav Drawer Header
+
         val uid = auth!!.currentUser!!.uid
         val userRef = database!!.collection("Users").document(uid)
         userRef.get()
@@ -157,9 +158,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -204,7 +205,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onResume()
         setNavDrawerDetails()
         recentLinearLayout!!.removeAllViews()
-//        see_more_label.visibility = View.VISIBLE
         graphHolder!!.removeAllViews()
         inflateRecentItems()
         inflateGraphView()
@@ -216,9 +216,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // Converts DP to PX for setMargin of RecentItems
     private fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()
 
-
-
     private fun insertRecentItem(time: String, bgc: String, mid : String) {
+    // Creates a RecentItem and adds it to view
 
         // Creates Layout Params for bottom margin of RecentItem
         var layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
@@ -231,22 +230,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             intent.putExtra("mid", mid)
             startActivity(intent)
             Log.d("Measurement Item Clicked :", "DETECTED")
-
         }
         newItem.layoutParams = layoutParams
 
-
-
         recentLinearLayout!!.addView(newItem)
-
-
     }
 
-    // TODO Refactor score safe range based on accurate values
 
     private fun inflateRecentItems() {
-
-        // TODO add onClickListener to open measurements view for each measurement
+    // Fetches measurements and inflates them to view
 
         // Display ProgressBar while waiting for RecentItems to inflate
         val progressBar = ProgressBar(this)
@@ -292,7 +284,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // If measurements from current day -> display them
                 else {
                     // For each measurement from current day
-                    // -> insert measurement into RecentItems widget
+                    // -> insert measurement into RecentItems container
                     itemsArray.forEach { documentSnapshot ->
                         val item = documentSnapshot.toObject(Measurement::class.java)
                         val time = item!!.timeFormatted
@@ -307,15 +299,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .addOnFailureListener { e ->
                 Log.w("Fetch recent items", "Error fetching recent items", e)
                 Toast.makeText(this, "Error fetching recent items", Toast.LENGTH_LONG).show()
-
             }
-
     }
 
-
+    // TODO add progress bars to week and month views
 
     private fun inflateGraphView() {
+    // Fetches measurements and adds graph of them to view
 
+        // Display progress bar while waiting for measurements to load
         val progressBar = ProgressBar(this)
         var layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(0, 8.dpToPx(this.resources.displayMetrics),0, 0)
@@ -331,7 +323,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val day = dateTime.dayOfMonth
         val month = dateTime.monthValue
         val year = dateTime.year
-        val date = day.toString() + "-" + month.toString() + "-" + year.toString()
+        val date = "$day-$month-$year"
 
         // Query -> Measurements from current day
         val query = database!!
@@ -379,6 +371,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         entries.add(Entry(time, bgc))
                         Log.d("ADD ENTRIES", "COMPLETE")
                     }
+
+                    // Creates graph
                     val dataSet = LineDataSet(entries, "Blood Glucose Concentration")
                     dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
                     dataSet.setDrawValues(false)
@@ -391,22 +385,21 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     dataSet.isHighlightEnabled = false
                     val lineData = LineData(dataSet)
 
-                    var postPrandialLimit = LimitLine(9f)
-                    postPrandialLimit.lineColor = Color.RED
-                    postPrandialLimit.lineWidth = 0.3f
-                    postPrandialLimit.enableDashedLine(30f, 10f, 30f)
-                    var prePrandialLimit = LimitLine(6f)
-                    prePrandialLimit.lineColor = Color.RED
-                    prePrandialLimit.lineWidth = 0.3f
-                    prePrandialLimit.enableDashedLine(30f, 10f, 30f)
+                    var lowLimit = LimitLine(4f)
+                    var highLimit = LimitLine(9f)
+                    highLimit.lineColor = Color.RED
+                    highLimit.lineWidth = 0.3f
+                    highLimit.enableDashedLine(30f, 10f, 30f)
+                    lowLimit.lineColor = Color.RED
+                    lowLimit.lineWidth = 0.3f
+                    lowLimit.enableDashedLine(30f, 10f, 30f)
                     var lowerLimit = LimitLine(4f)
                     lowerLimit.lineColor = Color.RED
                     lowerLimit.lineWidth = 0.3f
                     lowerLimit.enableDashedLine(30f, 10f, 30f)
 
-                    graph!!.axisLeft.addLimitLine(postPrandialLimit)
-                    graph!!.axisLeft.addLimitLine(prePrandialLimit)
-                    graph!!.axisLeft.addLimitLine(lowerLimit)
+                    graph!!.axisLeft.addLimitLine(highLimit)
+                    graph!!.axisLeft.addLimitLine(lowLimit)
                     graph!!.axisRight.setDrawLimitLinesBehindData(false)
 
                     graph!!.data = lineData
@@ -421,8 +414,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     graph!!.description.isEnabled = false
                     graph!!.axisLeft.setDrawGridLines(false)
                     graph!!.invalidate()
-
-
 
                     graphHolder!!.removeView(progressBar)
                     graphHolder!!.addView(graph!!)
@@ -444,15 +435,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 graphHolder!!.addView(tv)
             }
-
     }
 
-    // TODO create method for setting score
-    // TODO create method for setting score color based on score
-
     private fun calcScore() {
-
-        // TODO refactor so class only fetches measurements once
+    // Fetches measurements for current day and uses them to set score
+    // Updates score in firestore model
 
         var measurements = ArrayList<Measurement>()
 
@@ -495,12 +482,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     setScore(calculator.score)
                 }
             }
-
-
-
     }
 
     private fun setScore(scoreVal: Int) {
+    // Sets score on view, updates user model with new score
+
         when {
             scoreVal >= 70 -> {
                 scoreText!!.setTextColor(ContextCompat.getColor(this, R.color.scoreGood))
@@ -525,7 +511,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val year = dateTime.year
         val date = day.toString() + "-" + month.toString() + "-" + year.toString()
 
-        // Query -> Measurements from current day
+        // Query -> Score from current day
         val query = database!!
             .collection("Users")
             .document(userId)
@@ -536,13 +522,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .addOnSuccessListener { querySnapshot ->
                 val itemsArray = querySnapshot.documents
 
-                // If previous score for current day, delete it
+                // Delete all previous scores for current day
                 if (itemsArray.size > 0) {
                     for(doc in itemsArray) {
                         doc.reference.delete()
                     }
                 }
-                // Append new score for current day
+                // Set score for current day in firestore model
                 database!!.collection("Users")
                     .document(userId)
                     .collection("Scores")
@@ -554,8 +540,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Log.w("Add score", "Failed to write new measurement object to Firestore")
                     }
             }
-
-
     }
 
     private fun inflateHints() {
@@ -569,6 +553,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         insertHintItem(HintItem.ADD_HINT)
         insertHintItem(HintItem.FREQUENT_HINT)
         insertHintItem(HintItem.RANGE_HINT)
+        insertHintItem(HintItem.LOW_SCORE_HINT)
 
     }
 

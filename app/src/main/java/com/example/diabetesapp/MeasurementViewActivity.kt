@@ -94,7 +94,7 @@ class MeasurementViewActivity : AppCompatActivity() {
                 .collection("Measurements")
                 .document(mid!!)
             query.delete()
-                .addOnSuccessListener {querySnapshot ->
+                .addOnSuccessListener {
                     Log.d("Delete measurement", "SUCCESSFUL")
                     Toast.makeText(this, "Successfully deleted", Toast.LENGTH_LONG).show()
                     finish()
