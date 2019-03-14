@@ -701,7 +701,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             Log.w("POPULATE GRAPH", "EXCEPTION", e)
             graphHolder!!.removeView(graph!!)
             val tv = TextView(this)
-            tv.text = "Error"
+            tv.text = getString(R.string.error)
             tv.setTextColor(ContextCompat.getColor(this, R.color.textDark))
             tv.gravity = Gravity.CENTER
             tv.height = 300

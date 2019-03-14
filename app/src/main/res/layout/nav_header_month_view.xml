@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/imageView1"
                 android:src="@drawable/avatar"
-                android:scaleType="centerCrop" android:contentDescription="Header Image"/>
+                android:scaleType="centerCrop" android:contentDescription="@string/avatar_icon"/>
     </android.support.v7.widget.CardView>
 
     <TextView

@@ -30,7 +30,7 @@ class RecentItem(context: Context, timeIn: String, bgcIn: String): ConstraintLay
         bgcTextView = findViewById<View>(R.id.bgc_text_view) as TextView
 
         timeTextView!!.text = time
-        bgcTextView!!.text = bgc + " mmol/L"
+        bgcTextView!!.text = context.getString(R.string.unit, bgc)
 
 
     }

@@ -162,13 +162,13 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun setVerification() {
         val user = auth!!.currentUser!!
         if(user.isEmailVerified) {
-            verificationTextView!!.text = "Verified"
+            verificationTextView!!.text = getString(R.string.verified)
             verifyButton!!.isEnabled = false
             verifyButton!!.visibility = View.INVISIBLE
 
         }
         else {
-            verificationTextView!!.text = "Unverified"
+            verificationTextView!!.text = getString(R.string.unverified)
         }
     }
 

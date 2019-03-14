@@ -277,7 +277,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(itemsArray.size == 0) {
                     recentLinearLayout!!.removeView(progressBar)
                     val emptyTextView = TextView(this)
-                    emptyTextView.text = "No recent measurements"
+                    emptyTextView.text = getString(R.string.no_recent_measurements)
                     emptyTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
                     emptyTextView.gravity = Gravity.CENTER_HORIZONTAL
 
@@ -350,7 +350,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(itemsArray.size == 0) {
                     graphHolder!!.removeView(graph!!)
                     val addMeasurementsTextView = TextView(this)
-                    addMeasurementsTextView.text = "Add a measurement to get started"
+                    addMeasurementsTextView.text = getString(R.string.add_measurement)
                     addMeasurementsTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
                     addMeasurementsTextView.gravity = Gravity.CENTER
                     addMeasurementsTextView.height = 300
@@ -433,7 +433,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.w("Fetch recent items", "Error fetching Graph items", e)
                 graphHolder!!.removeView(graph!!)
                 val tv = TextView(this)
-                tv.text = "Error"
+                tv.text = getString(R.string.error)
                 tv.setTextColor(ContextCompat.getColor(this, R.color.textDark))
                 tv.gravity = Gravity.CENTER
                 tv.height = 300

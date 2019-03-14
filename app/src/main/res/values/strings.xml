@@ -45,8 +45,9 @@
 
     <string name="new_measurement_title">New Measurement</string>
     <string name="blood_glucose_concentration">Blood Glucose Concentration:</string>
-    <string name="recent_food">Food Recently Consumed</string>
-    <string name="exercise">Recent exercise</string>
+    <string name="recent_food">Food recently consumed</string>
+    <string name="no_recent_food">No food recently consumed</string>
+    <string name="exercise">Recent physical activity</string>
 
     <!--Symptoms-->
     <string name="symptoms">Symptoms</string>
@@ -98,6 +99,7 @@
     <string name="title_activity_month_view">MonthViewActivity</string>
 
     <string name="day">Day</string>
+    <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
 
@@ -112,6 +114,29 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="no_score">---</string>
+
+    <string name="dashboard">Dashboard</string>
+
+    <string name="recent_exercise">Recent physical activity</string>
+
+    <string name="avatar_icon">Avatar Icon</string>
+
+    <string name="monthly_score">Monthly Score:</string>
+    <string name="weekly_score">Weekly Score:</string>
+
+    <string name="verified">Verified</string>
+    <string name="unverified">Unverified</string>
+
+    <string name="no_measurements">No measurements</string>
+    <string name="no_recent_measurements">No recent measurements</string>
+    <string name="no_measurements_date">No measurements for selected date</string>
+
+    <string name="error">Error</string>
+
+    <string name="add_measurement">Add a measurements to get started</string>
+
+    <string name="unit">%1$s mmol/L</string>
+
 
 
 </resources>

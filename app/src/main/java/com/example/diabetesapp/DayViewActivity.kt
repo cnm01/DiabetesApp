@@ -193,7 +193,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun initGraph() {
         graphHolder!!.removeView(graph!!)
         val addMeasurementsTextView = TextView(this)
-        addMeasurementsTextView.text = "No measurements"
+        addMeasurementsTextView.text = getString(R.string.no_measurements)
         addMeasurementsTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
         addMeasurementsTextView.gravity = Gravity.CENTER
         addMeasurementsTextView.height = 300
@@ -208,7 +208,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun initMeasurements() {
         val emptyTextView = TextView(this)
-        emptyTextView.text = "No measurements"
+        emptyTextView.text = getString(R.string.no_measurements)
         emptyTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
         emptyTextView.gravity = Gravity.CENTER_HORIZONTAL
 
@@ -393,7 +393,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 if(itemsArray.size == 0) {
                     graphHolder!!.removeView(graph!!)
                     val addMeasurementsTextView = TextView(this)
-                    addMeasurementsTextView.text = "No measurements for selected date"
+                    addMeasurementsTextView.text = getString(R.string.no_measurements_date)
                     addMeasurementsTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
                     addMeasurementsTextView.gravity = Gravity.CENTER
                     addMeasurementsTextView.height = 300
@@ -481,7 +481,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Log.w("Fetch measurement items", "Error fetching measurement items", e)
                 graphHolder!!.removeView(graph!!)
                 val tv = TextView(this)
-                tv.text = "Error"
+                tv.text = getString(R.string.error)
                 tv.setTextColor(ContextCompat.getColor(this, R.color.textDark))
                 tv.gravity = Gravity.CENTER
                 tv.height = 300
@@ -543,7 +543,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 if(itemsArray.size == 0) {
                     measurementsLinearLayout!!.removeView(progressBar)
                     val emptyTextView = TextView(this)
-                    emptyTextView.text = "No measurements for selected date"
+                    emptyTextView.text = getString(R.string.no_measurements_date)
                     emptyTextView.setTextColor(ContextCompat.getColor(this, R.color.textDark))
                     emptyTextView.gravity = Gravity.CENTER_HORIZONTAL
 

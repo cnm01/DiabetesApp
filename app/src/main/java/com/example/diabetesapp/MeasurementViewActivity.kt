@@ -158,10 +158,10 @@ class MeasurementViewActivity : AppCompatActivity() {
         dateTextView!!.text = getString(R.string.date_format, measurement!!.day, measurement!!.month, measurement!!.year)
         setBGC()
         if(measurement!!.recentFood) {
-            foodTextView!!.text = "Food recently consumed"
+            foodTextView!!.text = getString(R.string.recent_food)
         }
         else {
-            foodTextView!!.text = "No recent food consumption"
+            foodTextView!!.text = getString(R.string.no_recent_food)
         }
         exerciseTextView!!.text = if(measurement!!.recentExercise) { "Recent physical activity" }
                                   else {"No recent physical activity"}
@@ -172,7 +172,7 @@ class MeasurementViewActivity : AppCompatActivity() {
     }
 
     private fun setBGC() {
-        bgcTextView!!.text = measurement!!.bloodGlucoseConc.toString() + "mmol/L"
+        bgcTextView!!.text = getString(R.string.unit, measurement!!.bloodGlucoseConc.toString())
         if(measurement!!.bloodGlucoseConc > 6 || measurement!!.bloodGlucoseConc < 4) {
             bgcTextView!!.setTextColor(ContextCompat.getColor(this, R.color.scoreBad))
         }

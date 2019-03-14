@@ -10,10 +10,10 @@
                 android:id="@+id/nav_dashboard"
                 android:icon="@drawable/dashboard_icon"
                 android:iconTint="@color/white"
-                android:title="Dashboard"/>
+                android:title="@string/dashboard"/>
     </group>
 
-    <item android:title="Archive">
+    <item android:title="@string/archive">
         <menu>
             <group android:id="@+id/group_2"
                    android:checkableBehavior="none">
@@ -21,17 +21,17 @@
                         android:id="@+id/nav_day_view"
                         android:icon="@drawable/assess_icon"
                         android:iconTint="@color/white"
-                        android:title="Day"/>
+                        android:title="@string/day"/>
                 <item
                         android:id="@+id/nav_week_view"
                         android:icon="@drawable/assess_icon"
                         android:iconTint="@color/white"
-                        android:title="Week"/>
+                        android:title="@string/week"/>
                 <item
                         android:id="@+id/nav_month_view"
                         android:icon="@drawable/assess_icon"
                         android:iconTint="@color/white"
-                        android:title="Month"/>
+                        android:title="@string/month"/>
             </group>
         </menu>
     </item>
@@ -42,12 +42,12 @@
                 android:id="@+id/nav_account"
                 android:icon="@drawable/account_icon"
                 android:iconTint="@color/white"
-                android:title="Account"/>
+                android:title="@string/account"/>
         <item
                 android:id="@+id/nav_sign_out"
                 android:icon="@drawable/sign_out_icon"
                 android:iconTint="@color/white"
-                android:title="Sign Out"/>
+                android:title="@string/sign_out"/>
     </group>
 
 </menu>
