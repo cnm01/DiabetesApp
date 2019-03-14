@@ -44,6 +44,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // Score
     private var scoreText: TextView? = null
 
+    // Measurements
+    private var measurementsArray = arrayListOf<Measurement>()
+
     // GraphView
     private var graph: LineChart? = null
     private var graphHolder: ConstraintLayout? = null
@@ -209,7 +212,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         inflateRecentItems()
         inflateGraphView()
         hintsLinearLayout!!.removeAllViews()
-        inflateHints()
         calcScore()
     }
 
@@ -440,6 +442,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun calcScore() {
     // Fetches measurements for current day and uses them to set score
     // Updates score in firestore model
+    // Fetches measurements and assigns them to field: measurementsArray
 
         var measurements = ArrayList<Measurement>()
 
@@ -477,9 +480,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     itemsArray.forEach { documentSnapshot ->
                         val item = documentSnapshot.toObject(Measurement::class.java)
                         measurements.add(item!!)
+                        measurementsArray.add(item!!)
                     }
                     val calculator = Calculator(measurements)
                     setScore(calculator.score)
+                    inflateHints()
                 }
             }
     }
@@ -509,7 +514,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val day = dateTime.dayOfMonth
         val month = dateTime.monthValue
         val year = dateTime.year
-        val date = day.toString() + "-" + month.toString() + "-" + year.toString()
+        val date = "$day-$month-$year"
 
         // Query -> Score from current day
         val query = database!!
@@ -550,10 +555,112 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // -> If account is unverified - VERIFY_HINT
         // -> If deviation outside healthy range of BGC - RANGE_HINT
 
-        insertHintItem(HintItem.ADD_HINT)
-        insertHintItem(HintItem.FREQUENT_HINT)
-        insertHintItem(HintItem.RANGE_HINT)
-        insertHintItem(HintItem.LOW_SCORE_HINT)
+        hintsLinearLayout!!.removeAllViews()
+
+        if(measurementsArray.size == 0) {
+            insertHintItem(getString(HintItem.ADD_HINT))
+        }
+
+        if(!auth!!.currentUser!!.isEmailVerified) {
+            insertHintItem(getString(HintItem.VERIFY_HINT))
+        }
+
+        if(measurementsArray.size > 2 && Math.random() > 0.7) {
+            insertHintItem(getString(HintItem.FREQUENT_HINT))
+        }
+
+        var aboveUpper = false
+        var belowLower = false
+        val calc = Calculator(measurementsArray)
+        for(m in measurementsArray) {
+            if(m.bloodGlucoseConc > calc.upperLimit) {
+                aboveUpper = true
+            }
+            else if(m.bloodGlucoseConc < calc.lowerLimit) {
+                belowLower = true
+            }
+        }
+        if(aboveUpper && Math.random() > 0.7) {
+            insertHintItem(getString(HintItem.RANGE_HINT))
+            if(Math.random() > 0.5) {
+                insertHintItem(getString(HintItem.HIGH_HINT))
+            }
+        }
+        if(belowLower && Math.random() > 0.7) {
+            insertHintItem(getString(HintItem.RANGE_HINT))
+            if(Math.random() > 0.5) {
+                insertHintItem(getString(HintItem.LOW_HINT))
+            }
+        }
+
+        try {
+            if(scoreText!!.text.toString().toInt() in 1..30 && Math.random() > 0.5) {
+                insertHintItem(getString(HintItem.LOW_SCORE_HINT))
+            }
+        } catch (e : Exception) {
+            Log.w("Assign hint item score", "FAILED", e)
+        }
+
+        var numSymptoms = 0
+        for(m in measurementsArray) {
+            for(symptom in m.symptoms) {
+                numSymptoms++
+            }
+        }
+
+        if(numSymptoms > 3 && Math.random() > 0.7) {
+            insertHintItem(getString(HintItem.NUM_MEASUREMENTS_HINT))
+        }
+
+        if(calc.percentageSafe > 50 && Math.random() > 0.7) {
+            insertHintItem(getString(HintItem.PERCENT_SAFE_HINT))
+        }
+
+        if(measurementsArray.size > 1) {
+            val duration = measurementsArray.last().time!!.toInt() - measurementsArray.first().time!!.toInt()
+            if(duration < 100 && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.TIME_HINT))
+            }
+        }
+
+        if(Math.random() > 0.8) {
+            if(Math.random() > 0.5) {
+                insertHintItem(getString(HintItem.MEDS_HINT))
+            }
+            else {
+                insertHintItem(getString(HintItem.NOTES_HINT))
+            }
+        }
+
+        if(Math.random() > 0.7) {
+            insertHintItem(getString(HintItem.SICK_HINT))
+        }
+
+        if(measurementsArray.size > 1) {
+            if(measurementsArray.last().bloodGlucoseConc < 4 && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.HYPO_HINT))
+                if(measurementsArray.takeLast(2).last().bloodGlucoseConc < 4) {
+                    insertHintItem(getString(HintItem.EMERGENCY_HINT))
+                }
+            }
+            else if(measurementsArray.last().bloodGlucoseConc > 8.5 && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.HYPER_HINT))
+                if(measurementsArray.takeLast(2).last().bloodGlucoseConc > 8.5) {
+                    insertHintItem(getString(HintItem.EMERGENCY_HINT))
+                }
+            }
+        }
+
+        if(hintsLinearLayout!!.childCount == 0) {
+            if(scoreText!!.text.toString().toInt() > 60) {
+                insertHintItem(getString(HintItem.GOOD_HINT))
+            }
+            else {
+                insertHintItem(getString(HintItem.CONTINUE_HINT))
+            }
+        }
+
+
 
     }
 

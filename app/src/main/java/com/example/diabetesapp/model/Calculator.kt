@@ -5,8 +5,8 @@ import kotlin.math.roundToInt
 class Calculator(measurements : ArrayList<Measurement>) {
 
     // Safe Range
-    private val lowerLimit = 4f
-    private val upperLimit = 9f
+    val lowerLimit = 4f
+    val upperLimit = 9f
 
     // List of measurements to calculate score for
     var measurements : ArrayList<Measurement> = arrayListOf()

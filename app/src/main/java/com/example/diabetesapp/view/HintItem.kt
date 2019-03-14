@@ -10,22 +10,24 @@ import com.example.diabetesapp.R
 class HintItem(context: Context, hint: String) : ConstraintLayout(context) {
 
     companion object {
-        const val FREQUENT_HINT = "Improve your score by taking more frequent measurements throughout the day."
-        const val ADD_HINT = "Add a measurement to get started"
-        const val VERIFY_HINT = "Verify your email"
-        const val RANGE_HINT = "Keep your blood glucose concentration within a safe range to improve your score."
-        const val HIGH_HINT = "Keep your highest blood glucose concentration measurement within the safe range to ensure a good score."
-        const val LOW_HINT = "Keep your lowest blood glucose concentration measurement within the safe range to ensure a good score."
-        const val LOW_SCORE_HINT = "If your score is consistently low despite adequate management, seek guidance from a healthcare professional. It may be necessary to try a different treatment, medication, or make changes to your lifestyle."
-        const val NUM_MEASUREMENTS_HINT = "A higher number of symptoms in a day indicates management or treatment is not optimal."
-        const val PERCENT_SAFE_HINT = "A higher proportion of measurements within the safe range will result in a higher score."
-        const val TIME_HINT = "To ensure a higher score, take your first measurement early on in the day, and your last measurement late in the day. Ensure you take lots of measurements in between."
-        const val MEDS_HINT = "Use the 'Medications' section when adding a new measurement to record current medications and dosages for later viewing."
-        const val NOTES_HINT = "Record any changes or abnormalities with the 'Notes' section when adding a new measurement."
-        const val SICK_HINT = "Temporary illnesses such as colds/flu can impact your ability to maintain a healthy blood glucose concentration. Be sure to record any temporary illnesses when taking a new measurement, using the 'Notes' section."
-        const val HYPO_HINT = "A blood glucose concentration below 4mmol/L may indicate hypoglycaemia. Seek medical advice."
-        const val HYPER_HINT = "A blood glucose concentration above 8.5mmol/L may indicate hyperglycaemia. Seek medical advice."
-        const val EMERGENCY_HINT = "Seek immediate medical attention if you are unable to control your blood glucose concentration to within a safe range."
+        const val FREQUENT_HINT =  R.string.frequent_hint
+        const val ADD_HINT = R.string.add_hint
+        const val VERIFY_HINT = R.string.verify_hint
+        const val RANGE_HINT = R.string.range_hint
+        const val HIGH_HINT = R.string.high_hint
+        const val LOW_HINT = R.string.low_hint
+        const val LOW_SCORE_HINT = R.string.low_score_hint
+        const val NUM_MEASUREMENTS_HINT = R.string.num_measurements_hint
+        const val PERCENT_SAFE_HINT = R.string.percent_safe_hint
+        const val TIME_HINT = R.string.time_hint
+        const val MEDS_HINT = R.string.meds_hint
+        const val NOTES_HINT = R.string.notes_hint
+        const val SICK_HINT = R.string.sick_hint
+        const val HYPO_HINT = R.string.hypo_hint
+        const val HYPER_HINT = R.string.hyper_hint
+        const val EMERGENCY_HINT = R.string.emergency_hint
+        const val GOOD_HINT = R.string.good_hint
+        const val CONTINUE_HINT = R.string.continue_hint
     }
 
     private var textView: TextView? = null
