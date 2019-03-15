@@ -350,7 +350,7 @@ class Calculator(measurements : ArrayList<Measurement>, testMode: Boolean) {
         }
 
         // Each metric is a value between 0..1
-        // Each metric is weighted with a value /100 as below
+        // Each metric is weighted so that the sum of all weights =100
         score += (percentageSafeMetric * 30).roundToInt()
         score += (percentAboveMetric * 10).roundToInt()
         score += (percentBelowMetric * 10).roundToInt()
