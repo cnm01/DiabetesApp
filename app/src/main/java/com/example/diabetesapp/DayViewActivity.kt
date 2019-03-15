@@ -181,8 +181,6 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         scoreText!!.text = scoreVal.toString()
     }
 
-    // TODO implement progressBars to MeasurementView activity while loading
-
     private fun initGraph() {
         graphHolder!!.removeView(graph!!)
         val addMeasurementsTextView = TextView(this)
@@ -607,8 +605,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.day_view, menu)
-        return true
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

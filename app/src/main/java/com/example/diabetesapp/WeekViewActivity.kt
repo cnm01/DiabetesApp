@@ -181,7 +181,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private fun inflateDatesAndScores() {
 
         for(c in dayContainers) {
-            c.setOnClickListener {  }
+            c.setOnClickListener {}
         }
 
 
@@ -343,6 +343,10 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 Toast.makeText(this, "Error fetching score", Toast.LENGTH_LONG).show()
                 Log.e("Fetch scores", "FAILURE", e)
             }
+        }
+
+        if(total == 0) {
+            setScore(0)
         }
 
     }
@@ -585,7 +589,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.week_view, menu)
-        return true
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

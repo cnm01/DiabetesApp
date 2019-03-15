@@ -5,10 +5,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.diabetesapp.model.Measurement
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +18,8 @@ class MeasurementViewActivity : AppCompatActivity() {
     private var bgcTextView : TextView? = null
     private var foodTextView : TextView? = null
     private var exerciseTextView : TextView? = null
+    private var timeProgressBar : ProgressBar? = null
+    private var bgcProgressBar : ProgressBar? = null
 
     // Symptom Checkboxes
     private var dizzynessCB : CheckBox? = null
@@ -77,6 +76,8 @@ class MeasurementViewActivity : AppCompatActivity() {
         bgcTextView = findViewById<View>(R.id.bgc_text_view) as TextView
         foodTextView = findViewById<View>(R.id.food_text_view) as TextView
         exerciseTextView = findViewById<View>(R.id.exercise_text_view) as TextView
+        timeProgressBar = findViewById<View>(R.id.time_progress_bar) as ProgressBar
+        bgcProgressBar = findViewById<View>(R.id.bgc_progress_bar) as ProgressBar
 
         initCheckBoxes()
 
@@ -110,7 +111,6 @@ class MeasurementViewActivity : AppCompatActivity() {
         database = FirebaseFirestore.getInstance()
 
         fetchMeasurement()
-//        setDetails()
     }
 
     private fun initCheckBoxes() {
@@ -154,6 +154,8 @@ class MeasurementViewActivity : AppCompatActivity() {
     }
 
     private fun setDetails() {
+        timeProgressBar!!.visibility = View.INVISIBLE
+
         timeTextView!!.text = measurement!!.timeFormatted
         dateTextView!!.text = getString(R.string.date_format, measurement!!.day, measurement!!.month, measurement!!.year)
         setBGC()
@@ -172,6 +174,7 @@ class MeasurementViewActivity : AppCompatActivity() {
     }
 
     private fun setBGC() {
+        bgcProgressBar!!.visibility = View.INVISIBLE
         bgcTextView!!.text = getString(R.string.unit, measurement!!.bloodGlucoseConc.toString())
         if(measurement!!.bloodGlucoseConc > 6 || measurement!!.bloodGlucoseConc < 4) {
             bgcTextView!!.setTextColor(ContextCompat.getColor(this, R.color.scoreBad))

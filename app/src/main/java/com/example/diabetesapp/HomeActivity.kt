@@ -153,8 +153,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home, menu)
-        return true
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -303,8 +302,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Error fetching recent items", Toast.LENGTH_LONG).show()
             }
     }
-
-    // TODO add progress bars to week and month views
 
     private fun inflateGraphView() {
     // Fetches measurements and adds graph of them to view
@@ -480,9 +477,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     itemsArray.forEach { documentSnapshot ->
                         val item = documentSnapshot.toObject(Measurement::class.java)
                         measurements.add(item!!)
-                        measurementsArray.add(item!!)
+                        measurementsArray.add(item)
                     }
-                    val calculator = Calculator(measurements)
+                    val calculator = Calculator(measurements, false)
                     setScore(calculator.score)
                     inflateHints()
                 }
@@ -548,12 +545,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun inflateHints() {
-        // TODO implement functionality for deciding and inflating hints
-        // Inserts appropriate hint based on context
-        // -> If no measurements on current day yet - ADD_HINT
-        // -> Regular usage - FREQUENT_HINT
-        // -> If account is unverified - VERIFY_HINT
-        // -> If deviation outside healthy range of BGC - RANGE_HINT
+    // Inserts appropriate hint based on context
 
         hintsLinearLayout!!.removeAllViews()
 
@@ -571,7 +563,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         var aboveUpper = false
         var belowLower = false
-        val calc = Calculator(measurementsArray)
+        val calc = Calculator(measurementsArray, false)
         for(m in measurementsArray) {
             if(m.bloodGlucoseConc > calc.upperLimit) {
                 aboveUpper = true

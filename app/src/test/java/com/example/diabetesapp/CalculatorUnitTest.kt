@@ -17,7 +17,7 @@ class CalculatorUnitTest {
 
         val measurements = arrayListOf<Measurement>()
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.duration)
     }
 
@@ -35,7 +35,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
     }
 
@@ -54,7 +54,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
     }
 
@@ -73,7 +73,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
     }
 
@@ -90,7 +90,7 @@ class CalculatorUnitTest {
 
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(200, calculator.duration)
     }
 
@@ -102,7 +102,7 @@ class CalculatorUnitTest {
         m1.time = "0800"
         val measurements = arrayListOf(m1)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.duration)
     }
 
@@ -123,7 +123,7 @@ class CalculatorUnitTest {
         m5.time = "1200"
         val measurements = arrayListOf(m1,m2,m3,m4,m5)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
     }
 
@@ -142,7 +142,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(50, calculator.duration)
 
     }
@@ -164,7 +164,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
 
     }
@@ -188,7 +188,7 @@ class CalculatorUnitTest {
         m6.time = "1300"
         val measurements = arrayListOf(m1,m2,m3,m4,m5,m6)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
 
     }
@@ -208,7 +208,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
 
     }
@@ -230,7 +230,7 @@ class CalculatorUnitTest {
         m5.time = "1200"
         val measurements = arrayListOf(m1,m2,m3,m4,m5)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(200, calculator.duration)
 
     }
@@ -247,7 +247,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.duration)
 
     }
@@ -264,7 +264,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.duration)
 
     }
@@ -290,7 +290,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
     }
 
@@ -309,7 +309,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
     }
 
@@ -328,7 +328,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
     }
 
@@ -345,7 +345,7 @@ class CalculatorUnitTest {
 
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(200, calculator.duration)
     }
 
@@ -357,7 +357,7 @@ class CalculatorUnitTest {
         m1.time = "0800"
         val measurements = arrayListOf(m1)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.duration)
     }
 
@@ -378,7 +378,7 @@ class CalculatorUnitTest {
         m5.time = "1200"
         val measurements = arrayListOf(m1,m2,m3,m4,m5)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
     }
 
@@ -397,7 +397,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(50, calculator.duration)
 
     }
@@ -419,7 +419,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
 
     }
@@ -443,7 +443,7 @@ class CalculatorUnitTest {
         m6.time = "1300"
         val measurements = arrayListOf(m1,m2,m3,m4,m5,m6)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
 
     }
@@ -463,7 +463,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.duration)
 
     }
@@ -485,7 +485,7 @@ class CalculatorUnitTest {
         m5.time = "1200"
         val measurements = arrayListOf(m1,m2,m3,m4,m5)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(200, calculator.duration)
 
     }
@@ -502,7 +502,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.duration)
 
     }
@@ -519,7 +519,7 @@ class CalculatorUnitTest {
         m3.time = "1000"
         val measurements = arrayListOf(m1,m2,m3)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.duration)
 
     }
@@ -547,7 +547,7 @@ class CalculatorUnitTest {
         m5.time = "1200"
         val measurements = arrayListOf(m1,m2,m3,m4,m5)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(200, calculator.duration)
 
     }
@@ -569,7 +569,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
 
     }
@@ -591,7 +591,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
 
     }
@@ -613,7 +613,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(150, calculator.duration)
 
     }
@@ -636,7 +636,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(67, calculator.percentageSafe)
     }
 
@@ -655,7 +655,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(50, calculator.percentageSafe)
     }
 
@@ -673,7 +673,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(100, calculator.percentageSafe)
     }
 
@@ -691,7 +691,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.percentageSafe)
     }
 
@@ -709,7 +709,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.percentageSafe)
     }
 
@@ -731,7 +731,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(25, calculator.percentAbove)
     }
 
@@ -739,7 +739,7 @@ class CalculatorUnitTest {
     fun percentAbove_empty_isCorrect() {
 
         val measurements = arrayListOf<Measurement>()
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.percentAbove)
     }
 
@@ -756,7 +756,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
 
         val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.percentAbove)
     }
 
@@ -772,7 +772,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
         val measurements = arrayListOf(m1,m2,m3,m4)
 
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(25, calculator.percentBelow)
     }
 
@@ -780,7 +780,7 @@ class CalculatorUnitTest {
     fun percentBelow_empty_isCorrect() {
 
         val measurements = arrayListOf<Measurement>()
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.percentBelow)
     }
 
@@ -797,7 +797,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
 
         val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(0, calculator.percentBelow)
     }
 
@@ -817,7 +817,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
 
         val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         println("Score : " + calculator.score)
     }
 
@@ -836,7 +836,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
 
         val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(7f, calculator.highestMeasurement)
     }
 
@@ -853,7 +853,7 @@ class CalculatorUnitTest {
         m4.time = "1100"
 
         val measurements = arrayListOf<Measurement>(m1,m2,m3,m4)
-        val calculator = Calculator(measurements)
+        val calculator = Calculator(measurements, true)
         Assert.assertEquals(5f, calculator.lowestMeasurement)
     }
 

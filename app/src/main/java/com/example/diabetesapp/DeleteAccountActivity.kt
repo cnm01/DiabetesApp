@@ -34,8 +34,6 @@ class DeleteAccountActivity : AppCompatActivity() {
         initialise()
     }
 
-    // TODO change settings menu, top right 3 buttons
-
     private fun initialise() {
         emailEditText = findViewById<View>(R.id.email_input) as EditText
         passwordEditText = findViewById<View>(R.id.password_input) as EditText

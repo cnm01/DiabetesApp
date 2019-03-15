@@ -2,11 +2,11 @@ package com.example.diabetesapp.model
 
 import kotlin.math.roundToInt
 
-class Calculator(measurements : ArrayList<Measurement>) {
+class Calculator(measurements : ArrayList<Measurement>, testMode: Boolean) {
 
     // Safe Range
-    val lowerLimit = 4f
-    val upperLimit = 9f
+    var lowerLimit = 4f
+    var upperLimit = 9f
 
     // List of measurements to calculate score for
     var measurements : ArrayList<Measurement> = arrayListOf()
@@ -26,6 +26,7 @@ class Calculator(measurements : ArrayList<Measurement>) {
     var score : Int = 0
 
     init {
+        if(testMode) {upperLimit = 6f}
         this.measurements = measurements
         calcDurationUpper()
         calcDurationLower()
