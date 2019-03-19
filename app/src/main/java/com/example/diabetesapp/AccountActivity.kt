@@ -64,7 +64,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         headerEmailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
         val headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
+        headerIMG.setBackgroundResource(R.drawable.header2)
 
         firstNameTextView = findViewById<View>(R.id.first_name_text) as TextView
         firstNameTextView!!.movementMethod = ScrollingMovementMethod()
@@ -82,16 +82,20 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
 
+
+        // Opens authentication for change account details on button click
         changeDetailsButton!!.setOnClickListener{
             val intent = Intent(this, ReauthenticateActivity::class.java)
             startActivity(intent)
         }
 
+        // Opens authentication for account deletion on button click
         deleteAccountButton!!.setOnClickListener{
             val intent = Intent(this, DeleteAccountActivity::class.java)
             startActivity(intent)
         }
 
+        // Signs out and opens login page on button click
         signOutButton!!.setOnClickListener{
             auth!!.signOut()
             Log.d("Logging out", "Successfully logged out")
@@ -100,6 +104,7 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             finish()
         }
 
+        // Sends email verification on button click
         verifyButton!!.setOnClickListener {
             auth!!.currentUser!!.sendEmailVerification()
                 .addOnSuccessListener {
@@ -110,7 +115,6 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_LONG).show()
                     Log.w("Send verify email", "FAILED")
                 }
-            // TODO fix verification only updates on relogin
         }
     }
 
@@ -160,6 +164,15 @@ class AccountActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun setVerification() {
     // Sets the verification status
+
+        auth!!.currentUser?.getIdToken(true)!!
+            .addOnSuccessListener {
+                auth!!.currentUser!!.reload()
+                Log.d("Refresh token for verification status :", "SUCCESSFUL")
+            }
+            .addOnFailureListener {
+                Log.e("Refresh token for verifcation status :", "FAILED")
+            }
 
         val user = auth!!.currentUser!!
         if(user.isEmailVerified) {

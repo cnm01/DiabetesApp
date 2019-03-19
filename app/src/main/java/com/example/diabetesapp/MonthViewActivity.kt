@@ -88,7 +88,7 @@ class MonthViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         database = FirebaseFirestore.getInstance()
         var headerIMG = headerView!!.findViewById<View>(R.id.header_layout_month) as LinearLayout
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
+        headerIMG.setBackgroundResource(R.drawable.header2)
 
         scoreText = findViewById<View>(R.id.score_text) as TextView
         graph = findViewById<View>(R.id.graphView) as LineChart

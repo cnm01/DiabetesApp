@@ -51,6 +51,11 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        forgotPasswordTextView!!.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
+
         registerButton!!.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)

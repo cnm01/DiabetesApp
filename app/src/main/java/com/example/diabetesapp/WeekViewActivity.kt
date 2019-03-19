@@ -119,7 +119,7 @@ class WeekViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         database = FirebaseFirestore.getInstance()
         val headerIMG = headerView!!.findViewById<View>(R.id.header_layout_week) as LinearLayout
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
+        headerIMG.setBackgroundResource(R.drawable.header2)
         graph = findViewById<View>(R.id.graphView) as LineChart
         graphHolder = findViewById<View>(R.id.graph_holder) as ConstraintLayout
         daySpinner = findViewById<View>(R.id.day_spinner) as Spinner

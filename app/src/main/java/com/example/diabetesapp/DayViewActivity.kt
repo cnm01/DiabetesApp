@@ -114,7 +114,7 @@ class DayViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         val headerIMG = headerView!!.findViewById<View>(R.id.header_layout_day) as LinearLayout
-        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
+        headerIMG.setBackgroundResource(R.drawable.header2)
 
         daySpinner = findViewById<View>(R.id.day_spinner) as Spinner
         monthSpinner = findViewById<View>(R.id.month_spinner) as Spinner

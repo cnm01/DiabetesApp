@@ -114,7 +114,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         emailTextView = headerView!!.findViewById<View>(R.id.email_text_view) as TextView
         val headerIMG = headerView!!.findViewById<View>(R.id.header_layout) as LinearLayout
         // Sets Navigation Drawer Header background image
-        headerIMG.setBackgroundResource(R.drawable.wallpaper2)
+        headerIMG.setBackgroundResource(R.drawable.header2)
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         recentLinearLayout = findViewById<View>(R.id.recentLinearLayout) as LinearLayout
@@ -450,7 +450,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val day = dateTime.dayOfMonth
         val month = dateTime.monthValue
         val year = dateTime.year
-        val date = day.toString() + "-" + month.toString() + "-" + year.toString()
+        val date = "$day-$month-$year"
 
         // Query -> Measurements from current day
         val query = database!!
@@ -481,13 +481,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                     val calculator = Calculator(measurements, false)
                     setScore(calculator.score)
-                    inflateHints()
+                    Log.d("set_score :", "complete")
                 }
             }
     }
 
     private fun setScore(scoreVal: Int) {
     // Sets score on view, updates user model with new score
+
+        inflateHints()
 
         when {
             scoreVal >= 70 -> {
@@ -551,109 +553,108 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(measurementsArray.size == 0) {
             insertHintItem(getString(HintItem.ADD_HINT))
+            Log.d("add_hint : ", "successful")
         }
-
-        if(!auth!!.currentUser!!.isEmailVerified) {
-            insertHintItem(getString(HintItem.VERIFY_HINT))
-        }
-
-        if(measurementsArray.size > 2 && Math.random() > 0.7) {
-            insertHintItem(getString(HintItem.FREQUENT_HINT))
-        }
-
-        var aboveUpper = false
-        var belowLower = false
-        val calc = Calculator(measurementsArray, false)
-        for(m in measurementsArray) {
-            if(m.bloodGlucoseConc > calc.upperLimit) {
-                aboveUpper = true
+        else {
+            if(!auth!!.currentUser!!.isEmailVerified) {
+                insertHintItem(getString(HintItem.VERIFY_HINT))
             }
-            else if(m.bloodGlucoseConc < calc.lowerLimit) {
-                belowLower = true
-            }
-        }
-        if(aboveUpper && Math.random() > 0.7) {
-            insertHintItem(getString(HintItem.RANGE_HINT))
-            if(Math.random() > 0.5) {
-                insertHintItem(getString(HintItem.HIGH_HINT))
-            }
-        }
-        if(belowLower && Math.random() > 0.7) {
-            insertHintItem(getString(HintItem.RANGE_HINT))
-            if(Math.random() > 0.5) {
-                insertHintItem(getString(HintItem.LOW_HINT))
-            }
-        }
 
-        try {
-            if(scoreText!!.text.toString().toInt() in 1..30 && Math.random() > 0.5) {
-                insertHintItem(getString(HintItem.LOW_SCORE_HINT))
+            if(measurementsArray.size > 2 && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.FREQUENT_HINT))
             }
-        } catch (e : Exception) {
-            Log.w("Assign hint item score", "FAILED", e)
-        }
 
-        var numSymptoms = 0
-        for(m in measurementsArray) {
-            for(symptom in m.symptoms) {
-                numSymptoms++
-            }
-        }
-
-        if(numSymptoms > 3 && Math.random() > 0.7) {
-            insertHintItem(getString(HintItem.NUM_MEASUREMENTS_HINT))
-        }
-
-        if(calc.percentageSafe > 50 && Math.random() > 0.7) {
-            insertHintItem(getString(HintItem.PERCENT_SAFE_HINT))
-        }
-
-        if(measurementsArray.size > 1) {
-            val duration = measurementsArray.last().time!!.toInt() - measurementsArray.first().time!!.toInt()
-            if(duration < 100 && Math.random() > 0.7) {
-                insertHintItem(getString(HintItem.TIME_HINT))
-            }
-        }
-
-        if(Math.random() > 0.8) {
-            if(Math.random() > 0.5) {
-                insertHintItem(getString(HintItem.MEDS_HINT))
-            }
-            else {
-                insertHintItem(getString(HintItem.NOTES_HINT))
-            }
-        }
-
-        if(Math.random() > 0.7) {
-            insertHintItem(getString(HintItem.SICK_HINT))
-        }
-
-        if(measurementsArray.size > 1) {
-            if(measurementsArray.last().bloodGlucoseConc < 4 && Math.random() > 0.7) {
-                insertHintItem(getString(HintItem.HYPO_HINT))
-                if(measurementsArray.takeLast(2).last().bloodGlucoseConc < 4) {
-                    insertHintItem(getString(HintItem.EMERGENCY_HINT))
+            var aboveUpper = false
+            var belowLower = false
+            val calc = Calculator(measurementsArray, false)
+            for(m in measurementsArray) {
+                if(m.bloodGlucoseConc > calc.upperLimit) {
+                    aboveUpper = true
+                }
+                else if(m.bloodGlucoseConc < calc.lowerLimit) {
+                    belowLower = true
                 }
             }
-            else if(measurementsArray.last().bloodGlucoseConc > 8.5 && Math.random() > 0.7) {
-                insertHintItem(getString(HintItem.HYPER_HINT))
-                if(measurementsArray.takeLast(2).last().bloodGlucoseConc > 8.5) {
-                    insertHintItem(getString(HintItem.EMERGENCY_HINT))
+            if(aboveUpper && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.RANGE_HINT))
+                if(Math.random() > 0.5) {
+                    insertHintItem(getString(HintItem.HIGH_HINT))
+                }
+            }
+            if(belowLower && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.RANGE_HINT))
+                if(Math.random() > 0.5) {
+                    insertHintItem(getString(HintItem.LOW_HINT))
+                }
+            }
+
+            try {
+                if(scoreText!!.text.toString().toInt() in 1..30 && Math.random() > 0.5) {
+                    insertHintItem(getString(HintItem.LOW_SCORE_HINT))
+                }
+            } catch (e : Exception) {
+                Log.w("Assign hint item score", "FAILED", e)
+            }
+
+            var numSymptoms = 0
+            for(m in measurementsArray) {
+                for(symptom in m.symptoms) {
+                    numSymptoms++
+                }
+            }
+
+            if(numSymptoms > 3 && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.NUM_MEASUREMENTS_HINT))
+            }
+
+            if(calc.percentageSafe > 50 && Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.PERCENT_SAFE_HINT))
+            }
+
+            if(measurementsArray.size > 1) {
+                val duration = measurementsArray.last().time!!.toInt() - measurementsArray.first().time!!.toInt()
+                if(duration < 100 && Math.random() > 0.7) {
+                    insertHintItem(getString(HintItem.TIME_HINT))
+                }
+            }
+
+            if(Math.random() > 0.8) {
+                if(Math.random() > 0.5) {
+                    insertHintItem(getString(HintItem.MEDS_HINT))
+                }
+                else {
+                    insertHintItem(getString(HintItem.NOTES_HINT))
+                }
+            }
+
+            if(Math.random() > 0.7) {
+                insertHintItem(getString(HintItem.SICK_HINT))
+            }
+
+            if(measurementsArray.size > 1) {
+                if(measurementsArray.last().bloodGlucoseConc < 4 && Math.random() > 0.7) {
+                    insertHintItem(getString(HintItem.HYPO_HINT))
+                    if(measurementsArray.takeLast(2).last().bloodGlucoseConc < 4) {
+                        insertHintItem(getString(HintItem.EMERGENCY_HINT))
+                    }
+                }
+                else if(measurementsArray.last().bloodGlucoseConc > 8.5 && Math.random() > 0.7) {
+                    insertHintItem(getString(HintItem.HYPER_HINT))
+                    if(measurementsArray.takeLast(2).last().bloodGlucoseConc > 8.5) {
+                        insertHintItem(getString(HintItem.EMERGENCY_HINT))
+                    }
+                }
+            }
+
+            if(hintsLinearLayout!!.childCount == 0) {
+                if(scoreText!!.text.toString().toInt() > 60) {
+                    insertHintItem(getString(HintItem.GOOD_HINT))
+                }
+                else {
+                    insertHintItem(getString(HintItem.CONTINUE_HINT))
                 }
             }
         }
-
-        if(hintsLinearLayout!!.childCount == 0) {
-            if(scoreText!!.text.toString().toInt() > 60) {
-                insertHintItem(getString(HintItem.GOOD_HINT))
-            }
-            else {
-                insertHintItem(getString(HintItem.CONTINUE_HINT))
-            }
-        }
-
-
-
     }
 
     private fun insertHintItem(hint: String) {

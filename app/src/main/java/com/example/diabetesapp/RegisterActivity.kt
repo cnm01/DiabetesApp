@@ -14,6 +14,9 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.diabetesapp.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
@@ -98,13 +101,29 @@ class RegisterActivity : AppCompatActivity() {
                         Toast.makeText(this, "Registered", Toast.LENGTH_SHORT).show()
 
                         updateUserInfoAndUI()
+
+                        auth!!.currentUser!!.sendEmailVerification()
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Verification email sent", Toast.LENGTH_LONG).show()
+                                Log.d("Send verify email", "SUCCESS")
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_LONG).show()
+                                Log.w("Send verify email", "FAILED")
+                            }
                     }
                 }
-                .addOnFailureListener {
-                    e -> Log.w("Create new user", "Error creating user", e)
-                    progressBar?.visibility = View.INVISIBLE
-                    Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
-
+                .addOnFailureListener { e ->
+                    when (e) {
+                        is FirebaseAuthWeakPasswordException -> Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                        is FirebaseAuthUserCollisionException -> Toast.makeText(this, "Email already in use", Toast.LENGTH_SHORT).show()
+                        is FirebaseAuthInvalidCredentialsException -> { Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show() }
+                        else -> {
+                            Log.w("Create new user", "ERROR", e)
+                            progressBar?.visibility = View.INVISIBLE
+                            Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
         }
         else {

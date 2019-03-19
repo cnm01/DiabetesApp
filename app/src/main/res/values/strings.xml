@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diabetes</string>
+    <string name="app_name">Evaluate</string>
     <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -135,6 +135,9 @@
 
     <string name="add_measurement">Add a measurements to get started</string>
 
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_prompt">Enter email to continue</string>
+
     <string name="unit">%1$s mmol/L</string>
 
     <string name="tips_label">Tips</string>
@@ -143,18 +146,44 @@
     <string name="add_hint">Add a measurement to get started</string>
     <string name="verify_hint">Verify your email</string>
     <string name="range_hint">Keep your blood glucose concentration within a safe range.</string>
-    <string name="high_hint">Keep your highest blood glucose concentration measurement within the safe range to ensure a good score.</string>
-    <string name="low_hint">Keep your lowest blood glucose concentration measurement within the safe range to ensure a good score.</string>
-    <string name="low_score_hint">If your score is consistently low despite adequate management, seek guidance from a healthcare professional. It may be necessary to try a different treatment, medication, or make changes to your lifestyle.</string>
-    <string name="num_measurements_hint">A higher number of symptoms in a day indicates management or treatment is not optimal.</string>
-    <string name="percent_safe_hint">A higher proportion of measurements within the safe range will result in a higher score.</string>
-    <string name="time_hint">To ensure a higher score, take your first measurement early on in the day, and your last measurement late in the day. Ensure you take lots of measurements in between.</string>
-    <string name="meds_hint">Use the \'Medications\' section when adding a new measurement to record current medications and dosages for later viewing.</string>
-    <string name="notes_hint">Record any changes or abnormalities with the \'Notes\' section when adding a new measurement.</string>
-    <string name="sick_hint">Temporary illnesses such as colds/flu can impact your ability to maintain a healthy blood glucose concentration. Be sure to record any temporary illnesses when taking a new measurement, using the \'Notes\' section.</string>
-    <string name="hypo_hint">A blood glucose concentration below 4mmol/L may indicate hypoglycaemia. Seek medical advice.</string>
-    <string name="hyper_hint">A blood glucose concentration above 8.5mmol/L may indicate hyperglycaemia. Seek medical advice.</string>
-    <string name="emergency_hint">Seek immediate medical attention if you are unable to control your blood glucose concentration to within a safe range.</string>
+    <string name="high_hint">Keep your highest blood glucose concentration measurement within the safe range to ensure a
+        good score.
+    </string>
+    <string name="low_hint">Keep your lowest blood glucose concentration measurement within the safe range to ensure a
+        good score.
+    </string>
+    <string name="low_score_hint">If your score is consistently low despite adequate management, seek guidance from a
+        healthcare professional. It may be necessary to try a different treatment, medication, or make changes to your
+        lifestyle.
+    </string>
+    <string name="num_measurements_hint">A higher number of symptoms in a day indicates management or treatment is not
+        optimal.
+    </string>
+    <string name="percent_safe_hint">A higher proportion of measurements within the safe range will result in a higher
+        score.
+    </string>
+    <string name="time_hint">To ensure a higher score, take your first measurement early on in the day, and your last
+        measurement late in the day. Ensure you take lots of measurements in between.
+    </string>
+    <string name="meds_hint">Use the \'Medications\' section when adding a new measurement to record current medications
+        and dosages for later viewing.
+    </string>
+    <string name="notes_hint">Record any changes or abnormalities with the \'Notes\' section when adding a new
+        measurement.
+    </string>
+    <string name="sick_hint">Temporary illnesses such as colds/flu can impact your ability to maintain a healthy blood
+        glucose concentration. Be sure to record any temporary illnesses when taking a new measurement, using the
+        \'Notes\' section.
+    </string>
+    <string name="hypo_hint">A blood glucose concentration below 4mmol/L may indicate hypoglycaemia. Seek medical
+        advice.
+    </string>
+    <string name="hyper_hint">A blood glucose concentration above 8.5mmol/L may indicate hyperglycaemia. Seek medical
+        advice.
+    </string>
+    <string name="emergency_hint">Seek immediate medical attention if you are unable to control your blood glucose
+        concentration to within a safe range.
+    </string>
     <string name="good_hint">Keep up the good work!</string>
     <string name="continue_hint">Keep trying to maintain a good score.</string>
 
